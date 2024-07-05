@@ -80,7 +80,7 @@ public:
     if (x < 0)
         x += 360;
     return x;
-}
+    }
     Vento(unsigned int id, std::string n,double o);
     Vento(unsigned int id, std::string n,double o=0, double max=30, double tollG=0.1, double tollA=0.5);
     //--------------------getter--------------------
@@ -95,7 +95,7 @@ public:
     std::pair<double, double> Misura(std::pair<double, double> valoreReale);
 };
 
-Vento::Vento(unsigned int id, std::string n,double o) : 
+Vento::Vento(unsigned int id, std::string n, double o) : 
     Sensore(id, n),
     offset(limitaAngolo(o)),
     valoreMaxVelocita(30), 
@@ -111,8 +111,6 @@ Vento::Vento(unsigned int id, std::string n,double o, double max, double tollG, 
     dato(std::make_pair(0, 0)) {
         offset = std::round(limitaAngolo(o)*tolleranzaGoniometro) * tolleranzaGoniometro;
     }
-
-
 
 double Vento::getOffset() const {
     return offset;
@@ -314,6 +312,7 @@ double Umidita::Misura(double valoreReale) {
     std::uniform_real_distribution<> dis(valoreMin, valoreMax);
     return std::round(dato = dis(valoreReale) / tolleranza) * tolleranza;
 }
+
 class TemPercepita {
 private:
 public:
