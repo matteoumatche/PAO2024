@@ -145,10 +145,12 @@ void Vento::simulaMisura() {
 }
 
 std::pair<double, double> Vento::Misura(std::pair<double, double> valoreReale) {
-    std::uniform_real_distribution<> disv(0, valoreMaxVelocita);
-    std::uniform_real_distribution<> disa(0, 360);
-    double velocita = std::round(disv(valoreReale)/tolleranzaAnemometro) * tolleranzaAnemometro;
-    double angolo = std::round(disa(valoreReale)/tolleranzaGoniometro) * tolleranzaGoniometro;
+     std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> disv(-tolleranzaAnemometro, tolleranzaAnemometro);
+    std::uniform_real_distribution<> disa(-tolleranzaGoniometro, tolleranzaGoniometro);
+    double velocita = std::round((valoreReale.first + disv(gen)) / tolleranzaAnemometro) * tolleranzaAnemometro;
+    double angolo = std::round((limitaAngolo(valoreReale.second + disv(gen))) / tolleranzaGoniometro) * tolleranzaGoniometro;
     dato = std::make_pair(velocita, angolo);
     return dato;
 }
@@ -236,9 +238,11 @@ void Temperatura::simulaMisura() {
 }
 
 double Temperatura::Misura(double valoreReale) {
-    std::uniform_real_distribution<> dis(valoreMin, valoreMax);
-    //salvo il dato misurato assicurandomi che rispetti la precisione dello strumento
-    return std::round(dato = dis(valoreReale)/ tolleranza) * tolleranza;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(-tolleranza, tolleranza);
+    dato = std::round((valoreReale + dis(gen)) / tolleranza) * tolleranza;
+    return dato;
 }
 
 
@@ -311,8 +315,11 @@ void Umidita::simulaMisura() {
 }
 
 double Umidita::Misura(double valoreReale) {
-    std::uniform_real_distribution<> dis(valoreMin, valoreMax);
-    return std::round(dato = dis(valoreReale) / tolleranza) * tolleranza;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(-tolleranza, tolleranza);
+    dato= std::round((valoreReale + dis(gen)) / tolleranza) * tolleranza;
+    return dato;
 }
 class TemPercepita {
 private:
@@ -320,7 +327,7 @@ public:
 };
 
 int main() {
-    
+     
     Fotocellula f(2, "fotocellula");
     Vento v(3, "vento");
     Temperatura t(4, "temperatura");
@@ -330,9 +337,21 @@ int main() {
     t.simulaMisura();
     u.simulaMisura();
 
-    std::cout << "ID: " << f.getID() << " Nome: " << f.getNome() << f.isAttivo() << std::endl;
-    std::cout << "ID: " << v.getID() << " Nome: " << v.getNome() << std::endl;
-    std::cout << "ID: " << t.getID() << " Nome: " << t.getNome() << t.getDato()<< std::endl;
-    std::cout << "ID: " << u.getID() << " Nome: " << u.getNome() << u.getDato()<< std::endl;
+    std::cout << "-------simulamisura---------"<< std::endl;
+    std::cout << "ID: " << f.getID() << " Nome: " << f.getNome() << " misurazione: "  << f.isAttivo() << std::endl;
+    std::cout << "ID: " << v.getID() << " Nome: " << v.getNome() << " misurazione: "  << v.getDato().first << " " <<  v.getDato().second << std::endl;
+    std::cout << "ID: " << t.getID() << " Nome: " << t.getNome() << " misurazione: "  << t.getDato()<< std::endl;
+    std::cout << "ID: " << u.getID() << " Nome: " << u.getNome() << " misurazione: "  << u.getDato()<< std::endl;
+
+    v.Misura(std::make_pair(10, 180));
+    t.Misura(20);
+    u.Misura(10);
+
+    std::cout << "-------misura---------"<< std::endl;
+    std::cout << "ID: " << f.getID() << " Nome: " << f.getNome() << " misurazione: "  << f.isAttivo() << std::endl;
+    std::cout << "ID: " << v.getID() << " Nome: " << v.getNome() << " misurazione: "  << v.getDato().first << " " <<  v.getDato().second << std::endl;
+    std::cout << "ID: " << t.getID() << " Nome: " << t.getNome() << " misurazione: "  << t.getDato()<< std::endl;
+    std::cout << "ID: " << u.getID() << " Nome: " << u.getNome() << " misurazione: "  << u.getDato()<< std::endl;
+
     return 0;
 }
