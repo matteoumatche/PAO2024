@@ -67,14 +67,13 @@ bool Fotocellula::Misura(bool valoreReale) {
 //--------------------Vento--------------------
 class Vento : public Sensore {
 private:
-    double valoreMaxVelocita;
+    double valoreMaxVelocita;   //questo è const? Essendo valore massimo
     double tolleranzaGoniometro;
     double tolleranzaAnemometro;
     double offset;
     std::pair<double, double> dato;
 
 public:
-
     double limitaAngolo(double x) const {
     x = fmod(x,360);
     if (x < 0)
@@ -159,8 +158,8 @@ class Temperatura : public Sensore {
 private:
     double valoreMin;
     double valoreMax;
-    double valoreIdeale;
-    double tolleranza;
+    /*const*/ double valoreIdeale;
+    double tolleranza;  //unsigned int? No, ma simile? const?
     double dato;
     static double zeroAssoluto;
 public:
@@ -320,6 +319,8 @@ double Umidita::Misura(double valoreReale) {
     return dato;
 }
 
+
+//--------------------TemPercepita--------------------
 class TemPercepita {
 private:
     Umidita u;
@@ -339,6 +340,7 @@ TemPercepita::TemPercepita(Umidita u, Temperatura t) : u(u), t(t)  {
     else                  
         IndiceCalore = t.getDato();
 }
+
 TemPercepita::TemPercepita(Temperatura t) : t(t) , u(0, "umidita"){
     if(t.getDato()>27)   
      IndiceCalore = 13.12 + 0.6215 * t.getDato() - 11.37 * pow(u.getDato(), 0.16) + 0.3965 * t.getDato() * pow(u.getDato(), 0.16);
@@ -349,7 +351,6 @@ TemPercepita::TemPercepita(Temperatura t) : t(t) , u(0, "umidita"){
 double TemPercepita::getIndiceCalore() const {
     return IndiceCalore;
 }
-
 
 void TemPercepita::simulaMisura() {
     u.simulaMisura();
