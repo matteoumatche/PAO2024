@@ -9,17 +9,16 @@ class Sensore {
 private:
     unsigned int ID;
     std::string nome;
-public:
+protected:
     Sensore(unsigned int id, std::string nome);
-    /*ho eliminato il distruttore e il costruttore di copia perchè vanno bene quelli standard*/
-
+public:
     std::string getNome() const;
     unsigned int getID() const;
     void setNome(std::string n);
 
     virtual void simulaMisura() = 0;
 
-    virtual std::ostream& operator<<(std::ostream& os) const = 0;
+    virtual std::ostream& operator<<(std::ostream& os) const = 0;  //capire se deve restare
 };
 
 Sensore::Sensore(unsigned int id, std::string n) : ID(id), nome(n) {}
@@ -41,7 +40,6 @@ void Sensore::setNome(std::string n) {
 class Fotocellula : public Sensore {
 private:
     bool attivo;
-    double tempoRisposta;
 public:
     Fotocellula(unsigned int id, std::string nome);
     
