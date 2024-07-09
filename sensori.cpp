@@ -76,7 +76,7 @@ private:
     double valoreMaxVelocita;   //questo è const? Essendo valore massimo
     double tolleranzaGoniometro;
     double tolleranzaAnemometro;
-    double offset;
+    double offset;  //come è posizionato
     std::pair<double, double> dato;
 
 public:
