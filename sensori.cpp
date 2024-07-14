@@ -4,6 +4,13 @@
 #include <string>
 #include "math.h"
 
+class Errore {
+private:
+    std::string err;
+public:
+    Errore(std::string e): err(e){}
+};
+
 //--------------------Sensore--------------------
 class Sensore {
 private:
@@ -17,8 +24,6 @@ public:
     void setNome(std::string n);
 
     virtual void simulaMisura() = 0;
-
-    virtual std::ostream& operator<<(std::ostream& os) const = 0;  //capire se deve restare
 };
 
 Sensore::Sensore(unsigned int id, std::string n) : ID(id), nome(n) {}
@@ -47,8 +52,6 @@ public:
 
     void simulaMisura() override;
     bool Misura(bool valoreReale);
-
-    std::ostream& operator<<(std::ostream& os) const;
 };
 
 Fotocellula::Fotocellula(unsigned int id, std::string nome) : Sensore(id,nome), attivo(false) {}
@@ -63,10 +66,6 @@ void Fotocellula::simulaMisura() {
 
 bool Fotocellula::Misura(bool valoreReale) {
     
-}
-
-std::ostream& Fotocellula::operator<<(std::ostream& os) const {
-    return os << "ID fotocellula:" << getID() << "\n" << "Nome fotocellula:" << getNome() << "\n" << "Attivo?" << (isAttivo() ? "Sì" : "No") << std::endl;
 }
 
 
@@ -98,8 +97,6 @@ public:
     void setOffset(double offset);
     void simulaMisura();
     std::pair<double, double> Misura(std::pair<double, double> valoreReale);
-
-    std::ostream& operator<<(std::ostream& os) const;
 };
 
 Vento::Vento(unsigned int id, std::string n, double o) : 
@@ -110,7 +107,7 @@ Vento::Vento(unsigned int id, std::string n, double o) :
     tolleranzaAnemometro(0.5), 
     dato(std::make_pair(0, 0)) {}    
 
-Vento::Vento(unsigned int id, std::string n,double o, double max, double tollG, double tollA) : 
+Vento::Vento(unsigned int id, std::string n, double o, double max, double tollG, double tollA) : 
     Sensore(id, n), 
     valoreMaxVelocita(max>0 ? max : 30), 
     tolleranzaGoniometro(limitaAngolo(tollG)?limitaAngolo(tollG):0.1), 
@@ -160,10 +157,6 @@ std::pair<double, double> Vento::Misura(std::pair<double, double> valoreReale) {
     return dato;
 }
 
-std::ostream& Vento::operator<<(std::ostream& os) const {
-    return os << "ID sensore vento:" << getID() << "\n" << "Nome sensore vento:" << getNome() << "\n" << std::endl;      //da aggiungere la velocità
-}
-
 
 //--------------------Temperatura--------------------
 class Temperatura : public Sensore {
@@ -177,6 +170,7 @@ private:
 public:
     Temperatura(unsigned int id, std::string nome);
     Temperatura(unsigned int id, std::string nome, double min, double max, double ideale, double toll);
+
     //--------------------getter--------------------
     double getMin() const;
     double getMax() const;
@@ -188,11 +182,11 @@ public:
     //--------------------metodi--------------------
     void simulaMisura();
     double Misura(double);
-    std::ostream& operator<<(std::ostream& os) const;
 };
 
 double Temperatura::zeroAssoluto = -273.15;
 
+//costruttore standard(?)
 Temperatura::Temperatura(unsigned int id, std::string nome) : 
     Sensore(id, nome), 
     valoreMin(-10), 
@@ -201,29 +195,30 @@ Temperatura::Temperatura(unsigned int id, std::string nome) :
     tolleranza(0.1), 
     dato(0) {}
 
+//costruttore a 6 parametri(?)
 Temperatura::Temperatura(unsigned int id, std::string nome, double toll, double min, double max, double ideale) : 
-    Sensore(id, nome),  
-    tolleranza(toll>0 ? toll : 0.1), 
-    dato(0) {
+    Sensore(id, nome),  tolleranza(toll>0 ? toll : 0.1), dato(0) {
        
-        if(min >= zeroAssoluto)        valoreMin =  std::round(min/ tolleranza) * tolleranza;
+        if(min >= zeroAssoluto)        valoreMin = std::round(min/ tolleranza) * tolleranza;
         else                           valoreMin = zeroAssoluto;
 
         valoreMax =  std::round(max/ tolleranza) * tolleranza;
         valoreIdeale =  std::round(ideale/ tolleranza) * tolleranza;
     }
 
-
 double Temperatura::getMin() const {
-    return valoreMin;
+    if(valoreMin<0)         throw Errore("Rischio ghiaccio");
+    else                    return valoreMin;
 }
 
 double Temperatura::getMax() const {
-    return valoreMax;
+    if(valoreMax>30)        throw Errore("Rischio bruciatura piante");
+    else                    return valoreMax;
 }
 
 double Temperatura::getDato() const {
-    return dato;
+    if(dato<0 || dato>30)   throw Errore("Temperatura registrata fuori range di sicurezza");
+    else                    return dato;
 }
 
 double Temperatura::getTolleranza() const {
@@ -237,7 +232,6 @@ bool Temperatura::isCold() const {
 bool Temperatura::isHot() const {
     return dato > valoreIdeale;
 }
-
 
 void Temperatura::simulaMisura() {
     std::random_device rd;
@@ -253,11 +247,6 @@ double Temperatura::Misura(double valoreReale) {
     std::uniform_real_distribution<> dis(-tolleranza, tolleranza);
     dato = std::round((valoreReale + dis(gen)) / tolleranza) * tolleranza;
     return dato;
-}
-
-std::ostream& Temperatura::operator<<(std::ostream& os) const {
-    return os << "ID sensore temperatura:" << getID() << "\n" << "Nome sensore temperatura:" << getNome() << "\n" << "Range di misurazione: [" << getMin() << "," << getMax() << "]" <<
-    "\n" << "Temperatura registrata:" << getDato() << std::endl;
 }
 
 
@@ -281,10 +270,9 @@ public:
     bool outOfRange() const;
     void simulaMisura();
     double Misura(double);
-
-    std::ostream& operator<<(std::ostream& os) const;
 };
 
+//costruttore standard(?)
 Umidita::Umidita(unsigned int id, std::string n) : 
     Sensore(id, n), 
     valoreMin(0), 
@@ -293,6 +281,8 @@ Umidita::Umidita(unsigned int id, std::string n) :
     tolleranza(0.1), 
     dato(0) {
 }
+
+//costruttore a 6 parametri(?)
 Umidita::Umidita(unsigned int id, std::string n, double min, double max, std::pair<double,double> range, double toll) : 
     Sensore(id, n), 
     valoreMin(min>0 ? min : 0), 
@@ -303,17 +293,19 @@ Umidita::Umidita(unsigned int id, std::string n, double min, double max, std::pa
         //da inserire controllo su range , min e max
     }
 
-
 double Umidita::getMin() const {
-    return valoreMin;
+    if(valoreMin<0)         throw Errore("Ambiente troppo secco");
+    else                    return valoreMin;
 }
 
 double Umidita::getMax() const {
-    return valoreMax;
+    if(valoreMax>30)         throw Errore("Ambiente troppo umido");
+    else                     return valoreMax;
 }
 
 double Umidita::getDato() const {
-    return dato;
+    if(dato<0 || dato>30)   throw Errore("Umidità registrata fuori range di sicurezza");
+    else                    return dato;
 }
 
 double Umidita::getTolleranza() const {
@@ -339,11 +331,6 @@ double Umidita::Misura(double valoreReale) {
     return dato;
 }
 
-std::ostream& Umidita::operator<<(std::ostream& os) const {
-    return os << "ID sensore umidità:" << getID() << "\n" << "Nome sensore umidità:" << getNome() << "\n" << "Range di misurazione: [" << getMin() << "," << getMax() << "]" <<
-    "\n" << "Umidità registrata:" << getDato() << std::endl;
-}
-
 
 //--------------------TemPercepita--------------------
 class TemPercepita : public Sensore {
@@ -357,7 +344,6 @@ public:
     double getIndiceCalore() const;
     void simulaMisura();
     double Misura(double);
-    std::ostream& operator<<(std::ostream& os) const;
 };
 
 TemPercepita::TemPercepita(unsigned int id, std::string nome, Umidita u, Temperatura t) : Sensore(id,nome), u(u), t(t)  {
@@ -377,7 +363,8 @@ TemPercepita::TemPercepita(Temperatura t) : t(t) , u(0, "umidita"){
 */
 
 double TemPercepita::getIndiceCalore() const {
-    return IndiceCalore;
+    if(IndiceCalore<0 || IndiceCalore>30)   throw Errore("Temperatura percepita registrata fuori range di sicurezza");
+    else                                    return IndiceCalore;
 }
 
 void TemPercepita::simulaMisura() {
@@ -387,18 +374,14 @@ void TemPercepita::simulaMisura() {
 }
 
 double TemPercepita::Misura(double valoreReale) {
-    u.Misura(valoreReale);
-    t.Misura(valoreReale);
+    u.Misura((valoreReale>0 || valoreReale<30) ? valoreReale : throw Errore("Umidità misurata fuori range di sicurezza"));
+    t.Misura((valoreReale>0 || valoreReale<30) ? valoreReale : throw Errore("Temperatura misurata fuori range di sicurezza"));
     IndiceCalore = 13.12 + 0.6215 * t.getDato() - 11.37 * pow(u.getDato(), 0.16) + 0.3965 * t.getDato() * pow(u.getDato(), 0.16);
     return IndiceCalore;
 }
 
-std::ostream& TemPercepita::operator<<(std::ostream& os) const {
-    return os << "ID sensore temperatura percepita:" << getID() << "\n" << "Nome sensore umidità:" << getNome() << "\n" << "Temperatura percepita calcolata:" << getIndiceCalore() << std::endl;
-}
 
 int main() {
-     
     Fotocellula f(2, "fotocellula");
     Vento v(3, "vento");
     Temperatura t(4, "temperatura");
