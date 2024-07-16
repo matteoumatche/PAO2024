@@ -4,6 +4,28 @@
 #include <string>
 #include "math.h"
 
+
+
+
+// ciò che riguarda la UI
+namespace View {
+    class UI {
+    public:
+        void prompt(std::string s) {
+            std::cout << s;
+        }
+
+        int getInput() {
+            int x;
+            std::cin >> x;
+            return x;
+        }
+    };
+}
+
+// ciò che riguarda il data storage
+namespace Model {
+
 class Errore {
 private:
     std::string err;
@@ -380,12 +402,21 @@ double TemPercepita::Misura(double valoreReale) {
     return IndiceCalore;
 }
 
+}
+
+// ciò che riguarda la logica
+namespace Controller {
+
+}
+
+
+
 
 int main() {
-    Fotocellula f(2, "fotocellula");
-    Vento v(3, "vento");
-    Temperatura t(4, "temperatura");
-    Umidita u(5, "umidita");
+    Model::Fotocellula f(2, "fotocellula");
+    Model::Vento v(3, "vento");
+    Model::Temperatura t(4, "temperatura");
+    Model::Umidita u(5, "umidita");
     
     v.simulaMisura();
     t.simulaMisura();
