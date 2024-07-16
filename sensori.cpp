@@ -2,6 +2,7 @@
 #include <random>
 #include <functional>
 #include <string>
+#include <QJsonObject>
 #include "math.h"
 
 //--------------------Sensore--------------------
@@ -11,16 +12,22 @@ private:
     std::string nome;
 public:
     Sensore(unsigned int id, std::string nome);
+    Sensore(const QJsonObject& json);
     /*ho eliminato il distruttore e il costruttore di copia perchè vanno bene quelli standard*/
 
     std::string getNome() const;
     unsigned int getID() const;
     void setNome(std::string n);
+    QJsonObject salva() const;
 
     virtual void simulaMisura() = 0;
+
+    virtual std::ostream& operator<<(std::ostream& os) const = 0;
 };
 
 Sensore::Sensore(unsigned int id, std::string n) : ID(id), nome(n) {}
+
+Sensore::Sensore(const QJsonObject& json) : ID(json["ID"].toInt()), nome(json["Nome"].toString().toStdString()) {}
 
 std::string Sensore::getNome() const {
     return nome;
@@ -34,28 +41,48 @@ void Sensore::setNome(std::string n) {
     nome=n;
 }
 
+QJsonObject Sensore::salva() const {
+    QJsonObject json;
+    json["ID"] = static_cast<int>(ID);
+    json["Nome"] = QString::fromStdString(nome);
+    return json;
+}
+
 
 //--------------------Fotocellula--------------------
 class Fotocellula : public Sensore {
 private:
     bool attivo;
-    double tempoRisposta;
+    double soglia;
+    double tolleranza;
+
 public:
-    Fotocellula(unsigned int id, std::string nome);
+    Fotocellula(unsigned int id, std::string n, double s, double t);
     
     bool isAttivo() const;
 
     void simulaMisura() override;
     bool Misura(bool valoreReale);
+
+    std::ostream& operator<<(std::ostream& os) const;
 };
 
-Fotocellula::Fotocellula(unsigned int id, std::string nome) : Sensore(id,nome), attivo(false) {}
+Fotocellula::Fotocellula(unsigned int id, std::string nome, double s, doule t) : 
+Sensore(id,nome), 
+attivo(false), 
+soglia(s), 
+tolleranza(t) {}
 
 bool Fotocellula::isAttivo() const {
     return attivo;
 }
 
 void Fotocellula::simulaMisura() { 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(valoreMin, valoreMax);
+    //salvo il dato simulato assicurandomi che rispetti la precisione dello strumento
+    if(soglia < std::round(dis(gen)/ tolleranza) * tolleranza);
     attivo=true;
 }
 
@@ -63,18 +90,21 @@ bool Fotocellula::Misura(bool valoreReale) {
     
 }
 
+std::ostream& Fotocellula::operator<<(std::ostream& os) const {
+    return os << "ID fotocellula:" << getID() << "\n" << "Nome fotocellula:" << getNome() << "\n" << "Attivo?" << (isAttivo() ? "Sì" : "No") << std::endl;
+}
+
 
 //--------------------Vento--------------------
 class Vento : public Sensore {
 private:
-    double valoreMaxVelocita;
+    double valoreMaxVelocita;   //questo è const? Essendo valore massimo
     double tolleranzaGoniometro;
     double tolleranzaAnemometro;
     double offset;
     std::pair<double, double> dato;
 
 public:
-
     double limitaAngolo(double x) const {
     x = fmod(x,360);
     if (x < 0)
@@ -82,6 +112,7 @@ public:
     return x;
     }
     Vento(unsigned int id, std::string n,double o);
+    Vento(QJson dato);
     Vento(unsigned int id, std::string n,double o=0, double max=30, double tollG=0.1, double tollA=0.5);
     //--------------------getter--------------------
     double getMaxVelocita() const;
@@ -93,6 +124,7 @@ public:
     void setOffset(double offset);
     void simulaMisura();
     std::pair<double, double> Misura(std::pair<double, double> valoreReale);
+    QJson save() const;
 };
 
 Vento::Vento(unsigned int id, std::string n, double o) : 
@@ -153,14 +185,18 @@ std::pair<double, double> Vento::Misura(std::pair<double, double> valoreReale) {
     return dato;
 }
 
+std::ostream& Vento::operator<<(std::ostream& os) const {
+    return os << "ID sensore vento:" << getID() << "\n" << "Nome sensore vento:" << getNome() << "\n" << std::endl;      //da aggiungere la velocità
+}
+
 
 //--------------------Temperatura--------------------
 class Temperatura : public Sensore {
 private:
     double valoreMin;
     double valoreMax;
-    double valoreIdeale;
-    double tolleranza;
+    /*const*/ double valoreIdeale;
+    double tolleranza;  //unsigned int? No, ma simile? const?
     double dato;
     static double zeroAssoluto;
 public:
@@ -177,6 +213,7 @@ public:
     //--------------------metodi--------------------
     void simulaMisura();
     double Misura(double);
+    std::ostream& operator<<(std::ostream& os) const;
 };
 
 double Temperatura::zeroAssoluto = -273.15;
@@ -243,6 +280,11 @@ double Temperatura::Misura(double valoreReale) {
     return dato;
 }
 
+std::ostream& Temperatura::operator<<(std::ostream& os) const {
+    return os << "ID sensore temperatura:" << getID() << "\n" << "Nome sensore temperatura:" << getNome() << "\n" << "Range di misurazione: [" << getMin() << "," << getMax() << "]" <<
+    "\n" << "Temperatura registrata:" << getDato() << std::endl;
+}
+
 
 //--------------------Umidita--------------------
 class Umidita : public Sensore {
@@ -264,6 +306,9 @@ public:
     bool outOfRange() const;
     void simulaMisura();
     double Misura(double);
+    
+
+    std::ostream& operator<<(std::ostream& os) const;
 };
 
 Umidita::Umidita(unsigned int id, std::string n) : 
@@ -320,36 +365,46 @@ double Umidita::Misura(double valoreReale) {
     return dato;
 }
 
-class TemPercepita {
+std::ostream& Umidita::operator<<(std::ostream& os) const {
+    return os << "ID sensore umidità:" << getID() << "\n" << "Nome sensore umidità:" << getNome() << "\n" << "Range di misurazione: [" << getMin() << "," << getMax() << "]" <<
+    "\n" << "Umidità registrata:" << getDato() << std::endl;
+}
+
+
+//--------------------TemPercepita--------------------
+class TemPercepita : public Sensore {
 private:
     Umidita u;
     Temperatura t;
     double IndiceCalore;
 public:
-    TemPercepita(Umidita u, Temperatura t);
+    TemPercepita(unsigned int id, std::string nome, Umidita u, Temperatura t);
     TemPercepita(Temperatura t);
     double getIndiceCalore() const;
     void simulaMisura();
     double Misura(double);
+    std::ostream& operator<<(std::ostream& os) const;
 };
 
-TemPercepita::TemPercepita(Umidita u, Temperatura t) : u(u), t(t)  {
+TemPercepita::TemPercepita(unsigned int id, std::string nome, Umidita u, Temperatura t) : Sensore(id,nome), u(u), t(t)  {
     if(t.getDato()>27)    
         IndiceCalore = 13.12 + 0.6215 * t.getDato() - 11.37 * pow(u.getDato(), 0.16) + 0.3965 * t.getDato() * pow(u.getDato(), 0.16);
     else                  
         IndiceCalore = t.getDato();
 }
+
+/*
 TemPercepita::TemPercepita(Temperatura t) : t(t) , u(0, "umidita"){
     if(t.getDato()>27)   
      IndiceCalore = 13.12 + 0.6215 * t.getDato() - 11.37 * pow(u.getDato(), 0.16) + 0.3965 * t.getDato() * pow(u.getDato(), 0.16);
     else                 
      IndiceCalore = t.getDato();
 }
+*/
 
 double TemPercepita::getIndiceCalore() const {
     return IndiceCalore;
 }
-
 
 void TemPercepita::simulaMisura() {
     u.simulaMisura();
@@ -362,6 +417,10 @@ double TemPercepita::Misura(double valoreReale) {
     t.Misura(valoreReale);
     IndiceCalore = 13.12 + 0.6215 * t.getDato() - 11.37 * pow(u.getDato(), 0.16) + 0.3965 * t.getDato() * pow(u.getDato(), 0.16);
     return IndiceCalore;
+}
+
+std::ostream& TemPercepita::operator<<(std::ostream& os) const {
+    return os << "ID sensore temperatura percepita:" << getID() << "\n" << "Nome sensore umidità:" << getNome() << "\n" << "Temperatura percepita calcolata:" << getIndiceCalore() << std::endl;
 }
 
 int main() {
@@ -390,6 +449,7 @@ int main() {
     std::cout << "ID: " << v.getID() << " Nome: " << v.getNome() << " misurazione: "  << v.getDato().first << " " <<  v.getDato().second << std::endl;
     std::cout << "ID: " << t.getID() << " Nome: " << t.getNome() << " misurazione: "  << t.getDato()<< std::endl;
     std::cout << "ID: " << u.getID() << " Nome: " << u.getNome() << " misurazione: "  << u.getDato()<< std::endl;
+
 
     return 0;
 }
