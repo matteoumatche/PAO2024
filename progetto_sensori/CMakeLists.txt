@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(MyQtProject)
+project(progetto_sensori)
 
 set(CMAKE_CXX_STANDARD 11)
 
 # Trova il pacchetto Qt5
 find_package(Qt5Core REQUIRED)
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Gui REQUIRED)
 find_package(Qt5Json REQUIRED)
 
 add_executable(MyQtProject main.cpp)
