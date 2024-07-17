@@ -10,7 +10,7 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Json REQUIRED)
 
-add_executable(MyQtProject main.cpp)
+add_executable(progetto_sensori C:\Users\bzagh\Documents\GitHub\PAO2024\progetto_sensori\src)
 
 # Linka le librerie Qt5
-target_link_libraries(MyQtProject Qt5::Core Qt5::Json)
+target_link_libraries(progetto_sensori Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Json)
