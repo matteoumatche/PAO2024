@@ -2,8 +2,8 @@
 #include <random>
 #include <functional>
 #include <string>
-#include <QJsonObject>
 #include "math.h"
+#include "sensore.h"
 
 //--------------------Sensore--------------------
 class Sensore {
