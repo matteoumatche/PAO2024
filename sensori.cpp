@@ -26,14 +26,6 @@ namespace View {
 
 // ciò che riguarda il data storage
 namespace Model {
-
-class Errore {
-private:
-    std::string err;
-public:
-    Errore(std::string e): err(e){}
-};
-
 //--------------------Sensore--------------------
 class Sensore {
 private:
@@ -266,18 +258,15 @@ Temperatura::Temperatura(unsigned int id, std::string nome, double toll, double 
     }
 
 double Temperatura::getMin() const {
-    if(valoreMin<0)         throw Errore("Rischio ghiaccio");
-    else                    return valoreMin;
+    return valoreMin;
 }
 
 double Temperatura::getMax() const {
-    if(valoreMax>30)        throw Errore("Rischio bruciatura piante");
-    else                    return valoreMax;
+    return valoreMax;
 }
 
 double Temperatura::getDato() const {
-    if(dato<0 || dato>30)   throw Errore("Temperatura registrata fuori range di sicurezza");
-    else                    return dato;
+    return dato;
 }
 
 double Temperatura::getTolleranza() const {
@@ -359,18 +348,15 @@ Umidita::Umidita(unsigned int id, std::string n, double min, double max, std::pa
     }
 
 double Umidita::getMin() const {
-    if(valoreMin<0)         throw Errore("Ambiente troppo secco");
-    else                    return valoreMin;
+    return valoreMin;
 }
 
 double Umidita::getMax() const {
-    if(valoreMax>30)         throw Errore("Ambiente troppo umido");
-    else                     return valoreMax;
+    return valoreMax;
 }
 
 double Umidita::getDato() const {
-    if(dato<0 || dato>30)   throw Errore("Umidità registrata fuori range di sicurezza");
-    else                    return dato;
+    return dato;
 }
 
 double Umidita::getTolleranza() const {
@@ -428,8 +414,7 @@ TemPercepita::TemPercepita(Temperatura t) : t(t) , u(0, "umidita"){
 */
 
 double TemPercepita::getIndiceCalore() const {
-    if(IndiceCalore<0 || IndiceCalore>30)   throw Errore("Temperatura percepita registrata fuori range di sicurezza");
-    else                                    return IndiceCalore;
+    return IndiceCalore;
 }
 
 void TemPercepita::simulaMisura() {
