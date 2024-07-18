@@ -1,16 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(progetto_sensori)
+project(progetto_sensori LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_PREFIX_PATH "C:/Qt/Qt6.2.4/6.2.4/msvc2019_64")
 
-# Trova il pacchetto Qt5
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Json REQUIRED)
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
-add_executable(progetto_sensori C:\Users\bzagh\Documents\GitHub\PAO2024\progetto_sensori\src)
+add_executable(progetto_sensori main.cpp)
 
-# Linka le librerie Qt5
-target_link_libraries(progetto_sensori Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Json)
+target_link_libraries(progetto_sensori Qt6::Widgets)
