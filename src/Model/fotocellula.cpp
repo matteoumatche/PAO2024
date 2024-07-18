@@ -21,8 +21,6 @@ public:
     void simulaMisura() override;
     bool Misura(bool valoreReale);
     QJsonObject salva() const;
-
-    std::ostream& operator<<(std::ostream& os) const;
 };
 
 Fotocellula::Fotocellula(unsigned int id, std::string nome, double s, doule t) : 
@@ -52,10 +50,6 @@ void Fotocellula::simulaMisura() {
 
 bool Fotocellula::Misura(bool valoreReale) {
     
-}
-
-std::ostream& Fotocellula::operator<<(std::ostream& os) const {
-    return os << "ID fotocellula:" << getID() << "\n" << "Nome fotocellula:" << getNome() << "\n" << "Attivo?" << (isAttivo() ? "Sì" : "No") << std::endl;
 }
 
 QJsonObject Fotocellula::salva() const {

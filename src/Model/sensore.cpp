@@ -21,8 +21,6 @@ public:
     QJsonObject salva() const;
 
     virtual void simulaMisura() = 0;
-
-    virtual std::ostream& operator<<(std::ostream& os) const = 0;
 };
 
 Sensore::Sensore(unsigned int id, std::string n) : ID(id), nome(n) {}

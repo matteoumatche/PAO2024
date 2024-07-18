@@ -21,8 +21,6 @@ public:
     QJsonObject salva() const;
 
     virtual void simulaMisura() = 0;
-
-    virtual std::ostream& operator<<(std::ostream& os) const = 0;
 };
 
 Sensore::Sensore(unsigned int id, std::string n) : ID(id), nome(n) {}
@@ -65,8 +63,6 @@ public:
     void simulaMisura() override;
     bool Misura(bool valoreReale);
     QJsonObject salva() const;
-
-    std::ostream& operator<<(std::ostream& os) const;
 };
 
 Fotocellula::Fotocellula(unsigned int id, std::string nome, double s, doule t) : 
@@ -96,10 +92,6 @@ void Fotocellula::simulaMisura() {
 
 bool Fotocellula::Misura(bool valoreReale) {
     
-}
-
-std::ostream& Fotocellula::operator<<(std::ostream& os) const {
-    return os << "ID fotocellula:" << getID() << "\n" << "Nome fotocellula:" << getNome() << "\n" << "Attivo?" << (isAttivo() ? "Sì" : "No") << std::endl;
 }
 
 QJsonObject Fotocellula::salva() const {
@@ -228,10 +220,6 @@ QJsonObject Vento::salva() const {
     return json;
 }
 
-std::ostream& Vento::operator<<(std::ostream& os) const {
-    return os << "ID sensore vento:" << getID() << "\n" << "Nome sensore vento:" << getNome() << "\n" << std::endl;      //da aggiungere la velocità
-}
-
 
 //--------------------Temperatura--------------------
 class Temperatura : public Sensore {
@@ -256,7 +244,6 @@ public:
     //--------------------metodi--------------------
     void simulaMisura();
     double Misura(double);
-    std::ostream& operator<<(std::ostream& os) const;
 };
 
 double Temperatura::zeroAssoluto = -273.15;
@@ -342,11 +329,6 @@ QJsonObject Temperatura::salva() const {
     return json;
 }
 
-std::ostream& Temperatura::operator<<(std::ostream& os) const {
-    return os << "ID sensore temperatura:" << getID() << "\n" << "Nome sensore temperatura:" << getNome() << "\n" << "Range di misurazione: [" << getMin() << "," << getMax() << "]" <<
-    "\n" << "Temperatura registrata:" << getDato() << std::endl;
-}
-
 
 //--------------------Umidita--------------------
 class Umidita : public Sensore {
@@ -370,9 +352,6 @@ public:
     void simulaMisura();
     double Misura(double);
     QJsonObject salva() const;
-    
-
-    std::ostream& operator<<(std::ostream& os) const;
 };
 
 Umidita::Umidita(unsigned int id, std::string n) : 
@@ -452,11 +431,6 @@ QJsonObject Umidita::salva() const {
     return json;
 }
 
-std::ostream& Umidita::operator<<(std::ostream& os) const {
-    return os << "ID sensore umidità:" << getID() << "\n" << "Nome sensore umidità:" << getNome() << "\n" << "Range di misurazione: [" << getMin() << "," << getMax() << "]" <<
-    "\n" << "Umidità registrata:" << getDato() << std::endl;
-}
-
 
 //--------------------TemPercepita--------------------
 class TemPercepita : public Sensore {
@@ -470,7 +444,6 @@ public:
     double getIndiceCalore() const;
     void simulaMisura();
     double Misura(double);
-    std::ostream& operator<<(std::ostream& os) const;
 };
 
 TemPercepita::TemPercepita(unsigned int id, std::string nome, Umidita u, Temperatura t) : Sensore(id,nome), u(u), t(t)  {
@@ -504,10 +477,6 @@ double TemPercepita::Misura(double valoreReale) {
     t.Misura(valoreReale);
     IndiceCalore = 13.12 + 0.6215 * t.getDato() - 11.37 * pow(u.getDato(), 0.16) + 0.3965 * t.getDato() * pow(u.getDato(), 0.16);
     return IndiceCalore;
-}
-
-std::ostream& TemPercepita::operator<<(std::ostream& os) const {
-    return os << "ID sensore temperatura percepita:" << getID() << "\n" << "Nome sensore umidità:" << getNome() << "\n" << "Temperatura percepita calcolata:" << getIndiceCalore() << std::endl;
 }
 
 int main() {
