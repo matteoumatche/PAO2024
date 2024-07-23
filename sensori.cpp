@@ -2,7 +2,9 @@
 #include <random>
 #include <functional>
 #include <string>
+#include <vector>
 #include <QJsonObject>
+#include <QJsonArray>
 #include "math.h"
 
 //--------------------Sensore--------------------
@@ -95,7 +97,8 @@ bool Fotocellula::Misura(bool valoreReale) {
 }
 
 QJsonObject Fotocellula::salva() const {
-    QJsonObject json;
+    QJsonObject json = Sensore::salva();
+    json["Tipo"] = "Fotocellula";
     json["ID"] = static_cast<int>(getID());
     json["Nome"] = QString::fromStdString(getNome());
     json["Attivo"] = isAttivo();
@@ -206,9 +209,8 @@ std::pair<double, double> Vento::Misura(std::pair<double, double> valoreReale) {
 }
 
 QJsonObject Vento::salva() const {
-    QJsonObject json;
-    json["ID"] = static_cast<int>(getID());
-    json["Nome"] = QString::fromStdString(getNome());
+    QJsonObject json= Sensore::salva();
+    json["Tipo"] = "Vento";
     json["Offset"] = getOffset();
     json["MaxVelocita"] = getMaxVelocita();
     json["TolleranzaGoniometro"] = getTolleranzaGoniometro();
@@ -318,9 +320,8 @@ double Temperatura::Misura(double valoreReale) {
 }
 
 QJsonObject Temperatura::salva() const {
-    QJsonObject json;
-    json["ID"] = static_cast<int>(getID());
-    json["Nome"] = QString::fromStdString(getNome());
+    QJsonObject json= Sensore::salva();
+    json["Tipo"] = "Temperatura";
     json["Min"] = getMin();
     json["Max"] = getMax();
     json["ValoreIdeale"] = getValoreIdeale();
@@ -417,9 +418,8 @@ double Umidita::Misura(double valoreReale) {
 }
 
 QJsonObject Umidita::salva() const {
-    QJsonObject json;
-    json["ID"] = static_cast<int>(getID());
-    json["Nome"] = QString::fromStdString(getNome());
+    QJsonObject json= Sensore::salva();
+    json["Tipo"] = "Umidita";
     json["Min"] = getMin();
     json["Max"] = getMax();
     json["RangeOttimale"] = QJsonObject{
@@ -440,10 +440,12 @@ private:
     double IndiceCalore;
 public:
     TemPercepita(unsigned int id, std::string nome, Umidita u, Temperatura t);
+    TemPercepita(const QJsonArray& json);
     TemPercepita(Temperatura t);
     double getIndiceCalore() const;
     void simulaMisura();
     double Misura(double);
+    QJsonObject salva() const;
 };
 
 TemPercepita::TemPercepita(unsigned int id, std::string nome, Umidita u, Temperatura t) : Sensore(id,nome), u(u), t(t)  {
@@ -459,6 +461,12 @@ TemPercepita::TemPercepita(Temperatura t) : t(t) , u(0, "umidita"){
      IndiceCalore = 13.12 + 0.6215 * t.getDato() - 11.37 * pow(u.getDato(), 0.16) + 0.3965 * t.getDato() * pow(u.getDato(), 0.16);
     else                 
      IndiceCalore = t.getDato();
+}
+
+TemPercepita::TemPercepita(const QJsonArray& json) : Sensore(json) {
+    u = Umidita(json["Umidita"].toObject());
+    t = Temperatura(json["Temperatura"].toObject());
+    IndiceCalore = json["IndiceCalore"].toDouble();
 }
 
 
@@ -477,6 +485,100 @@ double TemPercepita::Misura(double valoreReale) {
     t.Misura(valoreReale);
     IndiceCalore = 13.12 + 0.6215 * t.getDato() - 11.37 * pow(u.getDato(), 0.16) + 0.3965 * t.getDato() * pow(u.getDato(), 0.16);
     return IndiceCalore;
+}
+
+QJsonObject TemPercepita::salva() const {
+    QJsonObject json = Sensore::salva();
+    json["Tipo"] = "TemPercepita";
+    json["Umidita"] = u.salva();
+    json["Temperatura"] = t.salva();
+    json["IndiceCalore"] = getIndiceCalore();
+    return json;
+}
+
+
+class Sensori {
+    private:
+        std::vector<Sensore*> sensori;
+    public:
+        explicit Sensori();
+        Sensori(const QJsonArray& json);
+        ~Sensori();
+        void aggiungi(Sensore* s);
+        void rimuovi(unsigned int id);
+        Sensore* get(unsigned int id) const;
+        QJsonArray salva() const;
+};
+
+sensori::Sensori(const QJlsonObject json) {}
+
+void Sensori::aggiungi(Sensore* s) {
+    void Sensori::aggiungi(Sensore* s) {
+        sensori.push_back(s);
+    }
+}
+Sensori::Sensori() {}
+
+Sensori::Sensori(const QJsonArray& json) {
+    for (const auto& sensoriJson : json) {
+        QJsonObject sensoriObj = sensoriJson.toObject();
+        std::string tipo = sensoriObj["Tipo"].toString().toStdString();
+        if (tipo == "Fotocellula") {
+            Fotocellula* f = new Fotocellula(sensoriObj);
+            aggiungi(f);
+        } else if (tipo == "Vento") {
+            Vento* v = new Vento(sensoriObj);
+            aggiungi(v);
+        } else if (tipo == "Temperatura") {
+            Temperatura* t = new Temperatura(sensoriObj);
+            aggiungi(t);
+        } else if (tipo == "Umidita") {
+            Umidita* u = new Umidita(sensoriObj);
+            aggiungi(u);
+        } else if (tipo == "TemPercepita") {
+            TemPercepita* tp = new TemPercepita(sensoriObj);
+            aggiungi(tp);
+        }
+    }
+}
+
+Sensori::~Sensori() {
+    for (Sensore* s : sensori) {
+        delete s;
+    }
+}
+
+void Sensori::aggiungi(Sensore* s) {
+    sensori.push_back(s);
+}
+
+void Sensori::rimuovi(unsigned int id) {
+    for (auto it = sensori.begin(); it != sensori.end(); ++it) {
+        if ((*it)->getID() == id) {
+            delete *it;
+            sensori.erase(it);
+            it=sensori.end();
+        }
+    }
+}
+
+Sensore* Sensori::get(unsigned int id) const {
+    for (Sensore* s : sensori) {
+        if (s->getID() == id) {
+            return s;
+        }
+    }
+    return nullptr;
+}
+
+QJsonArray Sensori::salva() const {
+    
+    QJsonArray sensoriArray;
+    for (Sensore* s : sensori) {
+        sensoriArray.append(s.salva());
+    }
+    
+    return sensoriArray;
 }
 
 int main() {
