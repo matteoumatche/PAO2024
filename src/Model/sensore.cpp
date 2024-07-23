@@ -1,27 +1,6 @@
-#include <iostream>
-#include <random>
-#include <functional>
-#include <string>
-#include "math.h"
 #include "sensore.h"
 
-//--------------------Sensore--------------------
-class Sensore {
-private:
-    unsigned int ID;
-    std::string nome;
-public:
-    Sensore(unsigned int id, std::string nome);
-    Sensore(const QJsonObject& json);
-    /*ho eliminato il distruttore e il costruttore di copia perchè vanno bene quelli standard*/
-
-    std::string getNome() const;
-    unsigned int getID() const;
-    void setNome(std::string n);
-    QJsonObject salva() const;
-
-    virtual void simulaMisura() = 0;
-};
+namespace Model {
 
 Sensore::Sensore(unsigned int id, std::string n) : ID(id), nome(n) {}
 
@@ -44,4 +23,6 @@ QJsonObject Sensore::salva() const {
     json["ID"] = static_cast<int>(ID);
     json["Nome"] = QString::fromStdString(nome);
     return json;
+}
+
 }

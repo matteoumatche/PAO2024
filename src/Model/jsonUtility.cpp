@@ -1,5 +1,7 @@
 // inserire tutta la logica che gestisce i json
 // trovare il modo per collegarli agli altri file
+#include <QJsonObject>
+
 
 QJsonObject Fotocellula::salva() const {
     QJsonObject json;

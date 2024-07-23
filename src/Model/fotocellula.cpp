@@ -1,29 +1,8 @@
-#include <iostream>
-#include <random>
-#include <functional>
-#include <string>
-#include "math.h"
 #include "fotocellula.h"
 
-//--------------------Fotocellula--------------------
-class Fotocellula : public Sensore {
-private:
-    bool attivo;
-    double soglia;
-    double tolleranza;
+namespace Model {
 
-public:
-    Fotocellula(unsigned int id, std::string n, double s, double t);
-    Fotocellula(const QJsonObject& json);
-    
-    bool isAttivo() const;
-
-    void simulaMisura() override;
-    bool Misura(bool valoreReale);
-    QJsonObject salva() const;
-};
-
-Fotocellula::Fotocellula(unsigned int id, std::string nome, double s, doule t) : 
+Fotocellula::Fotocellula(unsigned int id, std::string nome, double s, double t) :
 Sensore(id,nome), 
 attivo(false), 
 soglia(s), 
@@ -37,6 +16,14 @@ Fotocellula::Fotocellula(const QJsonObject& json) : Sensore(json) {
 
 bool Fotocellula::isAttivo() const {
     return attivo;
+}
+
+double Fotocellula::getSoglia() const {
+    return soglia;
+}
+
+double Fotocellula::getTolleranza() const {
+    return tolleranza;
 }
 
 void Fotocellula::simulaMisura() { 
@@ -60,4 +47,6 @@ QJsonObject Fotocellula::salva() const {
     json["Soglia"] = getSoglia();
     json["Tolleranza"] = getTolleranza();
     return json;
+}
+
 }
