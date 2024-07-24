@@ -15,7 +15,6 @@ private:
 public:
     Sensore(unsigned int id, std::string nome);
     Sensore(const QJsonObject& json);
-    /*ho eliminato il distruttore e il costruttore di copia perchè vanno bene quelli standard*/
 
     std::string getNome() const;
     unsigned int getID() const;
@@ -61,13 +60,15 @@ public:
     Fotocellula(const QJsonObject& json);
     
     bool isAttivo() const;
+    double getSoglia() const;
+    double getTolleranza() const;
 
     void simulaMisura() override;
     bool Misura(bool valoreReale);
     QJsonObject salva() const;
 };
 
-Fotocellula::Fotocellula(unsigned int id, std::string nome, double s, doule t) : 
+Fotocellula::Fotocellula(unsigned int id, std::string nome, double s, double t) : 
 Sensore(id,nome), 
 attivo(false), 
 soglia(s), 
@@ -84,9 +85,10 @@ bool Fotocellula::isAttivo() const {
 }
 
 void Fotocellula::simulaMisura() { 
+    // metodo da rifare, non vul dire nulla
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(valoreMin, valoreMax);
+    std::uniform_real_distribution<> dis(0, 1);
     //salvo il dato simulato assicurandomi che rispetti la precisione dello strumento
     if(soglia < std::round(dis(gen)/ tolleranza) * tolleranza);
     attivo=true;
@@ -94,6 +96,14 @@ void Fotocellula::simulaMisura() {
 
 bool Fotocellula::Misura(bool valoreReale) {
     
+}
+
+double Fotocellula::getSoglia() const{
+    return soglia;
+}
+
+double Fotocellula::getTolleranza() const{
+    return tolleranza;
 }
 
 QJsonObject Fotocellula::salva() const {
@@ -117,15 +127,11 @@ private:
     double offset;
     std::pair<double, double> dato;
 
+    double limitaAngolo(double x) const {};
+
 public:
-    double limitaAngolo(double x) const {
-    x = fmod(x,360);
-    if (x < 0)
-        x += 360;
-    return x;
-    }
+    
     Vento(unsigned int id, std::string n,double o);
-    Vento(QJson dato);
     Vento(unsigned int id, std::string n,double o=0, double max=30, double tollG=0.1, double tollA=0.5);
     Vento(const QJsonObject& json);
     //--------------------getter--------------------
@@ -165,6 +171,13 @@ Vento::Vento(const QJsonObject& json) : Sensore(json) {
     tolleranzaAnemometro = json["TolleranzaAnemometro"].toDouble();
     dato.first = json["Dato"].toObject()["Velocita"].toDouble();
     dato.second = json["Dato"].toObject()["Angolo"].toDouble();
+}
+
+double Vento::limitaAngolo(double x) const {
+    x = fmod(x,360);
+    if (x < 0)
+        x += 360;
+    return x;
 }
 
 double Vento::getOffset() const {
@@ -235,11 +248,13 @@ private:
 public:
     Temperatura(unsigned int id, std::string nome);
     Temperatura(unsigned int id, std::string nome, double min, double max, double ideale, double toll);
+    Temperatura(const QJsonObject& json);
     //--------------------getter--------------------
     double getMin() const;
     double getMax() const;
     double getDato() const;
     double getTolleranza() const;
+    double getValoreIdeale() const;
     bool isCold() const;
     bool isHot() const;
     
@@ -293,6 +308,10 @@ double Temperatura::getDato() const {
 
 double Temperatura::getTolleranza() const {
     return tolleranza;
+}
+
+double Temperatura::getValoreIdeale() const{
+    return valoreIdeale;
 }
 
 bool Temperatura::isCold() const {
@@ -464,9 +483,7 @@ TemPercepita::TemPercepita(Temperatura t) : t(t) , u(0, "umidita"){
 }
 
 TemPercepita::TemPercepita(const QJsonArray& json) : Sensore(json) {
-    u = Umidita(json["Umidita"].toObject());
-    t = Temperatura(json["Temperatura"].toObject());
-    IndiceCalore = json["IndiceCalore"].toDouble();
+   // da fare appena ho internet
 }
 
 
