@@ -1,13 +1,18 @@
 #include "mainwindow.h"
 #include <QToolBar>
 #include <QAction>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QFile>
+#include <QFileDialog>
 #include <QMessageBox>
-#include "src/Model/sensore.h"
-#include "src/Model/fotocellula.h"
-#include "src/Model/temperatura.h"
-#include "src/Model/tempercepita.h"
-#include "src/Model/umidita.h"
-#include "src/Model/vento.h"
+#include <QDebug>
+#include "Model/fotocellula.h"
+#include "Model/temperatura.h"
+#include "Model/vento.h"
+#include "Model/umidita.h"
+#include "Model/tempercepita.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), mainLayout(nullptr), centralLayout(nullptr), centralWidget(nullptr), tbar(nullptr)
@@ -31,8 +36,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     mainLayout->addWidget(tbar);
-    // Connessione del segnale di ToolBar allo slot di MainWindow
+
+    // Connessione dei segnali di ToolBar agli slot di MainWindow
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::showNewSensorDialog);
+    connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::openJsonFile);
+    connect(tbar, &View::ToolBar::saveSignal, this, &MainWindow::saveJsonFile);
+    connect(tbar, &View::ToolBar::saveAsSignal, this, &MainWindow::saveJsonFileAs);
 
 }
 
@@ -92,3 +101,73 @@ void MainWindow::addSensor(const QString &name, const QString &type, const QStri
 QStringList MainWindow::getAvailableSensorTypes() {
     return QStringList() << "Fotocellula" << "Vento" << "Temperatura" << "Umidità" << "Temperatura percepita";
 }
+
+Model::Sensore* MainWindow::creaSensore(const QJsonObject& info) const {
+    QString tipo = info["tipo"].toString();
+    if (!tipo.isEmpty()) {
+        if (tipo == "Fotocellula") {
+            return new Model::Fotocellula(info);
+        } else if (tipo == "Temperatura") {
+            return new Model::Temperatura(info);
+        }else if (tipo == "Vento") {
+            return new Model::Vento(info);
+        }else if (tipo == "Umidita") {
+            return new Model::Umidita(info);
+        }else if (tipo == "TemPercpita") {
+            return new Model::TemPercepita(info);
+        }
+
+    }
+    return nullptr;
+}
+
+void MainWindow::openJsonFile(){
+    QString nomeFile = QFileDialog::getOpenFileName(this, tr("Apri file JSON"), "", tr("JSON Files (*.json);;All Files (*)"));
+
+    if (nomeFile.isEmpty()) {
+        return;
+    }
+
+    QFile file(nomeFile);
+    if (!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::warning(this, tr("Errore"), tr("Non è stato possibile aprire il file."));
+        return;
+    }
+
+    QByteArray json = file.readAll();
+    file.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(json);
+    if (doc.isNull() || !doc.isObject()) {
+        QMessageBox::warning(this, tr("Errore"), tr("Formato del file JSON non valido."));
+        return;
+    }
+
+    QJsonObject rootObject = doc.object();
+    QJsonArray arraySensori = rootObject["sensori"].toArray();
+
+    // Pulizia dei sensori esistenti
+    sensori.clear();
+
+    for (const QJsonValue& i : arraySensori) {
+        QJsonObject sen_obj = i.toObject();
+
+        // Usa la funzione  per creare il sensore corretto
+        Model::Sensore* sensore = creaSensore(sen_obj);
+        if (sensore) {
+            sensori.push_back(sensore);
+        } else {
+            qWarning() << "Tipo di sensore non riconosciuto o errore nella creazione.";
+        }
+    }
+
+    pathToFile = nomeFile;
+    tbar->activateSaveAction();  // Abilita il pulsante di salvataggio
+    tbar->activateSaveAsAction();
+}
+
+
+
+void MainWindow::saveJsonFile(){}
+
+void MainWindow::saveJsonFileAs(){}

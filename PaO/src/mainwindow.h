@@ -29,19 +29,26 @@ private:
     QWidget* centralWidget;
     View::ToolBar* tbar;
 
-    QStringList getAvailableSensorTypes();
-
     std::vector<Model::Sensore*> sensori;
     QString pathToFile;
 
+    Model::Sensore* creaSensore(const QJsonObject& ) const ;
+    QStringList getAvailableSensorTypes();
+
 private slots:
+
     void addSensor(const QString &name, const QString &type, const QString &id);
+    void showNewSensorDialog();
+
+    void openJsonFile();
+    void saveJsonFile();
+    void saveJsonFileAs();
 
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 public slots:
-    void showNewSensorDialog();
+
 };
 #endif // MAINWINDOW_H
