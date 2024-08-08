@@ -22,8 +22,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     mainLayout->addWidget(tbar);
-    // Connessione del segnale di ToolBar allo slot di MainWindow
+
+    // Connessione dei segnali di ToolBar agli slot di MainWindow
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::showNewSensorDialog);
+    connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::openJsonFile);
+    connect(tbar, &View::ToolBar::saveSignal, this, &MainWindow::saveJsonFile);
+    connect(tbar, &View::ToolBar::saveAsSignal, this, &MainWindow::saveJsonFileAs);
 
 }
 
@@ -70,3 +74,11 @@ void MainWindow::addSensor(const QString &type, const QString &id){
 QStringList MainWindow::getAvailableSensorTypes() {
     return QStringList() << "Fotocellula" << "Vento" << "Temperatura" << "Umidità" << "Temperatura percepita";
 }
+
+void MainWindow::openJsonFile(){}
+
+
+
+void MainWindow::saveJsonFile(){}
+
+void MainWindow::saveJsonFileAs(){}
