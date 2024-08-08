@@ -12,6 +12,11 @@
 #include <vector>
 #include "src/View/toolbar.h"
 #include "src/Model/sensore.h"
+#include "src/Model/fotocellula.h"
+#include "src/Model/temperatura.h"
+#include "src/Model/tempercepita.h"
+#include "src/Model/umidita.h"
+#include "src/Model/vento.h"
 
 
 class MainWindow : public QMainWindow
@@ -33,7 +38,7 @@ private:
 
 private slots:
 
-    void addSensor(const QString &type, const QString &id);
+    void addSensor(const QString &name, const QString &type, const QString &id);
     void showNewSensorDialog();
 
     void openJsonFile();
