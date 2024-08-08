@@ -28,6 +28,7 @@ private:
     QString pathToFile;
 
     Model::Sensore* creaSensore(const QJsonObject& ) const ;
+    QJsonObject mapToJson(const std::map<std::string, std::string>& ) const;
     QStringList getAvailableSensorTypes();
 
 private slots:

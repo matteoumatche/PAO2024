@@ -110,6 +110,14 @@ Model::Sensore* MainWindow::creaSensore(const QJsonObject& info) const {
     return nullptr;
 }
 
+QJsonObject MainWindow::mapToJson(const std::map<std::string, std::string>& info) const {
+    QJsonObject jsonObject;
+    for (const auto& pair : info) {
+        jsonObject[QString::fromStdString(pair.first)] = QString::fromStdString(pair.second);
+    }
+    return jsonObject;
+}
+
 void MainWindow::openJsonFile(){
     QString nomeFile = QFileDialog::getOpenFileName(this, tr("Apri file JSON"), "", tr("JSON Files (*.json);;All Files (*)"));
 
@@ -155,8 +163,45 @@ void MainWindow::openJsonFile(){
     tbar->activateSaveAsAction();
 }
 
+void MainWindow::saveJsonFile(){
+    if (pathToFile.isEmpty()) {
+        saveJsonFileAs();  // Se non c'è un file aperto, richiama saveJsonFileAs()
+        return;
+    }
 
+    QFile file(pathToFile);
+    if (!file.open(QIODevice::WriteOnly)) {
+        QMessageBox::warning(this, tr("Errore"), tr("Non è stato possibile aprire il file per la scrittura."));
+        return;
+    }
 
-void MainWindow::saveJsonFile(){}
+    QJsonArray arraySensori;
+    for (const auto& sensore : sensori) {
+        QJsonObject sensorObject = mapToJson(sensore->getInfo());
+        arraySensori.append(sensorObject);
+    }
 
-void MainWindow::saveJsonFileAs(){}
+    QJsonObject rootObject;
+    rootObject["sensori"] = arraySensori;
+
+    QJsonDocument doc(rootObject);
+    file.write(doc.toJson());
+    file.close();
+
+}
+
+void MainWindow::saveJsonFileAs(){
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Salva file JSON"), "", tr("JSON Files (*.json)"));
+
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    // Aggiungi l'estensione .json se non è presente
+    if (!fileName.endsWith(".json", Qt::CaseInsensitive)) {
+        fileName += ".json";
+    }
+
+    pathToFile = fileName;
+    saveJsonFile();
+}
