@@ -5,6 +5,8 @@
 #include <string>
 #include <QJsonObject>
 
+namespace Model{
+
 class Sensore {
 private:
     unsigned int ID;
@@ -20,5 +22,7 @@ public:
 
     virtual void simulaMisura()=0;
 };
+
+}
 
 #endif // SENSORE_H

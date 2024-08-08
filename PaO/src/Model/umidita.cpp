@@ -1,6 +1,8 @@
 #include "Umidita.h"
 #include <random>
 
+namespace Model{
+
 Umidita::Umidita(unsigned int id, std::string nome, double toll) :
     Sensore(id, nome),
     tolleranza(toll > 0 ? toll : 0.5),
@@ -39,4 +41,6 @@ std::map<std::string, std::string> Umidita::getInfo() const {
     info.insert(std::make_pair("Tolleranza", std::to_string(tolleranza)));
     info["Dato"] = std::to_string(dato);
     return info;
+}
+
 }

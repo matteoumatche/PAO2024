@@ -1,4 +1,5 @@
 #include "toolBar.h"
+#include "../mainwindow.h"
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QLineEdit>
@@ -24,59 +25,24 @@ ToolBar::ToolBar(QToolBar *parent)
     // Collega le shortcut ai QAction
     openAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_O));
     saveAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_S));
-    saveAsAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
+    newAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
 
     // Al momento della costruzione non c'è niente da salvare e niente da salvare con nome
     saveAction->setEnabled(false);
     saveAsAction->setEnabled(false);
 
-    connect(newAction, &QAction::triggered, this, &ToolBar::showNewSensorDialog);
+    //connect(newAction, &QAction::triggered, this, &MainWindow::showNewSensorDialog);
+    connect(newAction, &QAction::triggered, this, &ToolBar::newSlot);
     connect(openAction, &QAction::triggered, this, &ToolBar::openSlot);
     connect(saveAction, &QAction::triggered, this, &ToolBar::saveSlot);
     connect(saveAsAction, &QAction::triggered, this, &ToolBar::saveAsSlot);
 }
 
-QStringList ToolBar::getAvailableSensorTypes() {
-    return QStringList() << "Fotocellula" << "Vento" << "Temperatura" << "Umidità" << "Temperatura percepita";
-}
 
-void ToolBar::showNewSensorDialog() {
-    QDialog dialog(this);
-    dialog.setWindowTitle("Nuovo Sensore");
 
-    QVBoxLayout *dialogLayout = new QVBoxLayout(&dialog);
 
-    formLayout = new QFormLayout();
-    QComboBox *typeComboBox = new QComboBox(&dialog);
-    QLineEdit *idEdit = new QLineEdit(&dialog);
-
-    QStringList sensorTypes = getAvailableSensorTypes();
-    typeComboBox->addItems(sensorTypes);
-
-    formLayout->addRow("Tipo:", typeComboBox);
-    formLayout->addRow("ID:", idEdit);
-
-    dialogLayout->addLayout(formLayout);
-
-    sensorOptionsWidget = new QWidget(&dialog);
-    sensorOptionsLayout = new QVBoxLayout(sensorOptionsWidget);
-    dialogLayout->addWidget(sensorOptionsWidget);
-
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
-    dialogLayout->addWidget(buttonBox);
-    connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-    connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
-
-    if (dialog.exec() == QDialog::Accepted) {
-        QString type = typeComboBox->currentText();
-        QString id = idEdit->text();
-        addSensor(type, id);
-    }
-}
-
-void ToolBar::addSensor(const QString &type, const QString &id) {
-    QMessageBox::information(this, "Sensore Aggiunto", "Tipo: " + type + "\nID: " + id);
-    // Aggiungi qui il codice per aggiungere il sensore alla tua finestra principale o al tuo sistema
+void ToolBar::newSlot(){
+    emit newSignal();
 }
 
 void ToolBar::openSlot(){
@@ -140,7 +106,7 @@ void ToolBar::openJsonFile()
     }
 }
 
-void ToolBar::saveJsonFile(Sensori sensors, std::string nomeFile)
+void ToolBar::saveJsonFile(int  sensors, std::string nomeFile)
 {/*
     if (repository == nullptr) {
         saveJsonFileAs(sensors, repository);
@@ -153,7 +119,7 @@ void ToolBar::saveJsonFile(Sensori sensors, std::string nomeFile)
     }*/
 }
 
-void ToolBar::saveJsonFileAs(Sensori sensors, std::string nomeFile)
+void ToolBar::saveJsonFileAs(int i, std::string nomeFile)
 {/*
     QString defaultFolder = "JsonDocuments";
     QFileDialog dialog(this);

@@ -21,19 +21,17 @@ private:
     QHBoxLayout* centralLayout;
     QWidget* centralWidget;
     View::ToolBar* tbar;
-    QAction* newAction;
-
-    QFormLayout* formLayout;
-    QWidget* sensorOptionsWidget;
-    QVBoxLayout* sensorOptionsLayout;
 
     QStringList getAvailableSensorTypes();
 
 private slots:
     void addSensor(const QString &type, const QString &id);
 
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+public slots:
+    void showNewSensorDialog();
 };
 #endif // MAINWINDOW_H

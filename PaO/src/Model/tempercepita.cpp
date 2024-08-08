@@ -1,5 +1,7 @@
 #include "TemPercepita.h"
 
+namespace Model{
+
 TemPercepita::TemPercepita(unsigned int id, std::string nome, Umidita um, Temperatura te) : Sensore(id,nome), u(um), t(te)  {
     if(t.getDato()>27)
         IndiceCalore = 13.12 + 0.6215 * te.getDato() - 11.37 * pow(u.getDato(), 0.16) + 0.3965 * t.getDato() * pow(u.getDato(), 0.16);
@@ -39,4 +41,6 @@ std::map<std::string, std::string> TemPercepita::getInfo() const {
     info.insert(std::make_pair("Umidita", u.getInfo()["Dato"]));
     info.insert(std::make_pair("Temperatura", t.getInfo()["Dato"]));
     return info;
+}
+
 }

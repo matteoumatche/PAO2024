@@ -2,6 +2,8 @@
 #include <random>
 #include <cmath>
 
+namespace Model{
+
 Vento::Vento(unsigned int id, std::string n, double o) :
     Sensore(id, n),
     offset(limitaAngolo(o)),
@@ -89,4 +91,6 @@ std::map<std::string, std::string> Vento::getInfo() const {
 
 void Vento::setOffset(double o){
     offset = o;
+}
+
 }

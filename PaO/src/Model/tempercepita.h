@@ -5,6 +5,8 @@
 #include "src/Model/Temperatura.h"
 #include "src/Model/Umidita.h"
 
+namespace Model{
+
 class TemPercepita : public Sensore {
 private:
     Umidita u;
@@ -18,5 +20,7 @@ public:
     void simulaMisura() override;
     double Misura(double);
 };
+
+}
 
 #endif // TEMPERCIPITA_H

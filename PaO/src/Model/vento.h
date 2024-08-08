@@ -5,6 +5,7 @@
 #include <map>
 #include "Sensore.h"
 
+namespace Model{
 
 class Vento : public Sensore {
 private:
@@ -33,5 +34,7 @@ public:
     void simulaMisura() override;
     std::pair<double, double> Misura(std::pair<double, double> valoreReale);
 };
+
+}
 
 #endif // VENTO_H

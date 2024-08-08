@@ -4,6 +4,8 @@
 #include "Sensore.h"
 #include <map>
 
+namespace Model{
+
 class Temperatura : public Sensore {
 private:
     double tolleranza;
@@ -20,5 +22,7 @@ public:
     void simulaMisura() override;
     double Misura(double valoreReale);
 };
+
+}
 
 #endif // TEMPERATURA_H

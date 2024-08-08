@@ -1,6 +1,6 @@
 #ifndef TOOLBAR_H
 #define TOOLBAR_H
-#include "src/Model/sensori.h"
+
 #include <QToolBar>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -19,14 +19,8 @@ private:
     QAction* openAction;
     QAction* saveAction;
     QAction* saveAsAction;
-    QFormLayout* formLayout;
-    QWidget* sensorOptionsWidget;
-    QVBoxLayout* sensorOptionsLayout;
-    QStringList getAvailableSensorTypes();
 
-private slots:
-    void showNewSensorDialog();
-    void addSensor(const QString &type, const QString &id);
+
 
 signals:
     void newSignal();
@@ -50,8 +44,8 @@ public:
     void disactivateSaveAction();
     void disactivateSaveAsAction();
     void openJsonFile();
-    void saveJsonFile(Sensori sensors, std::string nomeFile);
-    void saveJsonFileAs(Sensori sensors, std::string nomeFile);
+    void saveJsonFile(int, std::string nomeFile);//fuffa
+    void saveJsonFileAs(int, std::string nomeFile);//fuffa
 
     ~ToolBar();
 };

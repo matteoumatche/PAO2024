@@ -1,6 +1,6 @@
 #include "fotocellula.h"
 
-
+namespace Model{
 
 Fotocellula::Fotocellula(unsigned int id, std::string nome, double s, double t) :
     Sensore(id,nome),
@@ -40,4 +40,6 @@ std::map<std::string, std::string> Fotocellula::getInfo() const {
     info.insert(std::make_pair("Attivo", attivo ? "true" : "false"));
     info.insert(std::make_pair("Soglia", std::to_string(soglia)));
     return info;
+}
+
 }

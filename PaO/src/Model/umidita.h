@@ -3,6 +3,8 @@
 #include <map>
 #include "Sensore.h"
 
+namespace Model{
+
 class Umidita : public Sensore {
 private:
     double tolleranza;
@@ -19,5 +21,7 @@ public:
     void simulaMisura() override;
     double Misura(double valoreReale);
 };
+
+}
 
 #endif // UMIDITA_H

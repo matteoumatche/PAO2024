@@ -7,6 +7,8 @@
 #include "math.h"
 #include "sensore.h"
 
+namespace Model{
+
 class Fotocellula : public Sensore {
 private:
 
@@ -27,6 +29,6 @@ public:
     bool Misura(bool valoreReale);
 };
 
-
+}
 
 #endif // FOTOCELLULA_H
