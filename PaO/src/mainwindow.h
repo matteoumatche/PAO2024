@@ -27,6 +27,7 @@ private:
     QStringList getAvailableSensorTypes();
 
     std::vector<Model::Sensore*> sensori;
+    QString pathToFile;
 
 private slots:
     void addSensor(const QString &type, const QString &id);
