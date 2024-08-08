@@ -9,7 +9,9 @@
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <vector>
 #include "src/View/toolbar.h"
+#include "src/Model/sensore.h"
 
 
 class MainWindow : public QMainWindow
@@ -23,6 +25,8 @@ private:
     View::ToolBar* tbar;
 
     QStringList getAvailableSensorTypes();
+
+    std::vector<Model::Sensore*> sensori;
 
 private slots:
     void addSensor(const QString &type, const QString &id);
