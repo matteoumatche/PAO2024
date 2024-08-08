@@ -24,10 +24,11 @@ private:
     QWidget* centralWidget;
     View::ToolBar* tbar;
 
-    QStringList getAvailableSensorTypes();
-
     std::vector<Model::Sensore*> sensori;
     QString pathToFile;
+
+    Model::Sensore* creaSensore(const QJsonObject& ) const ;
+    QStringList getAvailableSensorTypes();
 
 private slots:
 
