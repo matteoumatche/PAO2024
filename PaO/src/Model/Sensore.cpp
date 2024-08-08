@@ -16,9 +16,9 @@ void Sensore::setNome(std::string n) {
     nome = n;
 }
 
-QJsonObject Sensore::salva() const {
-    QJsonObject json;
-    json["ID"] = static_cast<int>(ID);
-    json["Nome"] = QString::fromStdString(nome);
-    return json;
+std::map<std::string, std::string> Sensore::getInfo() const {
+    std::map<std::string, std::string> info;
+    info["ID"] = std::to_string(ID);
+    info["Nome"] = nome;
+    return info;
 }

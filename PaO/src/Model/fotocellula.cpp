@@ -35,13 +35,9 @@ double Fotocellula::getTolleranza() const{
     return tolleranza;
 }
 
-QJsonObject Fotocellula::salva() const {
-    QJsonObject json = Sensore::salva();
-    json["Tipo"] = "Fotocellula";
-    json["ID"] = static_cast<int>(getID());
-    json["Nome"] = QString::fromStdString(getNome());
-    json["Attivo"] = isAttivo();
-    json["Soglia"] = getSoglia();
-    json["Tolleranza"] = getTolleranza();
-    return json;
+std::map<std::string, std::string> Fotocellula::getInfo() const {
+    std::map<std::string, std::string> info= Sensore::getInfo();
+    info.insert(std::make_pair("Attivo", attivo ? "true" : "false"));
+    info.insert(std::make_pair("Soglia", std::to_string(soglia)));
+    return info;
 }

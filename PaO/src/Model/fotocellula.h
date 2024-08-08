@@ -1,6 +1,7 @@
 #ifndef FOTOCELLULA_H
 #define FOTOCELLULA_H
 
+#include <map>
 #include <string>
 #include <QJsonObject>
 #include "math.h"
@@ -8,6 +9,7 @@
 
 class Fotocellula : public Sensore {
 private:
+
     bool attivo;
     double soglia;
     double tolleranza;
@@ -19,10 +21,10 @@ public:
     bool isAttivo() const;
     double getSoglia() const;
     double getTolleranza() const;
+    std::map<std::string, std::string> getInfo() const;
 
     void simulaMisura() override;
     bool Misura(bool valoreReale);
-    QJsonObject salva() const override;
 };
 
 

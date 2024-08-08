@@ -2,6 +2,7 @@
 #define TEMPERATURA_H
 
 #include "Sensore.h"
+#include <map>
 
 class Temperatura : public Sensore {
 private:
@@ -14,10 +15,10 @@ public:
 
     double getTolleranza() const;
     double getDato() const;
+    std::map<std::string, std::string> getInfo() const;
 
     void simulaMisura() override;
     double Misura(double valoreReale);
-    QJsonObject salva() const override;
 };
 
 #endif // TEMPERATURA_H

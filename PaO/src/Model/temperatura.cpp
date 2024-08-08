@@ -34,10 +34,9 @@ double Temperatura::Misura(double valoreReale) {
     return dato;
 }
 
-QJsonObject Temperatura::salva() const {
-    QJsonObject json = Sensore::salva();
-    json["Tipo"] = "Temperatura";
-    json["Tolleranza"] = getTolleranza();
-    json["Dato"] = getDato();
-    return json;
+std::map<std::string, std::string> Temperatura::getInfo() const {
+    std::map<std::string, std::string> info= Sensore::getInfo();
+    info.insert(std::make_pair("Tolleranza", std::to_string(tolleranza)));
+    info["Dato"] = std::to_string(dato);
+    return info;
 }

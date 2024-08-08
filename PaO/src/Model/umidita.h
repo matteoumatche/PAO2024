@@ -1,6 +1,7 @@
 #ifndef UMIDITA_H
 #define UMIDITA_H
 
+#include <map>
 #include "Sensore.h"
 
 class Umidita : public Sensore {
@@ -14,10 +15,10 @@ public:
 
     double getTolleranza() const;
     double getDato() const;
+    std::map<std::string, std::string> getInfo() const;
 
     void simulaMisura() override;
     double Misura(double valoreReale);
-    QJsonObject salva() const override;
 };
 
 #endif // UMIDITA_H

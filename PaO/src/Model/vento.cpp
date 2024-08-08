@@ -76,18 +76,15 @@ std::pair<double, double> Vento::Misura(std::pair<double, double> valoreReale) {
     return dato;
 }
 
-QJsonObject Vento::salva() const {
-    QJsonObject json = Sensore::salva();
-    json["Tipo"] = "Vento";
-    json["MaxVelocita"] = getMaxVelocita();
-    json["Offset"] = getOffset();
-    json["TolleranzaGoniometro"] = getTolleranzaGoniometro();
-    json["TolleranzaAnemometro"] = getTolleranzaAnemometro();
-    QJsonObject datoJson;
-    datoJson["Velocita"] = dato.first;
-    datoJson["Angolo"] = dato.second;
-    json["Dato"] = datoJson;
-    return json;
+std::map<std::string, std::string> Vento::getInfo() const {
+    std::map<std::string, std::string> info= Sensore::getInfo();
+    info.insert(std::make_pair("Offset", std::to_string(offset)));
+    info.insert(std::make_pair("MaxVelocita", std::to_string(valoreMaxVelocita)));
+    info.insert(std::make_pair("TolleranzaGoniometro", std::to_string(tolleranzaGoniometro)));
+    info.insert(std::make_pair("TolleranzaAnemometro", std::to_string(tolleranzaAnemometro)));
+    info.insert(std::make_pair("Velocita", std::to_string(dato.first)));
+    info.insert(std::make_pair("Angolo", std::to_string(dato.second)));
+    return info;
 }
 
 void Vento::setOffset(double o){

@@ -1,8 +1,10 @@
 #ifndef VENTO_H
 #define VENTO_H
 
-#include "Sensore.h"
 #include <utility>
+#include <map>
+#include "Sensore.h"
+
 
 class Vento : public Sensore {
 private:
@@ -25,11 +27,11 @@ public:
     double getTolleranzaGoniometro() const;
     double getTolleranzaAnemometro() const;
     std::pair<double, double> getDato() const;
+    std::map<std::string, std::string> getInfo() const;
 
     void setOffset(double offset);
     void simulaMisura() override;
     std::pair<double, double> Misura(std::pair<double, double> valoreReale);
-    QJsonObject salva() const override;
 };
 
 #endif // VENTO_H

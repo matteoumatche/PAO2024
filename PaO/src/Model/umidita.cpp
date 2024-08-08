@@ -34,10 +34,9 @@ double Umidita::Misura(double valoreReale) {
     return dato;
 }
 
-QJsonObject Umidita::salva() const {
-    QJsonObject json = Sensore::salva();
-    json["Tipo"] = "Umidita";
-    json["Tolleranza"] = getTolleranza();
-    json["Dato"] = getDato();
-    return json;
+std::map<std::string, std::string> Umidita::getInfo() const {
+    std::map<std::string, std::string> info= Sensore::getInfo();
+    info.insert(std::make_pair("Tolleranza", std::to_string(tolleranza)));
+    info["Dato"] = std::to_string(dato);
+    return info;
 }

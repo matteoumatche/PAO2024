@@ -1,6 +1,7 @@
 #ifndef SENSORE_H
 #define SENSORE_H
 
+#include <map>
 #include <string>
 #include <QJsonObject>
 
@@ -15,7 +16,7 @@ public:
     std::string getNome() const;
     unsigned int getID() const;
     void setNome(std::string n);
-    virtual QJsonObject salva() const;
+    std::map<std::string, std::string> getInfo() const;
 
     virtual void simulaMisura()=0;
 };

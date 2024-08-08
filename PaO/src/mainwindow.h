@@ -14,6 +14,11 @@ class MainWindow : public QMainWindow
     QVBoxLayout* v;
     QHBoxLayout* h;
     View::ToolBar* tbar;
+    //br
+    //ms
+
+    QString pathtojson;
+    std::vector<Sensore*> Sensori;
 
 
 public:

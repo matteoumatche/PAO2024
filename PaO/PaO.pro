@@ -13,7 +13,6 @@ SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
     src/Model/sensore.cpp \
-    src/Model/sensori.cpp \
     src/Model/temperatura.cpp \
     src/Model/tempercepita.cpp \
     src/Model/umidita.cpp \
@@ -24,7 +23,6 @@ HEADERS += \
     src/Model/fotocellula.h \
     src/mainwindow.h \
     src/Model/sensore.h \
-    src/Model/sensori.h \
     src/Model/temperatura.h \
     src/Model/tempercepita.h \
     src/Model/umidita.h \
