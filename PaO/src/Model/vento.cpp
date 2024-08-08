@@ -80,6 +80,7 @@ std::pair<double, double> Vento::Misura(std::pair<double, double> valoreReale) {
 
 std::map<std::string, std::string> Vento::getInfo() const {
     std::map<std::string, std::string> info= Sensore::getInfo();
+    info.insert(std::make_pair("Tipo", "Vento"));
     info.insert(std::make_pair("Offset", std::to_string(offset)));
     info.insert(std::make_pair("MaxVelocita", std::to_string(valoreMaxVelocita)));
     info.insert(std::make_pair("TolleranzaGoniometro", std::to_string(tolleranzaGoniometro)));

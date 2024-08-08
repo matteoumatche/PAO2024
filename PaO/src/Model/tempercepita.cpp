@@ -37,6 +37,7 @@ double TemPercepita::Misura(double valoreReale) {
 
 std::map<std::string, std::string> TemPercepita::getInfo() const {
     std::map<std::string, std::string> info= Sensore::getInfo();
+    info.insert(std::make_pair("Tipo", "TemPercepita"));
     info.insert(std::make_pair("IndiceCalore", std::to_string(IndiceCalore)));
     info.insert(std::make_pair("Umidita", u.getInfo()["Dato"]));
     info.insert(std::make_pair("Temperatura", t.getInfo()["Dato"]));

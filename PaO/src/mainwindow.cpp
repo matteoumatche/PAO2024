@@ -15,7 +15,7 @@
 #include "Model/tempercepita.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), mainLayout(nullptr), centralLayout(nullptr), centralWidget(nullptr), tbar(nullptr)
+    : QMainWindow(parent), mainLayout(nullptr), centralLayout(nullptr), centralWidget(nullptr)
 {
     setWindowTitle("Sensori serra");
 
@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     mainLayout->addWidget(tbar);
+    mainLayout->addLayout(centralLayout);
 
     // Connessione dei segnali di ToolBar agli slot di MainWindow
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::showNewSensorDialog);
@@ -84,12 +85,12 @@ void MainWindow::addSensor(const QString &name, const QString &type, const QStri
     Model::Sensore* nuovoSensore = nullptr;
 
     if (type == "Fotocellula") {
-        nuovoSensore = new Model::Fotocellula(id, name, 0, 0);  // Sostituisci con la tua classe specifica
-    } else if (type == "Tipo2") {
+        nuovoSensore = new Model::Fotocellula(id.toUInt(), name.toStdString(), 0, 0);  // Sostituisci con la tua classe specifica
+    } /*else if (type == "Tipo2") {
         nuovoSensore = new Model::Tipo2Sensore(id);  // Sostituisci con la tua classe specifica
     } else if (type == "Tipo3") {
         nuovoSensore = new Model::Tipo3Sensore(id);  // Sostituisci con la tua classe specifica
-    }
+    }*/
 
     if (nuovoSensore) {
         sensori.push_back(nuovoSensore);
@@ -103,7 +104,7 @@ QStringList MainWindow::getAvailableSensorTypes() {
 }
 
 Model::Sensore* MainWindow::creaSensore(const QJsonObject& info) const {
-    QString tipo = info["tipo"].toString();
+    QString tipo = info["Tipo"].toString();
     if (!tipo.isEmpty()) {
         if (tipo == "Fotocellula") {
             return new Model::Fotocellula(info);
