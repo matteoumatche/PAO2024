@@ -1,19 +1,25 @@
 #include "mainwindow.h"
+#include <QToolBar>
+#include <QAction>
+#include <QMessageBox>
+
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), centralWidget(nullptr),v(nullptr), h(nullptr), tbar(nullptr){
-    v = new QVBoxLayout;
-    h = new QHBoxLayout;
+    : QMainWindow(parent), mainLayout(nullptr), centralLayout(nullptr), centralWidget(nullptr), tbar(nullptr)
+{
+    setWindowTitle("Sensori serra");
 
+    //layout
+    mainLayout = new QVBoxLayout;
+    centralLayout = new QHBoxLayout;
 
-    tbar = new View::ToolBar();
+    //pannello principale
+    centralWidget = new QWidget(this);
+    setCentralWidget(centralWidget);
+    centralWidget->setLayout(mainLayout);
 
     tbar->setFixedSize(1024, 30);
 
-    v->addWidget(tbar);
-
-    centralWidget = new QWidget(this);
-    setCentralWidget(centralWidget);
-    centralWidget->setLayout(v);
+    mainLayout->addWidget(tbar);
 }
 
 MainWindow::~MainWindow(){}

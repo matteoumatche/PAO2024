@@ -1,15 +1,22 @@
-#include "ToolBar.h"
+#include "toolBar.h"
+#include <QVBoxLayout>
+#include <QComboBox>
+#include <QLineEdit>
+#include <QDialogButtonBox>
+
 
 namespace View {
 
 ToolBar::ToolBar(QToolBar *parent)
     : QToolBar(parent)
 {
+    newAction = new QAction( tr("Nuovo sensore"), this);
     openAction = new QAction( tr("Apri"), this);
     saveAction = new QAction( tr("Salva"), this);
     saveAsAction = new QAction( tr("Salva con nome"), this);
 
     // Aggiungi i QAction alla ToolBar
+    addAction(newAction);
     addAction(openAction);
     addAction(saveAction);
     addAction(saveAsAction);
@@ -23,9 +30,53 @@ ToolBar::ToolBar(QToolBar *parent)
     saveAction->setEnabled(false);
     saveAsAction->setEnabled(false);
 
+    connect(newAction, &QAction::triggered, this, &ToolBar::showNewSensorDialog);
     connect(openAction, &QAction::triggered, this, &ToolBar::openSlot);
     connect(saveAction, &QAction::triggered, this, &ToolBar::saveSlot);
     connect(saveAsAction, &QAction::triggered, this, &ToolBar::saveAsSlot);
+}
+
+QStringList ToolBar::getAvailableSensorTypes() {
+    return QStringList() << "Fotocellula" << "Vento" << "Temperatura" << "Umidità" << "Temperatura percepita";
+}
+
+void ToolBar::showNewSensorDialog() {
+    QDialog dialog(this);
+    dialog.setWindowTitle("Nuovo Sensore");
+
+    QVBoxLayout *dialogLayout = new QVBoxLayout(&dialog);
+
+    formLayout = new QFormLayout();
+    QComboBox *typeComboBox = new QComboBox(&dialog);
+    QLineEdit *idEdit = new QLineEdit(&dialog);
+
+    QStringList sensorTypes = getAvailableSensorTypes();
+    typeComboBox->addItems(sensorTypes);
+
+    formLayout->addRow("Tipo:", typeComboBox);
+    formLayout->addRow("ID:", idEdit);
+
+    dialogLayout->addLayout(formLayout);
+
+    sensorOptionsWidget = new QWidget(&dialog);
+    sensorOptionsLayout = new QVBoxLayout(sensorOptionsWidget);
+    dialogLayout->addWidget(sensorOptionsWidget);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    dialogLayout->addWidget(buttonBox);
+    connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        QString type = typeComboBox->currentText();
+        QString id = idEdit->text();
+        addSensor(type, id);
+    }
+}
+
+void ToolBar::addSensor(const QString &type, const QString &id) {
+    QMessageBox::information(this, "Sensore Aggiunto", "Tipo: " + type + "\nID: " + id);
+    // Aggiungi qui il codice per aggiungere il sensore alla tua finestra principale o al tuo sistema
 }
 
 void ToolBar::openSlot(){
@@ -72,7 +123,7 @@ void ToolBar::openJsonFile()
          * delete repository;
         repository = new Sensor::Repository::JsonRepository(Sensor::Repository::JsonRepository::fromPath(fileName.toStdString())); // Static factory method
 
-        /* Questa era la precedente implementazione, ma c'era un bug, in certe situazioni non riusciva più a entrare in else, allora sono andato a forza
+        * Questa era la precedente implementazione, ma c'era un bug, in certe situazioni non riusciva più a entrare in else, allora sono andato a forza
            bruta eliminando e ricreando ogni volta repository */
         /*if(repository==nullptr)
             repository = new Sensor::Repository::JsonRepository(Sensor::Repository::JsonRepository::fromPath(fileName.toStdString())); // Static factory method
