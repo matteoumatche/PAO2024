@@ -2,7 +2,6 @@ debug/fotocellula.o
 debug/main.o
 debug/mainwindow.o
 debug/sensore.o
-debug/sensori.o
 debug/temperatura.o
 debug/tempercepita.o
 debug/umidita.o

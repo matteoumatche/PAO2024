@@ -1,12 +1,7 @@
 #ifndef UMIDITA_H
 #define UMIDITA_H
-
-<<<<<<< Updated upstream
 #include <map>
 #include "Sensore.h"
-=======
-#include "sensore.h"
->>>>>>> Stashed changes
 
 class Umidita : public Sensore {
 private:

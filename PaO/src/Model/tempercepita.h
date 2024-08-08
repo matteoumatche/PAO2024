@@ -2,8 +2,8 @@
 #define TEMPERCIPITA_H
 
 #include <map>
-#include "Temperatura.h"
-#include "Umidita.h"
+#include "src/Model/Temperatura.h"
+#include "src/Model/Umidita.h"
 
 class TemPercepita : public Sensore {
 private:

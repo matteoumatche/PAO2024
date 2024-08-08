@@ -2,7 +2,6 @@ release/fotocellula.o
 release/main.o
 release/mainwindow.o
 release/sensore.o
-release/sensori.o
 release/temperatura.o
 release/tempercepita.o
 release/umidita.o

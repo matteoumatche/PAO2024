@@ -15,18 +15,6 @@
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-<<<<<<< Updated upstream
-    QWidget* centralWidget;
-    QVBoxLayout* v;
-    QHBoxLayout* h;
-    View::ToolBar* tbar;
-    //br
-    //ms
-
-    QString pathtojson;
-    std::vector<Sensore*> Sensori;
-=======
->>>>>>> Stashed changes
 
 private:
     QVBoxLayout* mainLayout;
