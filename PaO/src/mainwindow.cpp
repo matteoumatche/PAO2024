@@ -7,10 +7,13 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), mainLayout(nullptr), centralLayout(nullptr), centralWidget(nullptr), tbar(nullptr)
 {
     setWindowTitle("Sensori serra");
-    tbar= new View::ToolBar;
+
     //layout
     mainLayout = new QVBoxLayout;
     centralLayout = new QHBoxLayout;
+
+    //toolbar
+    tbar= new View::ToolBar;
 
     //pannello principale
     centralWidget = new QWidget(this);
@@ -40,12 +43,14 @@ void MainWindow::showNewSensorDialog() {
     QFormLayout* formLayout= new QFormLayout();
     QVBoxLayout *dialogLayout = new QVBoxLayout(&dialog);
 
+    QLineEdit *nameEdit = new QLineEdit;
     QComboBox *typeComboBox = new QComboBox(&dialog);
     QLineEdit *idEdit = new QLineEdit(&dialog);
 
     QStringList sensorTypes = getAvailableSensorTypes();
     typeComboBox->addItems(sensorTypes);
 
+    formLayout->addRow("Nome:", nameEdit);
     formLayout->addRow("Tipo:", typeComboBox);
     formLayout->addRow("ID:", idEdit);
 
