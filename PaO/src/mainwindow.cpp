@@ -102,7 +102,7 @@ void MainWindow::addSensor(const QString &type, const QString &id, const QString
         nuovoSensore = new Model::Temperatura(id.toUInt(), name.toStdString());
     } else if (type == "Umidità") {
         nuovoSensore = new Model::Umidita(id.toUInt(), name.toStdString());
-    } else if (type == "Temperatura Percepita") {
+    } else if (type == "TemPercepita") {
         nuovoSensore = new Model::TemPercepita(id.toUInt(), name.toStdString());
     }
 
@@ -117,7 +117,7 @@ void MainWindow::addSensor(const QString &type, const QString &id, const QString
 }
 
 QStringList MainWindow::getAvailableSensorTypes() {
-    return QStringList() << "Fotocellula" << "Vento" << "Temperatura" << "Umidità" << "Temperatura percepita";
+    return QStringList() << "Fotocellula" << "Vento" << "Temperatura" << "Umidità" << "TemPercepita";
 }
 
 Model::Sensore* MainWindow::creaSensore(const QJsonObject& info) const {
@@ -132,7 +132,7 @@ Model::Sensore* MainWindow::creaSensore(const QJsonObject& info) const {
             return new Model::Vento(info);
         }else if (tipo == "Umidita") {
             return new Model::Umidita(info);
-        }else if (tipo == "TemPercpita") {
+        }else if (tipo == "TemPercepita") {
             return new Model::TemPercepita(info);
         }
 
