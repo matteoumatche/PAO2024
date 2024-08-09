@@ -1,7 +1,7 @@
 #ifndef UMIDITA_H
 #define UMIDITA_H
 #include <map>
-#include "Sensore.h"
+#include "sensore.h"
 
 namespace Model{
 

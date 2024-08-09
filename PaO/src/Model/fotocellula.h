@@ -17,7 +17,7 @@ private:
     double tolleranza;
 
 public:
-    Fotocellula(unsigned int id, std::string n, double s, double t);
+    Fotocellula(unsigned int id, std::string n, double s=0, double t=0);
     Fotocellula(const QJsonObject& json);
 
     bool isAttivo() const;

@@ -1,4 +1,4 @@
-#include "Temperatura.h"
+#include "temperatura.h"
 #include <random>
 
 namespace Model{

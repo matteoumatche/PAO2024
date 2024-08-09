@@ -10,7 +10,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <vector>
-#include "src/View/toolbar.h"
+#include "src/View/toolBar.h"
 #include "src/Model/sensore.h"
 #include "src/Model/fotocellula.h"
 #include "src/Model/temperatura.h"
@@ -28,6 +28,8 @@ private:
     QHBoxLayout* centralLayout;
     QWidget* centralWidget;
     View::ToolBar* tbar;
+    QWidget* sensorListWidget;
+    QWidget* graphWidget;
 
     std::vector<Model::Sensore*> sensori;
     QString pathToFile;

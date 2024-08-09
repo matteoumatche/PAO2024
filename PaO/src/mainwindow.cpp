@@ -6,6 +6,7 @@
 #include <QJsonArray>
 #include <QFile>
 #include <QFileDialog>
+#include <QScrollArea>
 #include <QMessageBox>
 #include <QDebug>
 #include "Model/fotocellula.h"
@@ -17,26 +18,35 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), mainLayout(nullptr), centralLayout(nullptr), centralWidget(nullptr)
 {
-    setWindowTitle("Sensori serra");
+    setWindowTitle("Greenhouse manager");
 
     //layout
     mainLayout = new QVBoxLayout;
     centralLayout = new QHBoxLayout;
 
-    //toolbar
+    //toolbar e widget
     tbar= new View::ToolBar;
-
-    //pannello principale
     centralWidget = new QWidget(this);
+    sensorListWidget = new QWidget(this);
+    graphWidget = new QWidget(this);
+
+    //impostazioni widget
     setCentralWidget(centralWidget);
     centralWidget->setLayout(mainLayout);
 
-    tbar->setFixedSize(1024, 30);
-
-
-
     mainLayout->addWidget(tbar);
     mainLayout->addLayout(centralLayout);
+
+    centralLayout->addWidget(sensorListWidget);
+    centralLayout->addWidget(graphWidget);
+
+    //misure
+    tbar->setFixedSize(1024, 30);
+    graphWidget->setFixedSize(500, 400);
+    sensorListWidget->setFixedSize(100, 30);
+
+    QScrollArea *scrollArea = new QScrollArea;
+    scrollArea->setWidget(sensorListWidget);
 
     // Connessione dei segnali di ToolBar agli slot di MainWindow
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::showNewSensorDialog);
@@ -62,9 +72,9 @@ void MainWindow::showNewSensorDialog() {
     QStringList sensorTypes = getAvailableSensorTypes();
     typeComboBox->addItems(sensorTypes);
 
-    formLayout->addRow("Nome:", nameEdit);
     formLayout->addRow("Tipo:", typeComboBox);
     formLayout->addRow("ID:", idEdit);
+    formLayout->addRow("Nome:", nameEdit);
 
     dialogLayout->addLayout(formLayout);
 
@@ -74,23 +84,27 @@ void MainWindow::showNewSensorDialog() {
     connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
     dialog.show();
     if (dialog.exec() == QDialog::Accepted) {
-        QString name = nameEdit->text();
         QString type = typeComboBox->currentText();
         QString id = idEdit->text();
-        addSensor(name, type, id);
+        QString name = nameEdit->text();
+        addSensor(type, id, name);
     }
 }
 
-void MainWindow::addSensor(const QString &name, const QString &type, const QString &id){
+void MainWindow::addSensor(const QString &type, const QString &id, const QString &name){
     Model::Sensore* nuovoSensore = nullptr;
 
     if (type == "Fotocellula") {
-        nuovoSensore = new Model::Fotocellula(id.toUInt(), name.toStdString(), 0, 0);  // Sostituisci con la tua classe specifica
-    } /*else if (type == "Tipo2") {
-        nuovoSensore = new Model::Tipo2Sensore(id);  // Sostituisci con la tua classe specifica
-    } else if (type == "Tipo3") {
-        nuovoSensore = new Model::Tipo3Sensore(id);  // Sostituisci con la tua classe specifica
-    }*/
+        nuovoSensore = new Model::Fotocellula(id.toUInt(), name.toStdString());
+    } else if (type == "Vento") {
+        nuovoSensore = new Model::Vento(id.toUInt(), name.toStdString());
+    } else if (type == "Temperatura") {
+        nuovoSensore = new Model::Temperatura(id.toUInt(), name.toStdString());
+    } else if (type == "Umidità") {
+        nuovoSensore = new Model::Umidita(id.toUInt(), name.toStdString());
+    } else if (type == "Temperatura Percepita") {
+        nuovoSensore = new Model::TemPercepita(id.toUInt(), name.toStdString());
+    }
 
     if (nuovoSensore) {
         sensori.push_back(nuovoSensore);
