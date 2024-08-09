@@ -1,5 +1,5 @@
-#include "SensorListWidget.h"
-#include "SensorInfoWidget.h"
+#include "sensorlistwidget.h"
+#include "sensorinfowidget.h"
 #include "../Model/Sensore.h"
 #include <QVBoxLayout>
 

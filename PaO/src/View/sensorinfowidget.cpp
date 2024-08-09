@@ -1,4 +1,4 @@
-#include "SensorInfoWidget.h"
+#include "sensorinfowidget.h"
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QMap>
