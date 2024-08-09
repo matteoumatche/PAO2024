@@ -23,7 +23,7 @@ public:
     bool isAttivo() const;
     double getSoglia() const;
     double getTolleranza() const;
-    std::map<std::string, std::string> getInfo() const;
+    std::map<std::string, std::string> getInfo() const override;
 
     void simulaMisura() override;
     bool Misura(bool valoreReale);

@@ -36,7 +36,8 @@ double Fotocellula::getTolleranza() const{
 }
 
 std::map<std::string, std::string> Fotocellula::getInfo() const {
-    std::map<std::string, std::string> info= Sensore::getInfo();
+    std::map<std::string, std::string> info;
+    info.merge(Sensore::getInfo());
     info.insert(std::make_pair("Tipo", "Fotocellula"));
     info.insert(std::make_pair("Attivo", attivo ? "true" : "false"));
     info.insert(std::make_pair("Soglia", std::to_string(soglia)));

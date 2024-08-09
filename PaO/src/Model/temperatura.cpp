@@ -37,7 +37,8 @@ double Temperatura::Misura(double valoreReale) {
 }
 
 std::map<std::string, std::string> Temperatura::getInfo() const {
-    std::map<std::string, std::string> info= Sensore::getInfo();
+    std::map<std::string, std::string> info;
+    info.merge(Sensore::getInfo());
     info.insert(std::make_pair("Tipo", "Temperatura"));
     info.insert(std::make_pair("Tolleranza", std::to_string(tolleranza)));
     info["Dato"] = std::to_string(dato);

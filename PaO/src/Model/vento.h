@@ -28,7 +28,7 @@ public:
     double getTolleranzaGoniometro() const;
     double getTolleranzaAnemometro() const;
     std::pair<double, double> getDato() const;
-    std::map<std::string, std::string> getInfo() const;
+    std::map<std::string, std::string> getInfo() const override;
 
     void setOffset(double offset);
     void simulaMisura() override;

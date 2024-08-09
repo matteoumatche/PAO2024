@@ -16,7 +16,7 @@ public:
 
     double getTolleranza() const;
     double getDato() const;
-    std::map<std::string, std::string> getInfo() const;
+    std::map<std::string, std::string> getInfo() const override;
 
     void simulaMisura() override;
     double Misura(double valoreReale);

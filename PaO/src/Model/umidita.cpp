@@ -37,7 +37,8 @@ double Umidita::Misura(double valoreReale) {
 }
 
 std::map<std::string, std::string> Umidita::getInfo() const {
-    std::map<std::string, std::string> info= Sensore::getInfo();
+    std::map<std::string, std::string> info;
+    info.merge(Sensore::getInfo());
     info.insert(std::make_pair("Tipo", "Umidita"));
     info.insert(std::make_pair("Tolleranza", std::to_string(tolleranza)));
     info["Dato"] = std::to_string(dato);

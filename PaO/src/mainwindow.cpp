@@ -97,6 +97,9 @@ void MainWindow::addSensor(const QString &name, const QString &type, const QStri
     }
 
     QMessageBox::information(this, "Sensore Aggiunto", "Tipo: " + type + "\nID: " + id);
+    tbar->activateSaveAction();  // Abilita il pulsante di salvataggio
+    tbar->activateSaveAsAction();
+
 }
 
 QStringList MainWindow::getAvailableSensorTypes() {
@@ -105,6 +108,7 @@ QStringList MainWindow::getAvailableSensorTypes() {
 
 Model::Sensore* MainWindow::creaSensore(const QJsonObject& info) const {
     QString tipo = info["Tipo"].toString();
+    qWarning() << tipo;
     if (!tipo.isEmpty()) {
         if (tipo == "Fotocellula") {
             return new Model::Fotocellula(info);

@@ -18,7 +18,7 @@ public:
     std::string getNome() const;
     unsigned int getID() const;
     void setNome(std::string n);
-    std::map<std::string, std::string> getInfo() const;
+    virtual std::map<std::string, std::string> getInfo() const;
 
     virtual void simulaMisura()=0;
 };
