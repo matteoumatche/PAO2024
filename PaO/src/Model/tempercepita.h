@@ -13,7 +13,7 @@ private:
     Temperatura t;
     double IndiceCalore;
 public:
-    TemPercepita(unsigned int, std::string, Umidita, Temperatura );
+    TemPercepita(unsigned int, std::string, Umidita=0, Temperatura=0);
     TemPercepita(const QJsonObject&);
     double getIndiceCalore() const;
     std::map<std::string, std::string> getInfo() const;

@@ -1,0 +1,11 @@
+debug/fotocellula.o
+debug/main.o
+debug/mainwindow.o
+debug/sensore.o
+debug/temperatura.o
+debug/tempercepita.o
+debug/umidita.o
+debug/vento.o
+debug/toolBar.o
+debug/moc_mainwindow.o
+debug/moc_toolBar.o

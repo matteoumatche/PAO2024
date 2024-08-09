@@ -85,12 +85,16 @@ void MainWindow::addSensor(const QString &name, const QString &type, const QStri
     Model::Sensore* nuovoSensore = nullptr;
 
     if (type == "Fotocellula") {
-        nuovoSensore = new Model::Fotocellula(id.toUInt(), name.toStdString(), 0, 0);  // Sostituisci con la tua classe specifica
-    } /*else if (type == "Tipo2") {
-        nuovoSensore = new Model::Tipo2Sensore(id);  // Sostituisci con la tua classe specifica
-    } else if (type == "Tipo3") {
-        nuovoSensore = new Model::Tipo3Sensore(id);  // Sostituisci con la tua classe specifica
-    }*/
+        nuovoSensore = new Model::Fotocellula(id.toUInt(), name.toStdString());
+    } else if (type == "Vento") {
+        nuovoSensore = new Model::Vento(id.toUInt(), name.toStdString());
+    } else if (type == "Temperatura") {
+        nuovoSensore = new Model::Temperatura(id.toUInt(), name.toStdString());
+    } else if (type == "Umidità") {
+        nuovoSensore = new Model::Umidita(id.toUInt(), name.toStdString());
+    } else if (type == "Temperatura Percepita") {
+        nuovoSensore = new Model::TemPercepita(id.toUInt(), name.toStdString());
+    }
 
     if (nuovoSensore) {
         sensori.push_back(nuovoSensore);
