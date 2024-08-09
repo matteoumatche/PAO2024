@@ -95,4 +95,9 @@ void Vento::setOffset(double o){
     offset = o;
 }
 
+Vento* Vento::clone() const {
+    // Supponendo che tu abbia un costruttore di copia
+    return new Vento(*this);
+}
+
 }

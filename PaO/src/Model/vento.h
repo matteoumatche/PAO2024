@@ -33,6 +33,8 @@ public:
     void setOffset(double offset);
     void simulaMisura() override;
     std::pair<double, double> Misura(std::pair<double, double> valoreReale);
+
+    virtual Vento* clone() const override; // Metodo clone
 };
 
 }

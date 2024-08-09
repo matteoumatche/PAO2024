@@ -21,6 +21,8 @@ public:
     virtual std::map<std::string, std::string> getInfo() const;
 
     virtual void simulaMisura()=0;
+
+    virtual Sensore* clone() const = 0; // Metodo virtuale puro per clonazione
 };
 
 }

@@ -44,4 +44,9 @@ std::map<std::string, std::string> Fotocellula::getInfo() const {
     return info;
 }
 
+Fotocellula* Fotocellula::clone() const {
+    // Supponendo che tu abbia un costruttore di copia
+    return new Fotocellula(*this);
+}
+
 }

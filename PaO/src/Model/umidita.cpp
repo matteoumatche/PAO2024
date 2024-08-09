@@ -45,4 +45,9 @@ std::map<std::string, std::string> Umidita::getInfo() const {
     return info;
 }
 
+Umidita* Umidita::clone() const {
+    // Supponendo che tu abbia un costruttore di copia
+    return new Umidita(*this);
+}
+
 }

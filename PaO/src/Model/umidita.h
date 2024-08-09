@@ -20,6 +20,8 @@ public:
 
     void simulaMisura() override;
     double Misura(double valoreReale);
+
+    virtual Umidita* clone() const override; // Metodo clone
 };
 
 }

@@ -71,4 +71,9 @@ std::map<std::string, std::string> TemPercepita::getInfo() const {
     return info;
 }
 
+TemPercepita* TemPercepita::clone() const {
+    // Supponendo che tu abbia un costruttore di copia
+    return new TemPercepita(*this);
+}
+
 }

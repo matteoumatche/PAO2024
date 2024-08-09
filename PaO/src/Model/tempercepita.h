@@ -20,6 +20,8 @@ public:
     std::map<std::string, std::string> getInfo() const override;
     void simulaMisura() override;
     double Misura(double);
+
+    virtual TemPercepita* clone() const override; // Metodo clone
 };
 
 }

@@ -21,6 +21,8 @@ public:
 
     void simulaMisura() override;
     double Misura(double valoreReale);
+
+    virtual Temperatura* clone() const override; // Metodo clone
 };
 
 }

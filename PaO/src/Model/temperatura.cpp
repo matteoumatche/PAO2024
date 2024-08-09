@@ -45,4 +45,9 @@ std::map<std::string, std::string> Temperatura::getInfo() const {
     return info;
 }
 
+Temperatura* Temperatura::clone() const {
+    // Supponendo che tu abbia un costruttore di copia
+    return new Temperatura(*this);
+}
+
 }

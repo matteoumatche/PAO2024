@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <vector>
 #include "../Model/Sensore.h"
+#include "sensorinfowidget.h"
 
 class Sensore; // Dichiarazione forward della classe Sensore
 

@@ -124,7 +124,7 @@ void MainWindow::addSensor(const QString &type, const QString &id, const QString
         sensori.push_back(nuovoSensore);
     }
 
-    QMessageBox::information(this, "Sensore Aggiunto", "Tipo: " + type + "\nID: " + id);
+    QMessageBox::information(this, "Sensore Aggiunto", "Tipo: " + type + "\nID: " + id + "\nNome: " + name);
     tbar->activateSaveAction();  // Abilita il pulsante di salvataggio
     tbar->activateSaveAsAction();
 

@@ -17,29 +17,6 @@ SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string>& inf
         layout->addWidget(label);
     }
 
-    /*
-    // PULSANTE "CLONA"--------------------
-    QPushButton* cloneButton = new QPushButton("Clona", this);
-    layout->addWidget(cloneButton);
-
-    connect(cloneButton, &QPushButton::clicked, this, [this, sensore]() {
-        // Qui puoi gestire la clonazione del sensore
-        // Ad esempio, emettere un segnale che gestisce la clonazione
-        // emit sensorRemoved(sensore);
-    });
-    //--------------------------------------
-
-    // PULSANTE "ELIMINA"-------------------
-    QPushButton* deleteButton = new QPushButton("Elimina", this);
-    layout->addWidget(deleteButton);
-
-    connect(deleteButton, &QPushButton::clicked, this, [this, sensore]() {
-        // Gestire l'eliminazione del sensore
-        // emit sensorDetailsRequested(sensore);
-    });
-    //---------------------------------------
-    */
-
     setLayout(layout);
 }
 
@@ -57,7 +34,7 @@ void SensorInfoWidget::mousePressEvent(QMouseEvent* event) {
     // Ripristina il colore di sfondo dopo un breve intervallo
     QTimer::singleShot(200, this, [this]() {
         QPalette palette = this->palette();
-        palette.setColor(QPalette::Window, Qt::white); // Colore originale
+        palette.setColor(QPalette::Window, QColor(255, 255, 255, 0)); // Colore originale
         this->setPalette(palette);
     });
 

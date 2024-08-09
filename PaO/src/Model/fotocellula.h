@@ -27,6 +27,9 @@ public:
 
     void simulaMisura() override;
     bool Misura(bool valoreReale);
+
+    //metodo clonazione
+    Fotocellula* clone() const override;
 };
 
 }
