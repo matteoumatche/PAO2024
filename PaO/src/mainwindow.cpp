@@ -6,6 +6,7 @@
 #include <QJsonArray>
 #include <QFile>
 #include <QFileDialog>
+#include <QScrollArea>
 #include <QMessageBox>
 #include <QDebug>
 #include "Model/fotocellula.h"
@@ -43,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent)
     tbar->setFixedSize(1024, 30);
     graphWidget->setFixedSize(500, 400);
     sensorListWidget->setFixedSize(100, 30);
+
+    QScrollArea *scrollArea = new QScrollArea;
+    scrollArea->setWidget(sensorListWidget);
 
     // Connessione dei segnali di ToolBar agli slot di MainWindow
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::showNewSensorDialog);
