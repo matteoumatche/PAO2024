@@ -27,8 +27,16 @@ MainWindow::MainWindow(QWidget *parent)
     //toolbar e widget
     tbar= new View::ToolBar;
     centralWidget = new QWidget(this);
-    sensorListWidget = new QWidget(this);
     graphWidget = new QWidget(this);
+    sensorListWidget= new SensorListWidget(sensori);
+
+
+    // Area di scorrimento per la lista dei sensori
+    scrollArea = new QScrollArea;
+
+    // Impostazione del widget della lista dei sensori nell'area di scorrimento
+    scrollArea->setWidget(sensorListWidget);
+    centralLayout->addWidget(scrollArea);
 
     //impostazioni widget
     setCentralWidget(centralWidget);
@@ -37,22 +45,28 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(tbar);
     mainLayout->addLayout(centralLayout);
 
-    centralLayout->addWidget(sensorListWidget);
+    centralLayout->addWidget(scrollArea);
     centralLayout->addWidget(graphWidget);
 
     //misure
-    tbar->setFixedSize(1024, 30);
-    graphWidget->setFixedSize(500, 400);
-    sensorListWidget->setFixedSize(100, 30);
+    tbar->setMinimumSize(1024, 30);
+    sensorListWidget->setMinimumSize(300, 400);
+    centralLayout->setStretchFactor(sensorListWidget, 2);
+    centralLayout->setStretchFactor(graphWidget, 2);
+    //graphWidget->setFixedSize(500, 400);
 
+/*
     QScrollArea *scrollArea = new QScrollArea;
     scrollArea->setWidget(sensorListWidget);
-
+    centralLayout->addWidget(scrollArea);
+*/
     // Connessione dei segnali di ToolBar agli slot di MainWindow
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::showNewSensorDialog);
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::openJsonFile);
     connect(tbar, &View::ToolBar::saveSignal, this, &MainWindow::saveJsonFile);
     connect(tbar, &View::ToolBar::saveAsSignal, this, &MainWindow::saveJsonFileAs);
+    connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::dataUpdated);
+    connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
 
 }
 
@@ -234,4 +248,10 @@ void MainWindow::saveJsonFileAs(){
 
     pathToFile = fileName;
     saveJsonFile();
+}
+
+void MainWindow::dataUpdated(){
+
+    sensorListWidget= new SensorListWidget(sensori);
+    scrollArea->setWidget(sensorListWidget);
 }

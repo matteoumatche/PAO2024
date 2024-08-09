@@ -9,6 +9,7 @@
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QScrollArea>
 #include <vector>
 #include "src/View/toolBar.h"
 #include "src/Model/sensore.h"
@@ -17,6 +18,7 @@
 #include "src/Model/tempercepita.h"
 #include "src/Model/umidita.h"
 #include "src/Model/vento.h"
+#include "View/sensorlistwidget.h"
 
 
 class MainWindow : public QMainWindow
@@ -28,8 +30,9 @@ private:
     QHBoxLayout* centralLayout;
     QWidget* centralWidget;
     View::ToolBar* tbar;
-    QWidget* sensorListWidget;
+    SensorListWidget* sensorListWidget;
     QWidget* graphWidget;
+    QScrollArea* scrollArea;
 
     std::vector<Model::Sensore*> sensori;
     QString pathToFile;
@@ -47,6 +50,8 @@ private slots:
     void saveJsonFile();
     void saveJsonFileAs();
 
+    //aggiorna la finestra dopo la modifica dei dati
+    void dataUpdated();
 
 public:
     MainWindow(QWidget *parent = nullptr);
