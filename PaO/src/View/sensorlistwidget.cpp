@@ -1,6 +1,6 @@
 #include "sensorlistwidget.h"
 #include "sensorinfowidget.h"
-#include "../Model/Sensore.h"
+#include "../Model/sensore.h"
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -8,6 +8,7 @@
 // Costruttore della classe SensorListWidget
 SensorListWidget::SensorListWidget(const std::vector<Model::Sensore*>& sensori, QWidget* parent)
     : QWidget(parent) {
+
     QVBoxLayout* layout = new QVBoxLayout();
 
     // Creazione di un SensorInfoWidget per ciascun sensore
@@ -42,7 +43,6 @@ SensorListWidget::SensorListWidget(const std::vector<Model::Sensore*>& sensori, 
 
         connect(deleteButton, &QPushButton::clicked, this, [this, sensore]() {
             // Gestire l'eliminazione del sensore
-            // emit sensorDeleteRequested(sensore);
         });
         //---------------------------------------
 
