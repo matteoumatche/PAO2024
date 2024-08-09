@@ -3,7 +3,7 @@
 
 #include <utility>
 #include <map>
-#include "Sensore.h"
+#include "sensore.h"
 
 namespace Model{
 

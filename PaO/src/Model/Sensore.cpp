@@ -1,4 +1,4 @@
-#include "Sensore.h"
+#include "sensore.h"
 
 namespace Model{
 

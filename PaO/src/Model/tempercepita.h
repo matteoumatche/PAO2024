@@ -2,8 +2,8 @@
 #define TEMPERCIPITA_H
 
 #include <map>
-#include "src/Model/Temperatura.h"
-#include "src/Model/Umidita.h"
+#include "src/Model/temperatura.h"
+#include "src/Model/umidita.h"
 
 namespace Model{
 
