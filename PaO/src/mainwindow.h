@@ -28,6 +28,8 @@ private:
     QHBoxLayout* centralLayout;
     QWidget* centralWidget;
     View::ToolBar* tbar;
+    QWidget* sensorListWidget;
+    QWidget* graphWidget;
 
     std::vector<Model::Sensore*> sensori;
     QString pathToFile;

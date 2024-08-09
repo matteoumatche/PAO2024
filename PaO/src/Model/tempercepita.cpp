@@ -9,7 +9,7 @@ TemPercepita::TemPercepita(unsigned int id, std::string nome, Umidita um, Temper
         IndiceCalore = t.getDato();
 }
 
-
+TemPercepita::TemPercepita(unsigned int id, std::string nome) : TemPercepita(id, nome, Umidita(0, "ok"), Temperatura(0, "ok")) {}
 
 TemPercepita::TemPercepita(const QJsonObject& json) :
     Sensore(json),

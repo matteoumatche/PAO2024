@@ -17,26 +17,29 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), mainLayout(nullptr), centralLayout(nullptr), centralWidget(nullptr)
 {
-    setWindowTitle("Sensori serra");
+    setWindowTitle("Greenhouse manager");
 
     //layout
     mainLayout = new QVBoxLayout;
     centralLayout = new QHBoxLayout;
 
-    //toolbar
+    //toolbar e widget
     tbar= new View::ToolBar;
-
-    //pannello principale
     centralWidget = new QWidget(this);
+    sensorListWidget = new QWidget(this);
+    graphWidget = new QWidget(this);
+
+    //impostazioni widget
     setCentralWidget(centralWidget);
     centralWidget->setLayout(mainLayout);
 
     tbar->setFixedSize(1024, 30);
 
-
-
     mainLayout->addWidget(tbar);
     mainLayout->addLayout(centralLayout);
+
+    centralLayout->addWidget(sensorListWidget);
+    centralLayout->addWidget(graphWidget);
 
     // Connessione dei segnali di ToolBar agli slot di MainWindow
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::showNewSensorDialog);
@@ -62,9 +65,9 @@ void MainWindow::showNewSensorDialog() {
     QStringList sensorTypes = getAvailableSensorTypes();
     typeComboBox->addItems(sensorTypes);
 
-    formLayout->addRow("Nome:", nameEdit);
     formLayout->addRow("Tipo:", typeComboBox);
     formLayout->addRow("ID:", idEdit);
+    formLayout->addRow("Nome:", nameEdit);
 
     dialogLayout->addLayout(formLayout);
 
@@ -74,14 +77,14 @@ void MainWindow::showNewSensorDialog() {
     connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
     dialog.show();
     if (dialog.exec() == QDialog::Accepted) {
-        QString name = nameEdit->text();
         QString type = typeComboBox->currentText();
         QString id = idEdit->text();
-        addSensor(name, type, id);
+        QString name = nameEdit->text();
+        addSensor(type, id, name);
     }
 }
 
-void MainWindow::addSensor(const QString &name, const QString &type, const QString &id){
+void MainWindow::addSensor(const QString &type, const QString &id, const QString &name){
     Model::Sensore* nuovoSensore = nullptr;
 
     if (type == "Fotocellula") {
