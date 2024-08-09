@@ -33,13 +33,16 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(centralWidget);
     centralWidget->setLayout(mainLayout);
 
-    tbar->setFixedSize(1024, 30);
-
     mainLayout->addWidget(tbar);
     mainLayout->addLayout(centralLayout);
 
     centralLayout->addWidget(sensorListWidget);
     centralLayout->addWidget(graphWidget);
+
+    //misure
+    tbar->setFixedSize(1024, 30);
+    graphWidget->setFixedSize(500, 400);
+    sensorListWidget->setFixedSize(100, 30);
 
     // Connessione dei segnali di ToolBar agli slot di MainWindow
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::showNewSensorDialog);
