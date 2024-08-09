@@ -1,4 +1,6 @@
 debug/fotocellula.o
+debug/sensorinfowidget.o
+debug/sensorlistwidget.o
 debug/main.o
 debug/mainwindow.o
 debug/sensore.o
@@ -7,5 +9,7 @@ debug/tempercepita.o
 debug/umidita.o
 debug/vento.o
 debug/toolBar.o
+debug/moc_sensorinfowidget.o
+debug/moc_sensorlistwidget.o
 debug/moc_mainwindow.o
 debug/moc_toolBar.o

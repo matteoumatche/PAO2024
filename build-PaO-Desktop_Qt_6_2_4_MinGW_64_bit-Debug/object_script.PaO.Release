@@ -1,4 +1,6 @@
 release/fotocellula.o
+release/sensorinfowidget.o
+release/sensorlistwidget.o
 release/main.o
 release/mainwindow.o
 release/sensore.o
@@ -7,5 +9,7 @@ release/tempercepita.o
 release/umidita.o
 release/vento.o
 release/toolBar.o
+release/moc_sensorinfowidget.o
+release/moc_sensorlistwidget.o
 release/moc_mainwindow.o
 release/moc_toolBar.o

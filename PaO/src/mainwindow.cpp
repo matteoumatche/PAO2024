@@ -55,6 +55,33 @@ MainWindow::MainWindow(QWidget *parent)
     centralLayout->setStretchFactor(graphWidget, 2);
     //graphWidget->setFixedSize(500, 400);
 
+    //stile
+    tbar->setStyleSheet(
+        "QToolBar { "
+        "background-color: #4b8f38;"  // Colore di sfondo blu
+        "border: 2px solid #214517;"  // Bordo
+        "padding: 5px;"               // Padding
+        "}"
+        "QToolBar QToolButton { "
+        "background-color: #336625;"   // Colore di sfondo blu
+        "border: 2px solid #214517;"   // Bordo
+        "border-radius: 5px;"          // Angoli arrotondati
+        "padding: 5px;"                // Padding interno
+        "color: white;"                // Colore del testo
+        "}"
+        "QToolBar QToolButton:hover { "
+        "background-color: #214517;"   // Cambia colore al passaggio del mouse
+        "}"
+        "QToolBar QToolButton:pressed { "
+        "background-color: #11240c;"   // Cambia colore quando viene premuto
+        "}"
+        "QToolBar QToolButton:disabled { "
+        "background-color: #95a5a6;"   // Colore di sfondo grigio per i pulsanti disabilitati
+        "color: #bdc3c7;"              // Colore del testo grigio chiaro per i pulsanti disabilitati
+        "border: 2px solid #7f8c8d;"   // Bordo grigio per i pulsanti disabilitati
+        "}"
+    );
+
 /*
     QScrollArea *scrollArea = new QScrollArea;
     scrollArea->setWidget(sensorListWidget);
