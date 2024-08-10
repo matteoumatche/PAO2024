@@ -68,9 +68,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::dataUpdated);
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &SensorListWidget::sensorCloned, this, &MainWindow::openJsonFile);
-    connect(sensorListWidget, &SensorListWidget::reloadRequested, this, &MainWindow::reloadJsonFile);
-    connect(sensorListWidget, &SensorListWidget::saveRequested, this, &MainWindow::saveJsonFile);
-
 }
 
 MainWindow::~MainWindow(){}
@@ -132,6 +129,14 @@ void MainWindow::showNewSensorDialog() {
 }
 
 void MainWindow::addSensor(const QString &type, const QString &id, const QString &name){
+    // Controllo se l'ID o il nome sono già esistenti
+    for (const auto& sensore : sensori) {
+        if (sensore->getID() == id.toUInt() || sensore->getNome() == name.toStdString()) {
+            QMessageBox::warning(this, "Errore", "ID o Nome già esistenti. Inserire valori unici.");
+            return; // Non aggiungere il sensore se l'ID o il nome esistono già
+        }
+    }
+
     Model::Sensore* nuovoSensore = nullptr;
 
     if (type == "Fotocellula") {
@@ -283,7 +288,7 @@ void MainWindow::dataUpdated(){
 
 }
 
-/*void MainWindow::reloadJsonFile() {
+void MainWindow::reloadJsonFile() {
     if (pathToFile.isEmpty()) {
         return; // Non c'è un file da ricaricare
     }
@@ -325,4 +330,4 @@ void MainWindow::dataUpdated(){
 
     tbar->activateSaveAction();  // Abilita il pulsante di salvataggio
     tbar->activateSaveAsAction();
-}*/
+}
