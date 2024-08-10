@@ -67,6 +67,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::saveAsSignal, this, &MainWindow::saveJsonFileAs);
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::dataUpdated);
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
+    connect(sensorListWidget, &SensorListWidget::sensorCloned, this, &MainWindow::openJsonFile);
+    connect(sensorListWidget, &SensorListWidget::reloadRequested, this, &MainWindow::reloadJsonFile);
+    connect(sensorListWidget, &SensorListWidget::saveRequested, this, &MainWindow::saveJsonFile);
 
 }
 
@@ -254,4 +257,48 @@ void MainWindow::dataUpdated(){
 
     sensorListWidget= new SensorListWidget(sensori);
     scrollArea->setWidget(sensorListWidget);
+}
+
+void MainWindow::reloadJsonFile() {
+    if (pathToFile.isEmpty()) {
+        return; // Non c'è un file da ricaricare
+    }
+
+    QFile file(pathToFile);
+    if (!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::warning(this, tr("Errore"), tr("Non è stato possibile aprire il file."));
+        return;
+    }
+
+    QByteArray json = file.readAll();
+    file.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(json);
+    if (doc.isNull() || !doc.isObject()) {
+        QMessageBox::warning(this, tr("Errore"), tr("Formato del file JSON non valido."));
+        return;
+    }
+
+    QJsonObject rootObject = doc.object();
+    QJsonArray arraySensori = rootObject["sensori"].toArray();
+
+    // Pulizia dei sensori esistenti
+    sensori.clear();
+
+    for (const QJsonValue& i : arraySensori) {
+        QJsonObject sen_obj = i.toObject();
+        Model::Sensore* sensore = creaSensore(sen_obj);
+        if (sensore) {
+            sensori.push_back(sensore);
+        } else {
+            qWarning() << "Tipo di sensore non riconosciuto o errore nella creazione.";
+        }
+    }
+
+    // Ricarica la lista dei sensori
+    sensorListWidget = new SensorListWidget(sensori, this); // Ricrea il widget
+    scrollArea->setWidget(sensorListWidget); // Aggiorna l'area di scorrimento
+
+    tbar->activateSaveAction();  // Abilita il pulsante di salvataggio
+    tbar->activateSaveAsAction();
 }

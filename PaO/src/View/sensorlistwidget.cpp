@@ -6,7 +6,7 @@
 #include <QPushButton>
 
 // Costruttore della classe SensorListWidget
-SensorListWidget::SensorListWidget(const std::vector<Model::Sensore*>& sensori, QWidget* parent)
+SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidget* parent)
     : QWidget(parent) {
 
     QVBoxLayout* layout = new QVBoxLayout();
@@ -21,19 +21,18 @@ SensorListWidget::SensorListWidget(const std::vector<Model::Sensore*>& sensori, 
         QPushButton* cloneButton = new QPushButton("Clona", this);
         layout->addWidget(cloneButton);
 
-        connect(cloneButton, &QPushButton::clicked, this, [this, sensore, layout]() {
+        connect(cloneButton, &QPushButton::clicked, this, [this, sensore, &sensori]() {
             // Clona il sensore usando il metodo clone
             Model::Sensore* clonedSensor = sensore->clone(); // Crea una copia del sensore
 
             // Aggiungi il nuovo SensorInfoWidget alla lista
-            std::map<std::string, std::string> clonedInfo = clonedSensor->getInfo();
-            SensorInfoWidget* clonedSensorWidget = new SensorInfoWidget(clonedInfo, this);
-            layout->addWidget(clonedSensorWidget);
+            sensori.push_back(clonedSensor);
 
-            // Collega il segnale widgetClicked del nuovo widget
-            connect(clonedSensorWidget, &SensorInfoWidget::widgetClicked, this, [this, clonedSensor]() {
-                emit sensorClicked(clonedSensor); // Emetti il segnale quando il widget viene cliccato
-            });
+            emit sensorCloned();
+            emit saveRequested();// Emetti il segnale
+            qDebug() << "sensore clonato";
+
+            emit reloadRequested();
         });
         //--------------------------------------
 

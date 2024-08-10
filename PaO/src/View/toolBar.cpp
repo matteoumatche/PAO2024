@@ -1,4 +1,5 @@
 #include "toolBar.h"
+#include "sensorlistwidget.h"
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QLineEdit>

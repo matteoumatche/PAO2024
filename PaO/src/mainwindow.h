@@ -49,6 +49,7 @@ private slots:
     void openJsonFile();
     void saveJsonFile();
     void saveJsonFileAs();
+    void reloadJsonFile();
 
     //aggiorna la finestra dopo la modifica dei dati
     void dataUpdated();
