@@ -116,14 +116,11 @@ void MainWindow::showNewSensorDialog() {
         }
 
         // Validazione del Nome
-        QRegularExpression nameRegex("^[A-Za-z]+$"); // Nome deve essere composto solo da caratteri alfabetici
+        QRegularExpression nameRegex("^[A-Za-z0-9]+$"); // Nome deve essere composto solo da caratteri alfabetici
         if (!nameRegex.match(name).hasMatch()) {
-            QMessageBox::warning(&dialog, "Errore", "Il Nome deve contenere solo caratteri alfabetici.");
+            QMessageBox::warning(&dialog, "Errore", "Il Nome deve contenere solo caratteri alfanumerici.");
             return; // Non chiudere il dialogo
         }
-
-        // Aggiungere ulteriori controlli qui se necessario
-        // ...
 
         addSensor(type, id, name);
         dialog.accept(); // Chiudere il dialogo se tutti i controlli sono superati
