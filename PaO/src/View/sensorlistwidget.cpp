@@ -29,10 +29,7 @@ SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidge
             sensori.push_back(clonedSensor);
 
             emit sensorCloned();
-            emit saveRequested();// Emetti il segnale
             qDebug() << "sensore clonato";
-
-            emit reloadRequested();
         });
         //--------------------------------------
 

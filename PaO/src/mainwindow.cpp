@@ -280,9 +280,10 @@ void MainWindow::dataUpdated(){
 
     sensorListWidget= new SensorListWidget(sensori);
     scrollArea->setWidget(sensorListWidget);
+
 }
 
-void MainWindow::reloadJsonFile() {
+/*void MainWindow::reloadJsonFile() {
     if (pathToFile.isEmpty()) {
         return; // Non c'è un file da ricaricare
     }
@@ -324,4 +325,4 @@ void MainWindow::reloadJsonFile() {
 
     tbar->activateSaveAction();  // Abilita il pulsante di salvataggio
     tbar->activateSaveAsAction();
-}
+}*/
