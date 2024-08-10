@@ -9,15 +9,17 @@
 // Costruttore della classe SensorInfoWidget
 SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string>& info, QWidget* parent)
     : QWidget(parent) {
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QHBoxLayout* layoutEsterno = new QHBoxLayout(this);
+    QVBoxLayout* layoutDati = new QVBoxLayout(this);
+    QVBoxLayout* layoutPulsanti = new QVBoxLayout(this);
 
     // Visualizzazione di ciascuna coppia chiave-valore
     for (const auto& pair : info) {
         QLabel* label = new QLabel(QString::fromStdString(pair.first) + ": " + QString::fromStdString(pair.second), this);
-        layout->addWidget(label);
+        layoutDati->addWidget(label);
     }
 
-    setLayout(layout);
+    setLayout(layoutEsterno);
 }
 
 // Gestione dell'evento di pressione del mouse
