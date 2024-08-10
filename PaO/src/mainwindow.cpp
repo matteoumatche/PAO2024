@@ -97,15 +97,41 @@ void MainWindow::showNewSensorDialog() {
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
     dialogLayout->addWidget(buttonBox);
-    connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-    connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
-    dialog.show();
-    if (dialog.exec() == QDialog::Accepted) {
+
+    connect(buttonBox, &QDialogButtonBox::accepted, [this, &dialog, typeComboBox, idEdit, nameEdit]() { // Cattura per riferimento
         QString type = typeComboBox->currentText();
         QString id = idEdit->text();
         QString name = nameEdit->text();
+
+        if (id.isEmpty() || name.isEmpty()) {
+            QMessageBox::warning(&dialog, "Errore", "I campi 'ID' e 'Nome' devono essere riempiti.");
+            return; // Non chiudere il dialogo
+        }
+
+        // Validazione dell'ID
+        QRegularExpression idRegex("^[0-9]{4}$");
+        if (!idRegex.match(id).hasMatch()) {
+            QMessageBox::warning(&dialog, "Errore", "L'ID deve avere esattamente 4 caratteri numerici.");
+            return; // Non chiudere il dialogo
+        }
+
+        // Validazione del Nome
+        QRegularExpression nameRegex("^[A-Za-z]+$"); // Nome deve essere composto solo da caratteri alfabetici
+        if (!nameRegex.match(name).hasMatch()) {
+            QMessageBox::warning(&dialog, "Errore", "Il Nome deve contenere solo caratteri alfabetici.");
+            return; // Non chiudere il dialogo
+        }
+
+        // Aggiungere ulteriori controlli qui se necessario
+        // ...
+
         addSensor(type, id, name);
-    }
+        dialog.accept(); // Chiudere il dialogo se tutti i controlli sono superati
+    });
+
+    connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    dialog.exec();
 }
 
 void MainWindow::addSensor(const QString &type, const QString &id, const QString &name){
