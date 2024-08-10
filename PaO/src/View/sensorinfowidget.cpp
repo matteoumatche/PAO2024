@@ -20,6 +20,8 @@ SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string>& inf
     }
 
     setLayout(layoutEsterno);
+    layoutEsterno->addLayout(layoutDati);
+    layoutEsterno->addLayout(layoutPulsanti);
 }
 
 // Gestione dell'evento di pressione del mouse
