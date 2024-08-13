@@ -19,7 +19,6 @@ public:
     std::map<std::string, std::string> getInfo() const override;
 
     void setTolleranza(double tolleranza);
-    void setDato(double dato);
 
     void simulaMisura() override;
     double Misura(double valoreReale);

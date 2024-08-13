@@ -18,10 +18,6 @@ void Sensore::setNome(std::string n) {
     nome = n;
 }
 
-void Sensore::setID(unsigned int id) {
-    ID = id;
-}
-
 std::map<std::string, std::string> Sensore::getInfo() const {
     std::map<std::string, std::string> info;
     info["ID"] = std::to_string(ID);

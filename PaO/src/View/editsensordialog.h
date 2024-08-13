@@ -31,8 +31,6 @@ private slots:
 private:
     Model::Sensore* sensore;
     std::map<std::string, QLineEdit*> edits;  // Mappa per associare chiavi della mappa del sensore a QLineEdit
-    QLineEdit* valore1LineEdit; // Per il primo valore di Vento
-    QLineEdit* valore2LineEdit; // Per il secondo valore di Vento
 };
 
 #endif

@@ -25,10 +25,6 @@ void Umidita::setTolleranza(double t) {
     tolleranza = t;
 }
 
-void Umidita::setDato(double d) {
-    dato = d;
-}
-
 void Umidita::simulaMisura() {
     std::random_device rd;
     std::mt19937 gen(rd());

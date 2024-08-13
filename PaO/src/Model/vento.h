@@ -30,11 +30,9 @@ public:
     std::pair<double, double> getDato() const;
     std::map<std::string, std::string> getInfo() const override;
 
-    void setMaxVelocita(double maxVelocita);
     void setOffset(double offset);
     void setTolleranzaGoniometro(double tolleranzaGoniometro);
     void setTolleranzaAnemometro(double tolleranzaAnemometro);
-    void setDato(double valore1, double valore2);
 
     void simulaMisura() override;
     std::pair<double, double> Misura(std::pair<double, double> valoreReale);
