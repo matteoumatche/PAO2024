@@ -16,9 +16,6 @@ public:
 signals:
     void sensorClicked(Model::Sensore* sensore); // Segnale emesso quando un sensore viene cliccato
     void sensorCloned();  // Segnale da emettere quando un sensore viene clonato
-
-private:
-    //void createSensorButtons(const std::vector<Model::Sensore*>& sensori);
 };
 
 #endif // SENSORLISTWIDGET_H
