@@ -21,8 +21,7 @@ class EditSensorDialog : public QDialog {
     Q_OBJECT
 
 public:
-    explicit EditSensorDialog(Model::Sensore* sensore, MainWindow* mainWindow, QWidget* parent);
-    //explicit EditSensorDialog(Model::Sensore* sensore, QWidget* parent = nullptr);
+    explicit EditSensorDialog(Model::Sensore* sensore, QWidget* parent = nullptr);
 
     double getValore1() const; // Getter per il primo valore
     double getValore2() const; // Getter per il secondo valore
@@ -32,7 +31,6 @@ private slots:
 
 private:
     Model::Sensore* sensore;
-    MainWindow* mainWindow;  // Aggiungi questo membro qui
     std::map<std::string, QLineEdit*> edits;  // Mappa per associare chiavi della mappa del sensore a QLineEdit
 };
 

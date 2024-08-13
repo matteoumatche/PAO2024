@@ -1,4 +1,4 @@
-/*#include "editsensordialog.h"
+#include "editsensordialog.h"
 #include <QVBoxLayout>
 
 EditSensorDialog::EditSensorDialog(Model::Sensore* sensore, QWidget* parent)
@@ -109,33 +109,8 @@ void EditSensorDialog::acceptChanges() {
     }
 
     accept();  // Chiude il dialogo e ritorna QDialog::Accepted
-}*/
-
-#include "editsensordialog.h"
-#include <QVBoxLayout>
-
-EditSensorDialog::EditSensorDialog(Model::Sensore* sensore, MainWindow* mainWindow, QWidget* parent)
-    : QDialog(parent), sensore(sensore), mainWindow(mainWindow) {
-
-    QFormLayout* layout = new QFormLayout(this);
-
-    // Ottieni le informazioni esistenti del sensore
-    auto info = sensore->getInfo();  // Ottieni una mappa modificabile
-
-    // Crea un QLineEdit per ogni campo della mappa, e memorizzalo in un'altra mappa
-    for (const auto& pair : info) {
-        QLineEdit* edit = new QLineEdit(QString::fromStdString(pair.second), this);
-        layout->addRow(QString::fromStdString(pair.first) + ":", edit);
-        edits[pair.first] = edit;  // Salva il QLineEdit associato alla chiave
-    }
-
-    // Bottoni OK e Cancel
-    QDialogButtonBox* buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-    connect(buttons, &QDialogButtonBox::accepted, this, &EditSensorDialog::acceptChanges);
-    connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
-
-    layout->addWidget(buttons);
 }
+
 
 void EditSensorDialog::acceptChanges() {
     // Crea una mappa per il nuovo sensore
