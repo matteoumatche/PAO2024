@@ -10,7 +10,8 @@
 SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidget* parent)
     : QWidget(parent) {
 
-    QVBoxLayout* layout = new QVBoxLayout();
+    QHBoxLayout* layout = new QHBoxLayout();
+    QVBoxLayout* layoutBottoni = new QVBoxLayout();
 
     // Creazione di un SensorInfoWidget per ciascun sensore
     for (Model::Sensore* sensore : sensori) {
@@ -26,7 +27,7 @@ SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidge
 
         // PULSANTE "CLONA"--------------------
         QPushButton* cloneButton = new QPushButton("Clona", this);
-        layout->addWidget(cloneButton);
+        layoutBottoni->addWidget(cloneButton);
 
         connect(cloneButton, &QPushButton::clicked, this, [this, sensore, &sensori]() {
             // Clona il sensore usando il metodo clone
@@ -42,7 +43,7 @@ SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidge
 
         //PULSANTE "MODIFICA"-------------------
         QPushButton* editButton = new QPushButton("Modifica", this);
-        layout->addWidget(editButton);
+        layoutBottoni->addWidget(editButton);
 
         connect(editButton, &QPushButton::clicked, this, [this, sensore]() {
             EditSensorDialog* dialog = new EditSensorDialog(sensore, this);
@@ -57,7 +58,9 @@ SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidge
 
         // PULSANTE "ELIMINA"-------------------
         QPushButton* deleteButton = new QPushButton("Elimina", this);
-        layout->addWidget(deleteButton);
+        layoutBottoni->addWidget(deleteButton);
+
+        layout->addLayout(layoutBottoni);
 
         connect(deleteButton, &QPushButton::clicked, this, [this, sensore]() {
             // Gestire l'eliminazione del sensore
