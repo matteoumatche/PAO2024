@@ -23,6 +23,7 @@ signals:
     void clonato(Model::Sensore* sensore); //emesso quando i dati dei sensori cambiano
 private slots:
     void sendRequestUpdateList();
+    //void updateSensors(std::vector<Model::Sensore*>& sensori);
 
 };
 }

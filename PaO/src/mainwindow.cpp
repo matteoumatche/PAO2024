@@ -283,11 +283,34 @@ void MainWindow::saveJsonFileAs(){
     saveJsonFile();
 }
 
+
+
+
+void MainWindow::dataUpdated() {
+    qDebug() << "dataUpdated slot called";
+
+    // Prima di creare un nuovo widget, eliminiamo il vecchio
+    if (sensorListWidget) {
+        delete sensorListWidget;
+        sensorListWidget = nullptr;
+    }
+
+    // Ricrea il widget con la lista aggiornata
+    sensorListWidget = new View::SensorListWidget(sensori, this);
+    scrollArea->setWidget(sensorListWidget);
+
+    // Riconnetti i segnali
+    connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
+    connect(sensorListWidget, &View::SensorListWidget::clonato, this, &MainWindow::sensoreClonato);
+}
+
+/*
 void MainWindow::dataUpdated(){
     qDebug() << "dataUpdated slot called";
     sensorListWidget= new View::SensorListWidget(sensori);
     scrollArea->setWidget(sensorListWidget);
 }
+*/
 
 void MainWindow::reloadJsonFile() {
     if (pathToFile.isEmpty()) {

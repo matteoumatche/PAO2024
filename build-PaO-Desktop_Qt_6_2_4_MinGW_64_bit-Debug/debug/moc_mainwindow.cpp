@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    const uint offsetsAndSize[24];
-    char stringdata0[123];
+    const uint offsetsAndSize[28];
+    char stringdata0[154];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs), len 
@@ -40,13 +40,15 @@ QT_MOC_LITERAL(55, 12), // "openJsonFile"
 QT_MOC_LITERAL(68, 12), // "saveJsonFile"
 QT_MOC_LITERAL(81, 14), // "saveJsonFileAs"
 QT_MOC_LITERAL(96, 14), // "reloadJsonFile"
-QT_MOC_LITERAL(111, 11) // "dataUpdated"
+QT_MOC_LITERAL(111, 11), // "dataUpdated"
+QT_MOC_LITERAL(123, 14), // "sensoreClonato"
+QT_MOC_LITERAL(138, 15) // "Model::Sensore*"
 
     },
     "MainWindow\0addSensor\0\0name\0type\0id\0"
     "showNewSensorDialog\0openJsonFile\0"
     "saveJsonFile\0saveJsonFileAs\0reloadJsonFile\0"
-    "dataUpdated"
+    "dataUpdated\0sensoreClonato\0Model::Sensore*"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,7 +58,7 @@ static const uint qt_meta_data_MainWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -64,13 +66,14 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    3,   56,    2, 0x08,    1 /* Private */,
-       6,    0,   63,    2, 0x08,    5 /* Private */,
-       7,    0,   64,    2, 0x08,    6 /* Private */,
-       8,    0,   65,    2, 0x08,    7 /* Private */,
-       9,    0,   66,    2, 0x08,    8 /* Private */,
-      10,    0,   67,    2, 0x08,    9 /* Private */,
-      11,    0,   68,    2, 0x08,   10 /* Private */,
+       1,    3,   62,    2, 0x08,    1 /* Private */,
+       6,    0,   69,    2, 0x08,    5 /* Private */,
+       7,    0,   70,    2, 0x08,    6 /* Private */,
+       8,    0,   71,    2, 0x08,    7 /* Private */,
+       9,    0,   72,    2, 0x08,    8 /* Private */,
+      10,    0,   73,    2, 0x08,    9 /* Private */,
+      11,    0,   74,    2, 0x0a,   10 /* Public */,
+      12,    1,   75,    2, 0x0a,   11 /* Public */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,
@@ -80,6 +83,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 13,    2,
 
        0        // eod
 };
@@ -97,6 +101,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 4: _t->saveJsonFileAs(); break;
         case 5: _t->reloadJsonFile(); break;
         case 6: _t->dataUpdated(); break;
+        case 7: _t->sensoreClonato((*reinterpret_cast< std::add_pointer_t<Model::Sensore*>>(_a[1]))); break;
         default: ;
         }
     }
@@ -110,7 +115,7 @@ const QMetaObject MainWindow::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_MainWindow_t
 , QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>
 
 
 >,
@@ -137,13 +142,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 8)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }
