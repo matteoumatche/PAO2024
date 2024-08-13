@@ -38,7 +38,7 @@ private:
     QString pathToFile;
 
     Model::Sensore* creaSensore(const QJsonObject& ) const ;
-    QJsonObject mapToJson(const std::map<std::string, std::string>& ) const;
+
     QStringList getAvailableSensorTypes();
 
 private slots:
@@ -56,6 +56,8 @@ private slots:
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    static QJsonObject mapToJson(const std::map<std::string, std::string>& ) ;
 public slots:
 
     //aggiorna la finestra dopo la modifica dei dati

@@ -187,7 +187,7 @@ Model::Sensore* MainWindow::creaSensore(const QJsonObject& info) const {
     return nullptr;
 }
 
-QJsonObject MainWindow::mapToJson(const std::map<std::string, std::string>& info) const {
+QJsonObject MainWindow::mapToJson(const std::map<std::string, std::string>& info) {
     QJsonObject jsonObject;
     for (const auto& pair : info) {
         jsonObject[QString::fromStdString(pair.first)] = QString::fromStdString(pair.second);
