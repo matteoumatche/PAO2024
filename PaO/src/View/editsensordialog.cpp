@@ -110,26 +110,3 @@ void EditSensorDialog::acceptChanges() {
 
     accept();  // Chiude il dialogo e ritorna QDialog::Accepted
 }
-
-
-void EditSensorDialog::acceptChanges() {
-    // Crea una mappa per il nuovo sensore
-    std::map<std::string, std::string> newInfo;
-
-    for (const auto& pair : edits) {
-        const std::string& key = pair.first;
-        const std::string& value = pair.second->text().toStdString();
-
-        // Aggiungi il valore al nuovo sensore
-        newInfo[key] = value;
-    }
-
-    // Elimina il vecchio sensore
-    delete sensore;
-
-    // Crea un nuovo sensore con i dati aggiornati
-    QJsonObject jsonObject = mainWindow->mapToJson(newInfo);
-    sensore = new sensore(jsonObject);  // Assicurati che il costruttore del sensore accetti un QJsonObject
-
-    accept();  // Chiude il dialogo e ritorna QDialog::Accepted
-}
