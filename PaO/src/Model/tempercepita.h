@@ -16,8 +16,12 @@ public:
     TemPercepita(unsigned int, std::string, Umidita, Temperatura);
     TemPercepita(unsigned int id, std::string nome);
     TemPercepita(const QJsonObject&);
+
     double getIndiceCalore() const;
     std::map<std::string, std::string> getInfo() const override;
+
+    void setIndiceCalore(double indiceCalore);
+
     void simulaMisura() override;
     double Misura(double);
 

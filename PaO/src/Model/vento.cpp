@@ -57,6 +57,26 @@ double Vento::getTolleranzaAnemometro() const {
     return tolleranzaAnemometro;
 }
 
+void Vento::setMaxVelocita(double mv) {
+    valoreMaxVelocita = mv;
+}
+
+void Vento::setOffset(double o) {
+    offset = o;
+}
+
+void Vento::setTolleranzaGoniometro(double tg) {
+    tolleranzaGoniometro = tg;
+}
+
+void Vento::setTolleranzaAnemometro(double ta) {
+    tolleranzaAnemometro = ta;
+}
+
+void Vento::setDato(double valore1, double valore2) {
+    dato = std::make_pair(valore1, valore2);
+}
+
 void Vento::simulaMisura() {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -89,10 +109,6 @@ std::map<std::string, std::string> Vento::getInfo() const {
     info.insert(std::make_pair("Velocita", std::to_string(dato.first)));
     info.insert(std::make_pair("Angolo", std::to_string(dato.second)));
     return info;
-}
-
-void Vento::setOffset(double o){
-    offset = o;
 }
 
 Vento* Vento::clone() const {

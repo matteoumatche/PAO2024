@@ -44,6 +44,14 @@ std::map<std::string, std::string> Fotocellula::getInfo() const {
     return info;
 }
 
+void Fotocellula::setSoglia(double s) {
+    soglia = s;
+}
+
+void Fotocellula::setTolleranza(double t) {
+    tolleranza = t;
+}
+
 Fotocellula* Fotocellula::clone() const {
     // Supponendo che tu abbia un costruttore di copia
     return new Fotocellula(*this);

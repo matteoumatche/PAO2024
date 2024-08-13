@@ -68,6 +68,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::dataUpdated);
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &SensorListWidget::sensorCloned, this, &MainWindow::openJsonFile);
+    connect(sensorListWidget, &SensorListWidget::sensorUpdated, this, &MainWindow::dataUpdated);
+
 }
 
 MainWindow::~MainWindow(){}

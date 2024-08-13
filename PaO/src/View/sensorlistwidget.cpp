@@ -1,6 +1,7 @@
 #include "sensorlistwidget.h"
 #include "sensorinfowidget.h"
 #include "../Model/sensore.h"
+#include "editsensordialog.h"
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -16,6 +17,12 @@ SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidge
         std::map<std::string, std::string> info = sensore->getInfo();
         SensorInfoWidget* sensorWidget = new SensorInfoWidget(info, this);
         layout->addWidget(sensorWidget);
+
+        // PULSANTE GENERALE SENSORE-------------
+        connect(sensorWidget, &SensorInfoWidget::widgetClicked, this, [this, sensore]() {
+            emit sensorClicked(sensore); // Emetti il segnale quando il widget viene cliccato
+        });
+        //---------------------------------------
 
         // PULSANTE "CLONA"--------------------
         QPushButton* cloneButton = new QPushButton("Clona", this);
@@ -33,6 +40,21 @@ SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidge
         });
         //--------------------------------------
 
+        //PULSANTE "MODIFICA"-------------------
+        QPushButton* editButton = new QPushButton("Modifica", this);
+        layout->addWidget(editButton);
+
+        connect(editButton, &QPushButton::clicked, this, [this, sensore]() {
+            EditSensorDialog* dialog = new EditSensorDialog(sensore, this);
+            if (dialog->exec() == QDialog::Accepted) {
+                // Aggiorna la visualizzazione del sensore se necessario
+                emit sensorUpdated();
+                qDebug() << "sensore modificato";
+            }
+            delete dialog;
+        });
+        //--------------------------------------
+
         // PULSANTE "ELIMINA"-------------------
         QPushButton* deleteButton = new QPushButton("Elimina", this);
         layout->addWidget(deleteButton);
@@ -42,10 +64,6 @@ SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidge
         });
         //---------------------------------------
 
-        // Collega il segnale widgetClicked al gestore desiderato
-        connect(sensorWidget, &SensorInfoWidget::widgetClicked, this, [this, sensore]() {
-            emit sensorClicked(sensore); // Emetti il segnale quando il widget viene cliccato
-        });
     }
 
     setLayout(layout);

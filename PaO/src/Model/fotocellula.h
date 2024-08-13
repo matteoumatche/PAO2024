@@ -25,6 +25,9 @@ public:
     double getTolleranza() const;
     std::map<std::string, std::string> getInfo() const override;
 
+    void setSoglia(double soglia);
+    void setTolleranza(double tolleranza);
+
     void simulaMisura() override;
     bool Misura(bool valoreReale);
 

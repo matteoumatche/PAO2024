@@ -16,6 +16,7 @@ public:
 signals:
     void sensorClicked(Model::Sensore* sensore); // Segnale emesso quando un sensore viene cliccato
     void sensorCloned();  // Segnale da emettere quando un sensore viene clonato
+    void sensorUpdated();
 };
 
 #endif // SENSORLISTWIDGET_H

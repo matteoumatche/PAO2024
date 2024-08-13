@@ -17,9 +17,12 @@ TemPercepita::TemPercepita(const QJsonObject& json) :
     t(json["Temperatura"].toObject()),
     IndiceCalore( json["IndiceCalore"].toInt()) {}
 
-
 double TemPercepita::getIndiceCalore() const {
     return IndiceCalore;
+}
+
+void TemPercepita::setIndiceCalore(double ic) {
+    IndiceCalore = ic;
 }
 
 void TemPercepita::simulaMisura() {
