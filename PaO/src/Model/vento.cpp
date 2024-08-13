@@ -57,10 +57,6 @@ double Vento::getTolleranzaAnemometro() const {
     return tolleranzaAnemometro;
 }
 
-void Vento::setMaxVelocita(double mv) {
-    valoreMaxVelocita = mv;
-}
-
 void Vento::setOffset(double o) {
     offset = o;
 }
@@ -71,10 +67,6 @@ void Vento::setTolleranzaGoniometro(double tg) {
 
 void Vento::setTolleranzaAnemometro(double ta) {
     tolleranzaAnemometro = ta;
-}
-
-void Vento::setDato(double valore1, double valore2) {
-    dato = std::make_pair(valore1, valore2);
 }
 
 void Vento::simulaMisura() {

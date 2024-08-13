@@ -21,10 +21,6 @@ double TemPercepita::getIndiceCalore() const {
     return IndiceCalore;
 }
 
-void TemPercepita::setIndiceCalore(double ic) {
-    IndiceCalore = ic;
-}
-
 void TemPercepita::simulaMisura() {
     u.simulaMisura();
     t.simulaMisura();

@@ -16,16 +16,6 @@ EditSensorDialog::EditSensorDialog(Model::Sensore* sensore, QWidget* parent)
         edits[pair.first] = edit;  // Salva il QLineEdit associato alla chiave
     }
 
-    // Campi aggiuntivi per Vento
-    if (dynamic_cast<Model::Vento*>(sensore)) {
-        // Creare QLineEdit aggiuntivi per i valori di Dato
-        valore1LineEdit = new QLineEdit(this);
-        valore2LineEdit = new QLineEdit(this);
-
-        layout->addRow("Primo valore Dato:", valore1LineEdit);
-        layout->addRow("Secondo valore Dato:", valore2LineEdit);
-    }
-
     // Bottoni OK e Cancel
     QDialogButtonBox* buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     connect(buttons, &QDialogButtonBox::accepted, this, &EditSensorDialog::acceptChanges);
@@ -35,91 +25,87 @@ EditSensorDialog::EditSensorDialog(Model::Sensore* sensore, QWidget* parent)
 }
 
 void EditSensorDialog::acceptChanges() {
-    // Verifica il tipo di sensore all'inizio
-    if (auto fotocellula = dynamic_cast<Model::Fotocellula*>(sensore)) {
-        // Gestione specifica per Fotocellula
+
+    std::string tipoSensore = sensore->getInfo()["type"];
+
+    if (tipoSensore == "Fotocellula") {
+
+        Model::Fotocellula* f = static_cast<Model::Fotocellula*>(sensore);
+
         for (const auto& pair : edits) {
             const std::string& key = pair.first;
             const std::string& value = pair.second->text().toStdString();
 
             if (key == "Nome") {
-                fotocellula->setNome(value);
-            } else if (key == "ID") {
-                fotocellula->setID(std::stoul(value));
+                sensore->setNome(value);
             } else if (key == "Soglia") {
-                fotocellula->setSoglia(std::stod(value));
+                f->setSoglia(std::stod(value));
             } else if (key == "Tolleranza") {
-                fotocellula->setTolleranza(std::stod(value));
+                f->setTolleranza(std::stod(value));
             }
         }
-    } else if (auto temperatura = dynamic_cast<Model::Temperatura*>(sensore)) {
-        // Gestione specifica per Temperatura
+
+    } else if (tipoSensore == "Temperatura") {
+
+        Model::Temperatura* t = static_cast<Model::Temperatura*>(sensore);
+
         for (const auto& pair : edits) {
             const std::string& key = pair.first;
             const std::string& value = pair.second->text().toStdString();
 
             if (key == "Nome") {
-                temperatura->setNome(value);
-            } else if (key == "ID") {
-                temperatura->setID(std::stoul(value));
+                t->setNome(value);
             } else if (key == "Tolleranza") {
-                temperatura->setTolleranza(std::stod(value));
-            } else if (key == "Dato") {
-                temperatura->setDato(std::stod(value));
+                t->setTolleranza(std::stod(value));
             }
         }
-    } else if (auto temPercepita = dynamic_cast<Model::TemPercepita*>(sensore)) {
-        // Gestione specifica per TemPercepita
+
+    } else if (tipoSensore == "Temperatura Percepita") {
+
+        Model::TemPercepita* tp = static_cast<Model::TemPercepita*>(sensore);
+
         for (const auto& pair : edits) {
             const std::string& key = pair.first;
             const std::string& value = pair.second->text().toStdString();
 
             if (key == "Nome") {
-                temPercepita->setNome(value);
-            } else if (key == "ID") {
-                temPercepita->setID(std::stoul(value));
-            } else if (key == "IndiceCalore") {
-                temPercepita->setIndiceCalore(std::stod(value));
+                tp->setNome(value);
             }
         }
-    } else if (auto umidita = dynamic_cast<Model::Umidita*>(sensore)) {
-        // Gestione specifica per Umidita
+
+    } else if (tipoSensore == "Umidità") {
+
+        Model::Umidita* u = static_cast<Model::Umidita*>(sensore);
+
         for (const auto& pair : edits) {
             const std::string& key = pair.first;
             const std::string& value = pair.second->text().toStdString();
 
             if (key == "Nome") {
-                umidita->setNome(value);
-            } else if (key == "ID") {
-                umidita->setID(std::stoul(value));
+                u->setNome(value);
             } else if (key == "Tolleranza") {
-                umidita->setTolleranza(std::stod(value));
-            } else if (key == "Dato") {
-                umidita->setDato(std::stod(value));
+                u->setTolleranza(std::stod(value));
             }
         }
-    } else if (auto vento = dynamic_cast<Model::Vento*>(sensore)) {
-        // Gestione specifica per Vento
+
+    } else if (tipoSensore == "Vento") {
+
+        Model::Vento* v = static_cast<Model::Vento*>(sensore);
+
         for (const auto& pair : edits) {
             const std::string& key = pair.first;
             const std::string& value = pair.second->text().toStdString();
 
             if (key == "Nome") {
-                vento->setNome(value);
-            } else if (key == "ID") {
-                vento->setID(std::stoul(value));
-            } else if (key == "MaxVelocita") {
-                vento->setMaxVelocita(std::stod(value));
+                v->setNome(value);
             } else if (key == "Offset") {
-                vento->setOffset(std::stod(value));
+                v->setOffset(std::stod(value));
             } else if (key == "TolleranzaGoniometro") {
-                vento->setTolleranzaGoniometro(std::stod(value));
+                v->setTolleranzaGoniometro(std::stod(value));
             } else if (key == "TolleranzaAnemometro") {
-                vento->setTolleranzaAnemometro(std::stod(value));
+                v->setTolleranzaAnemometro(std::stod(value));
             }
         }
-
-        vento->setDato(valore1LineEdit->text().toDouble(), valore2LineEdit->text().toDouble());
     }
 
     accept();  // Chiude il dialogo e ritorna QDialog::Accepted
