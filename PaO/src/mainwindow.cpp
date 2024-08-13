@@ -16,10 +16,11 @@
 #include "Model/tempercepita.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), mainLayout(nullptr), centralLayout(nullptr), centralWidget(nullptr)
+    : QMainWindow(parent), mainLayout(nullptr), centralLayout(nullptr), centralWidget(nullptr),sensorListWidget(nullptr)
 {
     setWindowTitle("Greenhouse manager");
 
+    connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
     //layout
     mainLayout = new QVBoxLayout;
     centralLayout = new QHBoxLayout;
@@ -28,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     tbar= new View::ToolBar;
     centralWidget = new QWidget(this);
     graphWidget = new QWidget(this);
-    sensorListWidget= new SensorListWidget(sensori);
+    sensorListWidget= new View::SensorListWidget(sensori,this);
 
 
     // Area di scorrimento per la lista dei sensori
@@ -67,8 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::saveAsSignal, this, &MainWindow::saveJsonFileAs);
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::dataUpdated);
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
-    connect(sensorListWidget, &SensorListWidget::sensorCloned, this, &MainWindow::openJsonFile);
-    connect(sensorListWidget, &SensorListWidget::sensorUpdated, this, &MainWindow::dataUpdated);
+    connect(sensorListWidget, &View::SensorListWidget::clonato, this, &MainWindow::sensoreClonato);
 
 }
 
@@ -284,10 +284,9 @@ void MainWindow::saveJsonFileAs(){
 }
 
 void MainWindow::dataUpdated(){
-
-    sensorListWidget= new SensorListWidget(sensori);
+    qDebug() << "dataUpdated slot called";
+    sensorListWidget= new View::SensorListWidget(sensori);
     scrollArea->setWidget(sensorListWidget);
-
 }
 
 void MainWindow::reloadJsonFile() {
@@ -327,9 +326,15 @@ void MainWindow::reloadJsonFile() {
     }
 
     // Ricarica la lista dei sensori
-    sensorListWidget = new SensorListWidget(sensori, this); // Ricrea il widget
+    sensorListWidget = new View::SensorListWidget(sensori, this); // Ricrea il widget
     scrollArea->setWidget(sensorListWidget); // Aggiorna l'area di scorrimento
 
     tbar->activateSaveAction();  // Abilita il pulsante di salvataggio
     tbar->activateSaveAsAction();
+}
+
+void MainWindow::sensoreClonato(Model::Sensore* s){
+    qDebug() << "sensoreClonato";
+    sensori.push_back(s->clone());
+    dataUpdated();
 }

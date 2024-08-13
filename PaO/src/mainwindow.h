@@ -30,7 +30,7 @@ private:
     QHBoxLayout* centralLayout;
     QWidget* centralWidget;
     View::ToolBar* tbar;
-    SensorListWidget* sensorListWidget;
+    View::SensorListWidget* sensorListWidget;
     QWidget* graphWidget;
     QScrollArea* scrollArea;
 
@@ -51,13 +51,16 @@ private slots:
     void saveJsonFileAs();
     void reloadJsonFile();
 
-    //aggiorna la finestra dopo la modifica dei dati
-    void dataUpdated();
+
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 public slots:
+
+    //aggiorna la finestra dopo la modifica dei dati
+    void dataUpdated();
+    void sensoreClonato(Model::Sensore*);
 
 };
 #endif // MAINWINDOW_H

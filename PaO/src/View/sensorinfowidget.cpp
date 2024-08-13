@@ -9,59 +9,15 @@
 // Costruttore della classe SensorInfoWidget
 SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string>& info, QWidget* parent)
     : QWidget(parent) {
-    QHBoxLayout* layoutEsterno = new QHBoxLayout(this);
     QVBoxLayout* layoutDati = new QVBoxLayout(this);
-    QVBoxLayout* layoutPulsanti = new QVBoxLayout(this);
 
     // Visualizzazione di ciascuna coppia chiave-valore
     for (const auto& pair : info) {
         QLabel* label = new QLabel(QString::fromStdString(pair.first) + ": " + QString::fromStdString(pair.second), this);
         layoutDati->addWidget(label);
     }
-    /*
-    // PULSANTE "CLONA"--------------------
-    QPushButton* cloneButton = new QPushButton("Clona", this);
-    layout->addWidget(cloneButton);
 
-    connect(cloneButton, &QPushButton::clicked, this, [this, sensore, &sensori]() {
-        // Clona il sensore usando il metodo clone
-        Model::Sensore* clonedSensor = sensore->clone(); // Crea una copia del sensore
-
-        // Aggiungi il nuovo SensorInfoWidget alla lista
-        sensori.push_back(clonedSensor);
-
-        emit sensorCloned();
-        qDebug() << "sensore clonato";
-    });
-    //--------------------------------------
-
-    //PULSANTE "MODIFICA"-------------------
-    QPushButton* editButton = new QPushButton("Modifica", this);
-    layout->addWidget(editButton);
-
-    connect(editButton, &QPushButton::clicked, this, [this, sensore]() {
-        EditSensorDialog* dialog = new EditSensorDialog(sensore, this);
-        if (dialog->exec() == QDialog::Accepted) {
-            // Aggiorna la visualizzazione del sensore se necessario
-            emit sensorUpdated();
-            qDebug() << "sensore modificato";
-        }
-        delete dialog;
-    });
-    //--------------------------------------
-
-    // PULSANTE "ELIMINA"-------------------
-    QPushButton* deleteButton = new QPushButton("Elimina", this);
-    layout->addWidget(deleteButton);
-
-    connect(deleteButton, &QPushButton::clicked, this, [this, sensore]() {
-        // Gestire l'eliminazione del sensore
-    });
-    //---------------------------------------
-*/
-    setLayout(layoutEsterno);
-    layoutEsterno->addLayout(layoutDati);
-    layoutEsterno->addLayout(layoutPulsanti);
+    setLayout(layoutDati);
 }
 
 // Gestione dell'evento di pressione del mouse
