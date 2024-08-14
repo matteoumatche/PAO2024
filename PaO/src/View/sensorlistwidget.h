@@ -20,10 +20,6 @@ public:
 signals:
     void sensorClicked(Model::Sensore* sensore); // Segnale emesso quando un sensore viene cliccato
     void updateList(); //emesso quando i dati dei sensori cambiano
-    void clonato(Model::Sensore* sensore); //emesso quando i dati dei sensori cambiano
-private slots:
-    void sendRequestUpdateList();
-    //void updateSensors(std::vector<Model::Sensore*>& sensori);
 
 };
 }

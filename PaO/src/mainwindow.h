@@ -62,7 +62,6 @@ public slots:
 
     //aggiorna la finestra dopo la modifica dei dati
     void dataUpdated();
-    void sensoreClonato(Model::Sensore*);
 
 };
 #endif // MAINWINDOW_H

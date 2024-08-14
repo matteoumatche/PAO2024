@@ -1,16 +1,23 @@
 #include "editsensordialog.h"
 #include <QVBoxLayout>
+#include <string>
+#include <set>
 
-EditSensorDialog::EditSensorDialog(Model::Sensore* sensore, QWidget* parent)
-    : QDialog(parent), sensore(sensore) {
+EditSensorDialog::EditSensorDialog(Model::Sensore* sensore,std::vector<Model::Sensore*>& sensori,QWidget* parent)
+    : QDialog(parent) {
 
     QFormLayout* layout = new QFormLayout(this);
 
     // Ottieni le informazioni esistenti del sensore
     std::map<std::string, std::string> info = sensore->getInfo();
+    // Definisci l'insieme delle chiavi da escludere dall'editazione
+    std::set<std::string> esclusioni = {"ID", "Dato","IndiceCalore","Attivo","Tipo"};  // Esempio di chiavi da escludere
 
-    // Crea un QLineEdit per ogni campo della mappa, e memorizzalo in un'altra mappa
+    // Crea un QLineEdit per ogni campo della mappa, se non è escluso
     for (const auto& pair : info) {
+        if (esclusioni.find(pair.first) != esclusioni.end()) {
+            continue;  // Salta questa chiave se è nell'insieme delle chiavi escluse
+        }
         QLineEdit* edit = new QLineEdit(QString::fromStdString(pair.second), this);
         layout->addRow(QString::fromStdString(pair.first) + ":", edit);
         edits[pair.first] = edit;  // Salva il QLineEdit associato alla chiave
@@ -18,95 +25,63 @@ EditSensorDialog::EditSensorDialog(Model::Sensore* sensore, QWidget* parent)
 
     // Bottoni OK e Cancel
     QDialogButtonBox* buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-    connect(buttons, &QDialogButtonBox::accepted, this, &EditSensorDialog::acceptChanges);
+    connect(buttons, &QDialogButtonBox::accepted, this, [this,&sensori,&sensore]{
+        // Passo 1: Ottenere la mappa originale da sensore
+        std::map<std::string, std::string> infoMap = sensore->getInfo();
+
+        // Passo 2: Modificare la mappa in base alle modifiche contenute in edits
+        for (const auto& pair : edits) {
+            const std::string& key = pair.first;
+            const std::string& value = pair.second->text().toStdString();
+            infoMap[key] = value; // Aggiorna la mappa con i nuovi valori
+        }
+
+        // Passo 3: Convertire la mappa modificata in QJsonObject
+        QJsonObject modifiedJson = MainWindow::mapToJson(infoMap);
+
+        // Passo 4: Creare un nuovo oggetto sensore in base al tipo
+        Model::Sensore* nuovoSensore= nullptr;
+        std::string tipoSensore = infoMap["Tipo"];
+        qWarning() <<tipoSensore;
+        if (tipoSensore == "Fotocellula") {
+            nuovoSensore = new Model::Fotocellula(modifiedJson);
+        } else if (tipoSensore == "Temperatura") {
+            nuovoSensore = new Model::Temperatura(modifiedJson);
+        } else if (tipoSensore == "Temperatura Percepita") {
+            nuovoSensore = new Model::TemPercepita(modifiedJson);
+        } else if (tipoSensore == "Umidità") {
+            nuovoSensore = new Model::Umidita(modifiedJson);
+        } else if (tipoSensore == "Vento") {
+            nuovoSensore = new Model::Vento(modifiedJson);
+        }
+
+        // Se l'oggetto nuovo è stato creato con successo
+        if (nuovoSensore) {
+            for (auto it = sensori.begin(); it != sensori.end(); ++it) {
+                // Se l'ID dell'elemento corrente corrisponde all'ID del sensore da rimuovere
+                if ((*it)->getID() == sensore->getID()) {
+                    // Rimuoviamo l'elemento dal vettore
+                    sensori.erase(it);
+                    qDebug() << nuovoSensore->getInfo();
+                    sensori.push_back(nuovoSensore);
+                    delete(sensore);
+                    // Uscire dal ciclo dopo aver rimosso l'elemento, poiché non è necessario continuare
+                    break;
+                }
+            }
+
+        }else qWarning() << "errore";
+
+        accept(); // Chiude il dialogo e ritorna QDialog::Accepted
+    });
     connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
     layout->addWidget(buttons);
 }
 
-void EditSensorDialog::acceptChanges() {
-
-    std::string tipoSensore = sensore->getInfo()["type"];
-
-    if (tipoSensore == "Fotocellula") {
-
-        Model::Fotocellula* f = static_cast<Model::Fotocellula*>(sensore);
-
-        for (const auto& pair : edits) {
-            const std::string& key = pair.first;
-            const std::string& value = pair.second->text().toStdString();
-
-            if (key == "Nome") {
-                sensore->setNome(value);
-            } else if (key == "Soglia") {
-                f->setSoglia(std::stod(value));
-            } else if (key == "Tolleranza") {
-                f->setTolleranza(std::stod(value));
-            }
-        }
-
-    } else if (tipoSensore == "Temperatura") {
-
-        Model::Temperatura* t = static_cast<Model::Temperatura*>(sensore);
-
-        for (const auto& pair : edits) {
-            const std::string& key = pair.first;
-            const std::string& value = pair.second->text().toStdString();
-
-            if (key == "Nome") {
-                t->setNome(value);
-            } else if (key == "Tolleranza") {
-                t->setTolleranza(std::stod(value));
-            }
-        }
-
-    } else if (tipoSensore == "Temperatura Percepita") {
-
-        Model::TemPercepita* tp = static_cast<Model::TemPercepita*>(sensore);
-
-        for (const auto& pair : edits) {
-            const std::string& key = pair.first;
-            const std::string& value = pair.second->text().toStdString();
-
-            if (key == "Nome") {
-                tp->setNome(value);
-            }
-        }
-
-    } else if (tipoSensore == "Umidità") {
-
-        Model::Umidita* u = static_cast<Model::Umidita*>(sensore);
-
-        for (const auto& pair : edits) {
-            const std::string& key = pair.first;
-            const std::string& value = pair.second->text().toStdString();
-
-            if (key == "Nome") {
-                u->setNome(value);
-            } else if (key == "Tolleranza") {
-                u->setTolleranza(std::stod(value));
-            }
-        }
-
-    } else if (tipoSensore == "Vento") {
-
-        Model::Vento* v = static_cast<Model::Vento*>(sensore);
-
-        for (const auto& pair : edits) {
-            const std::string& key = pair.first;
-            const std::string& value = pair.second->text().toStdString();
-
-            if (key == "Nome") {
-                v->setNome(value);
-            } else if (key == "Offset") {
-                v->setOffset(std::stod(value));
-            } else if (key == "TolleranzaGoniometro") {
-                v->setTolleranzaGoniometro(std::stod(value));
-            } else if (key == "TolleranzaAnemometro") {
-                v->setTolleranzaAnemometro(std::stod(value));
-            }
-        }
+EditSensorDialog::~EditSensorDialog() {
+    // Assicurati di eliminare i QLineEdit per evitare perdite di memoria
+    for (auto& pair : edits) {
+        delete pair.second; // Elimina solo i QLineEdit, non sensore
     }
-
-    accept();  // Chiude il dialogo e ritorna QDialog::Accepted
 }

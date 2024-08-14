@@ -38,19 +38,18 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
 
         connect(cloneButton, &QPushButton::clicked, cloneButton, [this,&sensori,sensore]{
             sensori.push_back(sensore->clone());
-            this->sendRequestUpdateList();
-
+            emit updateList();
         });
         //--------------------------------------
 
         //PULSANTE "MODIFICA"-------------------
         QPushButton* editButton = new QPushButton("Modifica", this);
         layoutBottoni->addWidget(editButton);
-        connect(editButton, &QPushButton::clicked, this, [this, sensore]() {
-            EditSensorDialog* dialog = new EditSensorDialog(sensore, this);
+        connect(editButton, &QPushButton::clicked, this, [this, &sensori, sensore]() {
+            EditSensorDialog* dialog = new EditSensorDialog(sensore,sensori, this);
             if (dialog->exec() == QDialog::Accepted) {
                 // Aggiorna la visualizzazione del sensore se necessario
-                View::SensorListWidget::sendRequestUpdateList();
+                emit updateList();
                 qDebug() << "sensore modificato";
             }
             delete dialog;
@@ -71,7 +70,7 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
                     break;
                 }
             }
-            this->sendRequestUpdateList();
+            emit updateList();
             qDebug() << "sensore eliminato";
         });
         //---------------------------------------
@@ -82,72 +81,3 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
 
     setLayout(layout);
 }
-
-void View::SensorListWidget::sendRequestUpdateList(){
-    qDebug() << "richiesta inviata";
-    emit View::SensorListWidget::updateList();
-}
-
-/*
-void View::SensorListWidget::updateSensors(std::vector<Model::Sensore*>& sensori) {
-    // Rimuovi tutti i widget figli esistenti
-    QLayoutItem* item;
-    while ((item = layout()->takeAt(0)) != nullptr) {
-        delete item->widget(); // elimina il widget
-        delete item; // elimina l'item del layout
-    }
-
-    // Ricrea i widget basati sui sensori aggiornati
-    for (Model::Sensore* sensore : sensori) {
-        std::map<std::string, std::string> info = sensore->getInfo();
-        SensorInfoWidget* sensorWidget = new SensorInfoWidget(info, this);
-        QHBoxLayout* layoutInterno = new QHBoxLayout();
-        QVBoxLayout* layoutBottoni = new QVBoxLayout();
-        layoutInterno->addWidget(sensorWidget);
-
-        // PULSANTE GENERALE SENSORE
-        connect(sensorWidget, &SensorInfoWidget::widgetClicked, this, [this, sensore]() {
-            emit sensorClicked(sensore);
-        });
-
-        // PULSANTE "CLONA"
-        QPushButton* cloneButton = new QPushButton("Clona", this);
-        layoutBottoni->addWidget(cloneButton);
-
-        connect(cloneButton, &QPushButton::clicked, this, [this, &sensori, sensore] {
-            sensori.push_back(sensore->clone());
-            this->sendRequestUpdateList();
-        });
-
-        // PULSANTE "MODIFICA"
-        QPushButton* editButton = new QPushButton("Modifica", this);
-        layoutBottoni->addWidget(editButton);
-        connect(editButton, &QPushButton::clicked, this, [this, sensore]() {
-            EditSensorDialog* dialog = new EditSensorDialog(sensore, this);
-            if (dialog->exec() == QDialog::Accepted) {
-                sendRequestUpdateList();
-                qDebug() << "sensore modificato";
-            }
-            delete dialog;
-        });
-
-        // PULSANTE "ELIMINA"
-        QPushButton* deleteButton = new QPushButton("Elimina", this);
-        layoutBottoni->addWidget(deleteButton);
-        connect(deleteButton, &QPushButton::clicked, this, [&sensori, sensore, this]() {
-            auto it = std::find_if(sensori.begin(), sensori.end(), [sensore](Model::Sensore* s) {
-                return s->getID() == sensore->getID();
-            });
-            if (it != sensori.end()) {
-                sensori.erase(it);
-                sendRequestUpdateList();
-                qDebug() << "sensore eliminato";
-            }
-        });
-
-        layoutInterno->addLayout(layoutBottoni);
-        layout()->addLayout(layoutInterno);
-    }
-}*/
-
-

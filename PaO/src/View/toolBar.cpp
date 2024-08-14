@@ -38,9 +38,6 @@ ToolBar::ToolBar(QToolBar *parent)
     connect(saveAsAction, &QAction::triggered, this, &ToolBar::saveAsSlot);
 }
 
-
-
-
 void ToolBar::newSlot(){
     emit newSignal();
 }

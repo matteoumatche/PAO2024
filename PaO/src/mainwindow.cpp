@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::saveAsSignal, this, &MainWindow::saveJsonFileAs);
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::dataUpdated);
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
-    connect(sensorListWidget, &View::SensorListWidget::clonato, this, &MainWindow::sensoreClonato);
+    connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
 
 }
 
@@ -169,7 +169,7 @@ QStringList MainWindow::getAvailableSensorTypes() {
 
 Model::Sensore* MainWindow::creaSensore(const QJsonObject& info) const {
     QString tipo = info["Tipo"].toString();
-    qWarning() << tipo;
+   // qWarning() << tipo;
     if (!tipo.isEmpty()) {
         if (tipo == "Fotocellula") {
             return new Model::Fotocellula(info);
@@ -283,11 +283,8 @@ void MainWindow::saveJsonFileAs(){
     saveJsonFile();
 }
 
-
-
-
 void MainWindow::dataUpdated() {
-    qDebug() << "dataUpdated slot called";
+    qDebug() << "dataUpdated";
 
     // Prima di creare un nuovo widget, eliminiamo il vecchio
     if (sensorListWidget) {
@@ -301,16 +298,7 @@ void MainWindow::dataUpdated() {
 
     // Riconnetti i segnali
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
-    connect(sensorListWidget, &View::SensorListWidget::clonato, this, &MainWindow::sensoreClonato);
 }
-
-/*
-void MainWindow::dataUpdated(){
-    qDebug() << "dataUpdated slot called";
-    sensorListWidget= new View::SensorListWidget(sensori);
-    scrollArea->setWidget(sensorListWidget);
-}
-*/
 
 void MainWindow::reloadJsonFile() {
     if (pathToFile.isEmpty()) {
@@ -354,10 +342,4 @@ void MainWindow::reloadJsonFile() {
 
     tbar->activateSaveAction();  // Abilita il pulsante di salvataggio
     tbar->activateSaveAsAction();
-}
-
-void MainWindow::sensoreClonato(Model::Sensore* s){
-    qDebug() << "sensoreClonato";
-    sensori.push_back(s->clone());
-    dataUpdated();
 }
