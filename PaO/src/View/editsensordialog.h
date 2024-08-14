@@ -27,7 +27,7 @@ public:
 
 
 private slots:
-    //void acceptChanges();
+    void acceptChanges(Model::Sensore*);
 
 private:
     //Model::Sensore* sensore;

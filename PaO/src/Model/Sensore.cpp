@@ -8,7 +8,7 @@ Sensore::Sensore(unsigned int id, std::string n) : ID(id), nome(n) {}
 Sensore::Sensore(const QJsonObject& json) : nome(json["Nome"].toString().toStdString()) {
     std::string id=(json["ID"]).toString().toStdString();
     qDebug() << json;
-
+    ID=std::stoi(id);
 }
 
 std::string Sensore::getNome() const {

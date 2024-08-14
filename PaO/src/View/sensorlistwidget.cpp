@@ -47,12 +47,12 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
         layoutBottoni->addWidget(editButton);
         connect(editButton, &QPushButton::clicked, this, [this, &sensori, sensore]() {
             EditSensorDialog* dialog = new EditSensorDialog(sensore,sensori, this);
+            qDebug() << "creato edit dialog";
             if (dialog->exec() == QDialog::Accepted) {
                 // Aggiorna la visualizzazione del sensore se necessario
                 emit updateList();
                 qDebug() << "sensore modificato";
             }
-            delete dialog;
         });
         //--------------------------------------
 
