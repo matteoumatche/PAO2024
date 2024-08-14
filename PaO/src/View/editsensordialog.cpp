@@ -42,7 +42,7 @@ EditSensorDialog::EditSensorDialog(Model::Sensore* sensore,std::vector<Model::Se
         // Passo 4: Creare un nuovo oggetto sensore in base al tipo
         Model::Sensore* nuovoSensore= nullptr;
         std::string tipoSensore = infoMap["Tipo"];
-        qWarning() <<tipoSensore;
+        //qWarning() <<tipoSensore;
         if (tipoSensore == "Fotocellula") {
             nuovoSensore = new Model::Fotocellula(modifiedJson);
         } else if (tipoSensore == "Temperatura") {
