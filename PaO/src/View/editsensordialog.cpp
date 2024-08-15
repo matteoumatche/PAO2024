@@ -46,7 +46,6 @@ qDebug() << "6";
         Model::Sensore* nuovoSensore= nullptr;
         qDebug() << "passo 5";
         std::string tipoSensore = infoMap["Tipo"];
-        qDebug() << tipoSensore;
         qDebug() << "passo 6";
         //qWarning() <<tipoSensore;
         if (tipoSensore == "Fotocellula") {
@@ -75,7 +74,6 @@ qDebug() << "6";
             nuovoSensore= _nuovoSensore;
             qDebug() << "V";
         }
-        qDebug() << nuovoSensore->getInfo();
 
         // Se l'oggetto nuovo è stato creato con successo
         if (nuovoSensore) {
@@ -84,7 +82,6 @@ qDebug() << "6";
                 if ((*it)->getID() == sensore->getID()) {
                     // Rimuoviamo l'elemento dal vettore
                     sensori.erase(it);
-                    qDebug() << nuovoSensore->getInfo();
                     sensori.push_back(nuovoSensore);
                     delete(sensore);
                     // Uscire dal ciclo dopo aver rimosso l'elemento, poiché non è necessario continuare

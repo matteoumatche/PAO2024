@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EditSensorDialog_t {
-    const uint offsetsAndSize[6];
-    char stringdata0[32];
+    const uint offsetsAndSize[8];
+    char stringdata0[48];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_EditSensorDialog_t, stringdata0) + ofs), len 
@@ -31,10 +31,12 @@ static const qt_meta_stringdata_EditSensorDialog_t qt_meta_stringdata_EditSensor
     {
 QT_MOC_LITERAL(0, 16), // "EditSensorDialog"
 QT_MOC_LITERAL(17, 13), // "acceptChanges"
-QT_MOC_LITERAL(31, 0) // ""
+QT_MOC_LITERAL(31, 0), // ""
+QT_MOC_LITERAL(32, 15) // "Model::Sensore*"
 
     },
-    "EditSensorDialog\0acceptChanges\0"
+    "EditSensorDialog\0acceptChanges\0\0"
+    "Model::Sensore*"
 };
 #undef QT_MOC_LITERAL
 
@@ -52,10 +54,10 @@ static const uint qt_meta_data_EditSensorDialog[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   20,    2, 0x08,    1 /* Private */,
+       1,    1,   20,    2, 0x08,    1 /* Private */,
 
  // slots: parameters
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 3,    2,
 
        0        // eod
 };
@@ -66,11 +68,10 @@ void EditSensorDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         auto *_t = static_cast<EditSensorDialog *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->acceptChanges(); break;
+        case 0: _t->acceptChanges((*reinterpret_cast< std::add_pointer_t<Model::Sensore*>>(_a[1]))); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 const QMetaObject EditSensorDialog::staticMetaObject = { {
@@ -81,7 +82,7 @@ const QMetaObject EditSensorDialog::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_EditSensorDialog_t
 , QtPrivate::TypeAndForceComplete<EditSensorDialog, std::true_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>
 
 
 >,
