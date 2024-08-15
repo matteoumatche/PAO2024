@@ -316,6 +316,48 @@ debug/moc_editsensordialog.cpp: ../PaO/src/View/editsensordialog.h \
 		../PaO/src/Model/tempercepita.h \
 		../PaO/src/Model/vento.h \
 		../PaO/src/Model/fotocellula.h \
+		../PaO/src/mainwindow.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QMainWindow \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qmainwindow.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qtabwidget.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qicon.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QComboBox \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qcombobox.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qstyleoption.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qvalidator.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qslider.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractslider.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qstyle.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qtabbar.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qrubberband.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QVBoxLayout \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QHBoxLayout \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QScrollArea \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qscrollarea.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		../PaO/src/View/toolBar.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QToolBar \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qtoolbar.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qaction.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QMessageBox \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qmessagebox.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QFileDialog \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qfiledialog.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qdir.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qfile.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qfiledevice.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qfileinfo.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QToolButton \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qtoolbutton.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractbutton.h \
+		../PaO/src/View/sensorlistwidget.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QWidget \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QPushButton \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qpushbutton.h \
+		../PaO/src/View/sensorinfowidget.h \
 		debug/moc_predefs.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/bin/moc.exe
 	C:\Qt\Qt6.2.4\6.2.4\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/bzagh/Documents/GitHub/PAO2024/build-PaO-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/Qt6.2.4/6.2.4/mingw_64/mkspecs/win32-g++ -IC:/Users/bzagh/Documents/GitHub/PAO2024/PaO -IC:/Qt/Qt6.2.4/6.2.4/mingw_64/include -IC:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets -IC:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui -IC:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore -I. -IC:/Qt/Qt6.2.4/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IC:/Qt/Qt6.2.4/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt6.2.4/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IC:/Qt/Qt6.2.4/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IC:/Qt/Qt6.2.4/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IC:/Qt/Qt6.2.4/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\PaO\src\View\editsensordialog.h -o debug\moc_editsensordialog.cpp
@@ -578,6 +620,10 @@ debug/moc_sensorlistwidget.cpp: ../PaO/src/View/sensorlistwidget.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/QSizeF \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/QTransform \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qnativeinterface.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QPushButton \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qpushbutton.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qicon.h \
 		../PaO/src/Model/sensore.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/QJsonObject \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qjsonobject.h \
@@ -792,6 +838,8 @@ debug/moc_mainwindow.cpp: ../PaO/src/mainwindow.h \
 		../PaO/src/Model/vento.h \
 		../PaO/src/View/sensorlistwidget.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QWidget \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QPushButton \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qpushbutton.h \
 		../PaO/src/View/sensorinfowidget.h \
 		debug/moc_predefs.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/bin/moc.exe
@@ -1223,7 +1271,48 @@ debug/editsensordialog.o: ../PaO/src/View/editsensordialog.cpp ../PaO/src/View/e
 		../PaO/src/Model/tempercepita.h \
 		../PaO/src/Model/vento.h \
 		../PaO/src/Model/fotocellula.h \
-		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QVBoxLayout
+		../PaO/src/mainwindow.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QMainWindow \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qmainwindow.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qtabwidget.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qicon.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QComboBox \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qcombobox.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qstyleoption.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qvalidator.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qslider.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractslider.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qstyle.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qtabbar.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qrubberband.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QVBoxLayout \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QHBoxLayout \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QScrollArea \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qscrollarea.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		../PaO/src/View/toolBar.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QToolBar \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qtoolbar.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qaction.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QMessageBox \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qmessagebox.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QFileDialog \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qfiledialog.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qdir.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qfile.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qfiledevice.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qfileinfo.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QToolButton \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qtoolbutton.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractbutton.h \
+		../PaO/src/View/sensorlistwidget.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QWidget \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QPushButton \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qpushbutton.h \
+		../PaO/src/View/sensorinfowidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\editsensordialog.o ..\PaO\src\View\editsensordialog.cpp
 
 debug/sensorinfowidget.o: ../PaO/src/View/sensorinfowidget.cpp ../PaO/src/View/sensorinfowidget.h \
@@ -1501,6 +1590,10 @@ debug/sensorlistwidget.o: ../PaO/src/View/sensorlistwidget.cpp ../PaO/src/View/s
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/QSizeF \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/QTransform \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qnativeinterface.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QPushButton \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qpushbutton.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qicon.h \
 		../PaO/src/Model/sensore.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/QJsonObject \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qjsonobject.h \
@@ -1513,20 +1606,70 @@ debug/sensorlistwidget.o: ../PaO/src/View/sensorlistwidget.cpp ../PaO/src/View/s
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qregularexpression.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/quuid.h \
 		../PaO/src/View/sensorinfowidget.h \
-		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QVBoxLayout \
-		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qboxlayout.h \
+		../PaO/src/View/editsensordialog.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QDialog \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QLineEdit \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qlineedit.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qframe.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qtextcursor.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qtextformat.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qpen.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qtextoption.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QFormLayout \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qformlayout.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QLayout \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qlayout.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qlayoutitem.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qboxlayout.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qgridlayout.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QDialogButtonBox \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+		../PaO/src/Model/temperatura.h \
+		../PaO/src/Model/umidita.h \
+		../PaO/src/Model/tempercepita.h \
+		../PaO/src/Model/vento.h \
+		../PaO/src/Model/fotocellula.h \
+		../PaO/src/mainwindow.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QMainWindow \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qmainwindow.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qtabwidget.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QComboBox \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qcombobox.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qstyleoption.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qvalidator.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qslider.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractslider.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qstyle.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qtabbar.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qrubberband.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QVBoxLayout \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QHBoxLayout \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QScrollArea \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qscrollarea.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		../PaO/src/View/toolBar.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QToolBar \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qtoolbar.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qaction.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QMessageBox \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qmessagebox.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QFileDialog \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qfiledialog.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qdir.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qfile.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qfiledevice.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qfileinfo.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QToolButton \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qtoolbutton.h \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/QString \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QLabel \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qlabel.h \
-		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qframe.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qpicture.h \
-		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qtextdocument.h \
-		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QPushButton \
-		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qpushbutton.h \
-		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qicon.h
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/qtextdocument.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\sensorlistwidget.o ..\PaO\src\View\sensorlistwidget.cpp
 
 debug/main.o: ../PaO/src/main.cpp ../PaO/src/mainwindow.h \
@@ -1727,6 +1870,8 @@ debug/main.o: ../PaO/src/main.cpp ../PaO/src/mainwindow.h \
 		../PaO/src/Model/vento.h \
 		../PaO/src/View/sensorlistwidget.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QWidget \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QPushButton \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qpushbutton.h \
 		../PaO/src/View/sensorinfowidget.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QApplication \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qapplication.h \
@@ -1948,6 +2093,8 @@ debug/mainwindow.o: ../PaO/src/mainwindow.cpp ../PaO/src/mainwindow.h \
 		../PaO/src/Model/vento.h \
 		../PaO/src/View/sensorlistwidget.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QWidget \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QPushButton \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qpushbutton.h \
 		../PaO/src/View/sensorinfowidget.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtGui/QAction \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/QJsonDocument \
@@ -2575,6 +2722,8 @@ debug/toolBar.o: ../PaO/src/View/toolBar.cpp ../PaO/src/View/toolBar.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qgridlayout.h \
 		../PaO/src/View/sensorlistwidget.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QWidget \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/QPushButton \
+		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtWidgets/qpushbutton.h \
 		../PaO/src/Model/sensore.h \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/QJsonObject \
 		C:/Qt/Qt6.2.4/6.2.4/mingw_64/include/QtCore/qjsonobject.h \
