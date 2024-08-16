@@ -20,6 +20,7 @@
 #include "View/widgetumidita.h"
 #include "View/widgetvento.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), mainLayout(nullptr), centralLayout(nullptr), centralWidget(nullptr),sensorListWidget(nullptr)
 {
@@ -42,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Impostazione del widget della lista dei sensori nell'area di scorrimento
     scrollArea->setWidget(sensorListWidget);
+
     centralLayout->addWidget(scrollArea);
 
     //impostazioni widget
@@ -351,6 +353,9 @@ void MainWindow::reloadJsonFile() {
 }
 
 void MainWindow::onSensorSelected(Model::Sensore* sensore) {
+
+    qDebug() << "onSensorSelected chiamato";
+
     // Rimuovi il widget corrente
     if (graphWidget) {
         centralLayout->removeWidget(graphWidget);

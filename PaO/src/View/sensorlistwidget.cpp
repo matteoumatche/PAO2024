@@ -29,6 +29,7 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
         // PULSANTE GENERALE SENSORE-------------
         connect(sensorWidget, &SensorInfoWidget::widgetClicked, this, [this, sensore]() {
             emit sensorClicked(sensore); // Emetti il segnale quando il widget viene cliccato
+            qDebug() << "segnale emesso 1";
         });
         //---------------------------------------
 

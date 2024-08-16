@@ -12,8 +12,6 @@ namespace View{
 class SensorListWidget : public QWidget {
     Q_OBJECT
 
-
-
 public:
     SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidget* parent = nullptr);
 
