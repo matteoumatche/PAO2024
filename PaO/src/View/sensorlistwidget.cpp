@@ -2,7 +2,7 @@
 #include "sensorinfowidget.h"
 #include "../Model/sensore.h"
 #include "editsensordialog.h"
-#include "../mainwindow.h"
+//#include "../mainwindow.h"
 #include <vector>
 #include <QVBoxLayout>
 #include<QString>
@@ -28,8 +28,8 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
 
         // PULSANTE GENERALE SENSORE-------------
         connect(sensorWidget, &SensorInfoWidget::widgetClicked, this, [this, sensore]() {
-            emit sensorClicked(sensore); // Emetti il segnale quando il widget viene cliccato
-            qDebug() << "segnale emesso 1";
+            selezionato=sensore;
+            onSensorSelected();
         });
         //---------------------------------------
 
@@ -76,9 +76,17 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
         });
         //---------------------------------------
 
+
+
+
+
         layoutInterno->addLayout(layoutBottoni);
         layout->addLayout(layoutInterno);
     }
 
     setLayout(layout);
+}
+
+void View::SensorListWidget::onSensorSelected(){
+    emit sensorClicked(selezionato);
 }

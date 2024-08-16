@@ -356,27 +356,30 @@ void MainWindow::onSensorSelected(Model::Sensore* sensore) {
 
     qDebug() << "onSensorSelected chiamato";
 
-    // Rimuovi il widget corrente
-    if (graphWidget) {
-        centralLayout->removeWidget(graphWidget);
-        delete graphWidget;
+
+    if(sensore){
+        // Rimuovi il widget corrente
+        if (graphWidget) {
+            centralLayout->removeWidget(graphWidget);
+            delete graphWidget;
+        }
+
+        std::map<std::string, std::string> infoMap = sensore->getInfo();
+
+        // Identifica il tipo di sensore e crea il widget appropriato
+        std::string tipoSensore = infoMap["Tipo"];
+
+        if (tipoSensore == "Temperatura") {
+            // Se è un sensore di temperatura, crea un widget per la temperatura
+            graphWidget = new WidgetTemperatura(static_cast<Model::Temperatura*>(sensore), this);
+        }
+        // Aggiungi altri tipi di sensori se necessario...
+
+        // Aggiungi il nuovo widget alla finestra
+        centralLayout->addWidget(graphWidget);
+        centralLayout->setStretchFactor(graphWidget, 2);
+
+        // Assicurati che il layout venga aggiornato
+        centralWidget->update();
     }
-
-    std::map<std::string, std::string> infoMap = sensore->getInfo();
-
-    // Identifica il tipo di sensore e crea il widget appropriato
-    std::string tipoSensore = infoMap["Tipo"];
-
-    if (tipoSensore == "Temperatura") {
-        // Se è un sensore di temperatura, crea un widget per la temperatura
-        graphWidget = new WidgetTemperatura(static_cast<Model::Temperatura*>(sensore), this);
-    }
-    // Aggiungi altri tipi di sensori se necessario...
-
-    // Aggiungi il nuovo widget alla finestra
-    centralLayout->addWidget(graphWidget);
-    centralLayout->setStretchFactor(graphWidget, 2);
-
-    // Assicurati che il layout venga aggiornato
-    centralWidget->update();
 }
