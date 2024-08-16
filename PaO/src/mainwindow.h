@@ -51,6 +51,7 @@ private slots:
     void saveJsonFileAs();
     void reloadJsonFile();
 
+    void onSensorSelected(Model::Sensore* selectedSensor);
 
 
 public:

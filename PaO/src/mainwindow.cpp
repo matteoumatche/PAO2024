@@ -14,6 +14,11 @@
 #include "Model/vento.h"
 #include "Model/umidita.h"
 #include "Model/tempercepita.h"
+#include "View/widgetfotocellula.h"
+#include "View/widgettemperatura.h"
+#include "View/widgettempercepita.h"
+#include "View/widgetumidita.h"
+#include "View/widgetvento.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), mainLayout(nullptr), centralLayout(nullptr), centralWidget(nullptr),sensorListWidget(nullptr)
@@ -69,6 +74,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::dataUpdated);
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
+    connect(sensorListWidget, &View::SensorListWidget::sensorClicked, this, &MainWindow::onSensorSelected);
 
 }
 
@@ -342,4 +348,30 @@ void MainWindow::reloadJsonFile() {
 
     tbar->activateSaveAction();  // Abilita il pulsante di salvataggio
     tbar->activateSaveAsAction();
+}
+
+void MainWindow::onSensorSelected(Model::Sensore* sensore) {
+    // Rimuovi il widget corrente
+    if (graphWidget) {
+        centralLayout->removeWidget(graphWidget);
+        delete graphWidget;
+    }
+
+    std::map<std::string, std::string> infoMap = sensore->getInfo();
+
+    // Identifica il tipo di sensore e crea il widget appropriato
+    std::string tipoSensore = infoMap["Tipo"];
+
+    if (tipoSensore == "Temperatura") {
+        // Se è un sensore di temperatura, crea un widget per la temperatura
+        graphWidget = new WidgetTemperatura(static_cast<Model::Temperatura*>(sensore), this);
+    }
+    // Aggiungi altri tipi di sensori se necessario...
+
+    // Aggiungi il nuovo widget alla finestra
+    centralLayout->addWidget(graphWidget);
+    centralLayout->setStretchFactor(graphWidget, 2);
+
+    // Assicurati che il layout venga aggiornato
+    centralWidget->update();
 }

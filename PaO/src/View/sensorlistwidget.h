@@ -20,6 +20,7 @@ public:
 signals:
     void sensorClicked(Model::Sensore* sensore); // Segnale emesso quando un sensore viene cliccato
     void updateList(); //emesso quando i dati dei sensori cambiano
+    void sensorSelected(Model::Sensore* selectedSensor);
 
 };
 }

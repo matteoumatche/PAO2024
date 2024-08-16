@@ -13,6 +13,11 @@ SOURCES += \
     src/View/editsensordialog.cpp \
     src/View/sensorinfowidget.cpp \
     src/View/sensorlistwidget.cpp \
+    src/View/widgetfotocellula.cpp \
+    src/View/widgettemperatura.cpp \
+    src/View/widgettempercepita.cpp \
+    src/View/widgetumidita.cpp \
+    src/View/widgetvento.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/Model/sensore.cpp \
@@ -27,6 +32,11 @@ HEADERS += \
     src/View/editsensordialog.h \
     src/View/sensorinfowidget.h \
     src/View/sensorlistwidget.h \
+    src/View/widgetfotocellula.h \
+    src/View/widgettemperatura.h \
+    src/View/widgettempercepita.h \
+    src/View/widgetumidita.h \
+    src/View/widgetvento.h \
     src/mainwindow.h \
     src/Model/sensore.h \
     src/Model/temperatura.h \
