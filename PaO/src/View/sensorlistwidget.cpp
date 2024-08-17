@@ -27,6 +27,11 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
         QVBoxLayout* layoutBottoni = new QVBoxLayout();
         layoutInterno->addWidget(sensorWidget);
 
+        connect(sensorWidget, &SensorInfoWidget::sensorSelected, [this, sensore](const std::map<std::string, std::string>& info) {
+            qDebug() << "Sensore cliccato";
+            emit sensorSelected(info); // Emissione del segnale con informazioni del sensore
+        });
+
         // PULSANTE "CLONA"--------------------
         QPushButton* cloneButton = new QPushButton("Clona", this);
         layoutBottoni->addWidget(cloneButton);

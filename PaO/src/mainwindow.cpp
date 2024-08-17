@@ -75,7 +75,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::dataUpdated);
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
-
+    //connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
+    connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, [this](const std::map<std::string, std::string>& sensorInfo) {
+        qDebug() << "Segnale sensorSelected ricevuto in MainWindow";
+        onSensorSelected(sensorInfo); // Chiama il metodo slot
+    });
 }
 
 MainWindow::~MainWindow(){}
@@ -350,34 +354,8 @@ void MainWindow::reloadJsonFile() {
     tbar->activateSaveAsAction();
 }
 
-void MainWindow::onSensorSelected(Model::Sensore* sensore) {
-
+void MainWindow::onSensorSelected(const std::map<std::string, std::string>& sensorInfo) {
     qDebug() << "onSensorSelected chiamato";
 
-
-    if(sensore){
-        // Rimuovi il widget corrente
-        if (graphWidget) {
-            centralLayout->removeWidget(graphWidget);
-            delete graphWidget;
-        }
-
-        std::map<std::string, std::string> infoMap = sensore->getInfo();
-
-        // Identifica il tipo di sensore e crea il widget appropriato
-        std::string tipoSensore = infoMap["Tipo"];
-
-        if (tipoSensore == "Temperatura") {
-            // Se è un sensore di temperatura, crea un widget per la temperatura
-            graphWidget = new WidgetTemperatura(static_cast<Model::Temperatura*>(sensore), this);
-        }
-        // Aggiungi altri tipi di sensori se necessario...
-
-        // Aggiungi il nuovo widget alla finestra
-        centralLayout->addWidget(graphWidget);
-        centralLayout->setStretchFactor(graphWidget, 2);
-
-        // Assicurati che il layout venga aggiornato
-        centralWidget->update();
-    }
+    return;
 }

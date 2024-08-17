@@ -20,6 +20,8 @@ public:
 
 signals:
     void updateList(); //emesso quando i dati dei sensori cambiano
+    void sensorSelected(const std::map<std::string, std::string>& sensorInfo);
+
 };
 }
 #endif // SENSORLISTWIDGET_H

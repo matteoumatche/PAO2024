@@ -19,10 +19,11 @@ View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string
     }
 
     setLayout(layoutDati);
+
 }
 
 void View::SensorInfoWidget::mousePressEvent(QMouseEvent* event) {
-    emit sensorSelected(m_sensorInfo); // Emissione del segnale con le informazioni del sensore
+    emit sensorSelected(m_sensorInfo); // Emissione del segnale quando il widget viene cliccato
     QWidget::mousePressEvent(event); // Chiamata al gestore dell'evento padre
 }
 

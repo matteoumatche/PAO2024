@@ -52,8 +52,7 @@ private slots:
     void saveJsonFileAs();
     void reloadJsonFile();
 
-    void onSensorSelected(Model::Sensore* selectedSensor);
-
+    void onSensorSelected(const std::map<std::string, std::string>& sensorInfo);
 
 public:
     MainWindow(QWidget *parent = nullptr);
