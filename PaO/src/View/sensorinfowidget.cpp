@@ -7,7 +7,7 @@
 #include <QTimer>
 
 // Costruttore della classe SensorInfoWidget
-SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string>& info, QWidget* parent)
+View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string>& info, QWidget* parent)
     : QWidget(parent) {
     QVBoxLayout* layoutDati = new QVBoxLayout(this);
 
@@ -21,8 +21,8 @@ SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string>& inf
 }
 
 // Gestione dell'evento di pressione del mouse
-void SensorInfoWidget::mousePressEvent(QMouseEvent* event) {
-    emit widgetClicked(); // Emissione del segnale quando il widget viene cliccato
+void View::SensorInfoWidget::mousePressEvent(QMouseEvent* event, Model::Sensore* sensore) {
+    emit widgetClicked(sensore); // Emissione del segnale quando il widget viene cliccato
     qDebug() << "Widget cliccato!"; // Aggiungi questa riga per il debug
 
     // Cambia il colore di sfondo utilizzando QPalette

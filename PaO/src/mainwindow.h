@@ -19,7 +19,7 @@
 #include "src/Model/umidita.h"
 #include "src/Model/vento.h"
 #include "View/sensorlistwidget.h"
-
+#include "View/sensorinfowidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -31,6 +31,7 @@ private:
     QWidget* centralWidget;
     View::ToolBar* tbar;
     View::SensorListWidget* sensorListWidget;
+    View::SensorInfoWidget* sensorInfoWidget;
     QWidget* graphWidget;
     QScrollArea* scrollArea;
 

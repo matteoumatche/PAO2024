@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_View__SensorListWidget_t {
-    const uint offsetsAndSize[16];
-    char stringdata0[103];
+    const uint offsetsAndSize[18];
+    char stringdata0[120];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_View__SensorListWidget_t, stringdata0) + ofs), len 
@@ -36,12 +36,14 @@ QT_MOC_LITERAL(38, 15), // "Model::Sensore*"
 QT_MOC_LITERAL(54, 7), // "sensore"
 QT_MOC_LITERAL(62, 10), // "updateList"
 QT_MOC_LITERAL(73, 14), // "sensorSelected"
-QT_MOC_LITERAL(88, 14) // "selectedSensor"
+QT_MOC_LITERAL(88, 14), // "selectedSensor"
+QT_MOC_LITERAL(103, 16) // "onSensorSelected"
 
     },
     "View::SensorListWidget\0sensorClicked\0"
     "\0Model::Sensore*\0sensore\0updateList\0"
-    "sensorSelected\0selectedSensor"
+    "sensorSelected\0selectedSensor\0"
+    "onSensorSelected"
 };
 #undef QT_MOC_LITERAL
 
@@ -51,7 +53,7 @@ static const uint qt_meta_data_View__SensorListWidget[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -59,14 +61,20 @@ static const uint qt_meta_data_View__SensorListWidget[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   32,    2, 0x06,    1 /* Public */,
-       5,    0,   35,    2, 0x06,    3 /* Public */,
-       6,    1,   36,    2, 0x06,    4 /* Public */,
+       1,    1,   38,    2, 0x06,    1 /* Public */,
+       5,    0,   41,    2, 0x06,    3 /* Public */,
+       6,    1,   42,    2, 0x06,    4 /* Public */,
+
+ // slots: name, argc, parameters, tag, flags, initial metatype offsets
+       8,    0,   45,    2, 0x0a,    6 /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 3,    7,
+
+ // slots: parameters
+    QMetaType::Void,
 
        0        // eod
 };
@@ -80,6 +88,7 @@ void View::SensorListWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _
         case 0: _t->sensorClicked((*reinterpret_cast< std::add_pointer_t<Model::Sensore*>>(_a[1]))); break;
         case 1: _t->updateList(); break;
         case 2: _t->sensorSelected((*reinterpret_cast< std::add_pointer_t<Model::Sensore*>>(_a[1]))); break;
+        case 3: _t->onSensorSelected(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -116,7 +125,7 @@ const QMetaObject View::SensorListWidget::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_View__SensorListWidget_t
 , QtPrivate::TypeAndForceComplete<SensorListWidget, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>
-
+, QtPrivate::TypeAndForceComplete<void, std::false_type>
 
 
 >,
@@ -143,13 +152,13 @@ int View::SensorListWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 4)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

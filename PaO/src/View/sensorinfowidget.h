@@ -4,6 +4,9 @@
 #include <QWidget>
 #include <map>
 #include <string>
+#include "../Model/sensore.h"
+
+namespace View{
 
 class SensorInfoWidget : public QWidget {
     Q_OBJECT
@@ -11,11 +14,13 @@ public:
     SensorInfoWidget(const std::map<std::string, std::string>& info, QWidget* parent = nullptr);
 
 signals:
-    void widgetClicked(); // Segnale emesso quando il widget viene cliccato
+    void widgetClicked(Model::Sensore* sensore); // Segnale emesso quando il widget viene cliccato
 
 protected:
-    void mousePressEvent(QMouseEvent* event) override; // Sovrascrittura del metodo per gestire il clic
+    void mousePressEvent(QMouseEvent* event, Model::Sensore* sensore); // Sovrascrittura del metodo per gestire il clic
 };
+
+}
 
 #endif // SENSORINFOWIDGET_H
 

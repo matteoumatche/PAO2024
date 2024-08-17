@@ -21,24 +21,27 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_SensorInfoWidget_t {
-    const uint offsetsAndSize[6];
-    char stringdata0[32];
+struct qt_meta_stringdata_View__SensorInfoWidget_t {
+    const uint offsetsAndSize[10];
+    char stringdata0[62];
 };
 #define QT_MOC_LITERAL(ofs, len) \
-    uint(offsetof(qt_meta_stringdata_SensorInfoWidget_t, stringdata0) + ofs), len 
-static const qt_meta_stringdata_SensorInfoWidget_t qt_meta_stringdata_SensorInfoWidget = {
+    uint(offsetof(qt_meta_stringdata_View__SensorInfoWidget_t, stringdata0) + ofs), len 
+static const qt_meta_stringdata_View__SensorInfoWidget_t qt_meta_stringdata_View__SensorInfoWidget = {
     {
-QT_MOC_LITERAL(0, 16), // "SensorInfoWidget"
-QT_MOC_LITERAL(17, 13), // "widgetClicked"
-QT_MOC_LITERAL(31, 0) // ""
+QT_MOC_LITERAL(0, 22), // "View::SensorInfoWidget"
+QT_MOC_LITERAL(23, 13), // "widgetClicked"
+QT_MOC_LITERAL(37, 0), // ""
+QT_MOC_LITERAL(38, 15), // "Model::Sensore*"
+QT_MOC_LITERAL(54, 7) // "sensore"
 
     },
-    "SensorInfoWidget\0widgetClicked\0"
+    "View::SensorInfoWidget\0widgetClicked\0"
+    "\0Model::Sensore*\0sensore"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_SensorInfoWidget[] = {
+static const uint qt_meta_data_View__SensorInfoWidget[] = {
 
  // content:
       10,       // revision
@@ -52,44 +55,43 @@ static const uint qt_meta_data_SensorInfoWidget[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   20,    2, 0x06,    1 /* Public */,
+       1,    1,   20,    2, 0x06,    1 /* Public */,
 
  // signals: parameters
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 3,    4,
 
        0        // eod
 };
 
-void SensorInfoWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void View::SensorInfoWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
         auto *_t = static_cast<SensorInfoWidget *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->widgetClicked(); break;
+        case 0: _t->widgetClicked((*reinterpret_cast< std::add_pointer_t<Model::Sensore*>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (SensorInfoWidget::*)();
+            using _t = void (SensorInfoWidget::*)(Model::Sensore * );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SensorInfoWidget::widgetClicked)) {
                 *result = 0;
                 return;
             }
         }
     }
-    (void)_a;
 }
 
-const QMetaObject SensorInfoWidget::staticMetaObject = { {
+const QMetaObject View::SensorInfoWidget::staticMetaObject = { {
     QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
-    qt_meta_stringdata_SensorInfoWidget.offsetsAndSize,
-    qt_meta_data_SensorInfoWidget,
+    qt_meta_stringdata_View__SensorInfoWidget.offsetsAndSize,
+    qt_meta_data_View__SensorInfoWidget,
     qt_static_metacall,
     nullptr,
-qt_incomplete_metaTypeArray<qt_meta_stringdata_SensorInfoWidget_t
-, QtPrivate::TypeAndForceComplete<SensorInfoWidget, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+qt_incomplete_metaTypeArray<qt_meta_stringdata_View__SensorInfoWidget_t
+, QtPrivate::TypeAndForceComplete<SensorInfoWidget, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>
 
 
 
@@ -98,20 +100,20 @@ qt_incomplete_metaTypeArray<qt_meta_stringdata_SensorInfoWidget_t
 } };
 
 
-const QMetaObject *SensorInfoWidget::metaObject() const
+const QMetaObject *View::SensorInfoWidget::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *SensorInfoWidget::qt_metacast(const char *_clname)
+void *View::SensorInfoWidget::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_SensorInfoWidget.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_View__SensorInfoWidget.stringdata0))
         return static_cast<void*>(this);
     return QWidget::qt_metacast(_clname);
 }
 
-int SensorInfoWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int View::SensorInfoWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
@@ -129,9 +131,10 @@ int SensorInfoWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void SensorInfoWidget::widgetClicked()
+void View::SensorInfoWidget::widgetClicked(Model::Sensore * _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE
