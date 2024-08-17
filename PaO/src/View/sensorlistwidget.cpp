@@ -22,16 +22,10 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
     for (Model::Sensore* sensore : sensori) {
         std::map<std::string, std::string> info = sensore->getInfo();
         SensorInfoWidget* sensorWidget = new SensorInfoWidget(info, this);
+
         QHBoxLayout* layoutInterno = new QHBoxLayout();
         QVBoxLayout* layoutBottoni = new QVBoxLayout();
         layoutInterno->addWidget(sensorWidget);
-
-        // PULSANTE GENERALE SENSORE-------------
-        connect(sensorWidget, &SensorInfoWidget::widgetClicked, this, [this, sensore]() {
-            selezionato=sensore;
-            onSensorSelected();
-        });
-        //---------------------------------------
 
         // PULSANTE "CLONA"--------------------
         QPushButton* cloneButton = new QPushButton("Clona", this);
@@ -76,17 +70,9 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
         });
         //---------------------------------------
 
-
-
-
-
         layoutInterno->addLayout(layoutBottoni);
         layout->addLayout(layoutInterno);
     }
 
     setLayout(layout);
-}
-
-void View::SensorListWidget::onSensorSelected(){
-    emit sensorClicked(selezionato);
 }

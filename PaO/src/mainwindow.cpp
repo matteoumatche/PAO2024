@@ -37,10 +37,6 @@ MainWindow::MainWindow(QWidget *parent)
     graphWidget = new QWidget(this);
     sensorListWidget= new View::SensorListWidget(sensori,this);
 
-    //DA SISTEMARE---------------------------------------------------------------------
-    sensorInfoWidget = new View::SensorInfoWidget(sensori, this);
-    //---------------------------------------------------------------------------------
-
     // Area di scorrimento per la lista dei sensori
     scrollArea = new QScrollArea;
 
@@ -79,7 +75,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::dataUpdated);
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
-    connect(sensorInfoWidget, &View::SensorInfoWidget::widgetClicked, this, &MainWindow::onSensorSelected);
 
 }
 

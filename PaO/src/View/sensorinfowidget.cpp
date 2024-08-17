@@ -9,6 +9,7 @@
 // Costruttore della classe SensorInfoWidget
 View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string>& info, QWidget* parent)
     : QWidget(parent) {
+
     QVBoxLayout* layoutDati = new QVBoxLayout(this);
 
     // Visualizzazione di ciascuna coppia chiave-valore
@@ -20,7 +21,7 @@ View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string
     setLayout(layoutDati);
 }
 
-// Gestione dell'evento di pressione del mouse
+/* Gestione dell'evento di pressione del mouse
 void View::SensorInfoWidget::mousePressEvent(QMouseEvent* event, Model::Sensore* sensore) {
     emit widgetClicked(sensore); // Emissione del segnale quando il widget viene cliccato
     qDebug() << "Widget cliccato!"; // Aggiungi questa riga per il debug
@@ -39,4 +40,4 @@ void View::SensorInfoWidget::mousePressEvent(QMouseEvent* event, Model::Sensore*
     });
 
     QWidget::mousePressEvent(event); // Chiamata al gestore dell'evento padre
-}
+}*/
