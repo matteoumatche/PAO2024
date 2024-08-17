@@ -74,7 +74,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,    0,   71,    2, 0x08,    7 /* Private */,
        9,    0,   72,    2, 0x08,    8 /* Private */,
       10,    0,   73,    2, 0x08,    9 /* Private */,
-      11,    1,   74,    2, 0x08,   10 /* Private */,
+      11,    1,   74,    2, 0x0a,   10 /* Public */,
       14,    0,   77,    2, 0x0a,   12 /* Public */,
 
  // slots: parameters

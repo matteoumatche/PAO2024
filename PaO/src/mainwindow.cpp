@@ -76,6 +76,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
     //connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
+
+    qDebug() << "Configuro la connessione del segnale sensorSelected";
+
     connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, [this](const std::map<std::string, std::string>& sensorInfo) {
         qDebug() << "Segnale sensorSelected ricevuto in MainWindow";
         onSensorSelected(sensorInfo); // Chiama il metodo slot

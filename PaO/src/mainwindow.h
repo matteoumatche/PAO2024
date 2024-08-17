@@ -52,15 +52,14 @@ private slots:
     void saveJsonFileAs();
     void reloadJsonFile();
 
-    void onSensorSelected(const std::map<std::string, std::string>& sensorInfo);
-
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
     static QJsonObject mapToJson(const std::map<std::string, std::string>& ) ;
-public slots:
 
+public slots:
+    void onSensorSelected(const std::map<std::string, std::string>& sensorInfo);
     //aggiorna la finestra dopo la modifica dei dati
     void dataUpdated();
 
