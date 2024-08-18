@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     searchLayout = new QHBoxLayout;         //layout della barra di ricerca: contiene barra e bottone
 
     //toolbar e widget
-    centralWidget = new QWidget(this);      //widget della schermata principale
+    centralWidget = new QWidget(this);
     tbar= new View::ToolBar;
     sensorListWidget= new View::SensorListWidget(sensori,this);
     graphWidget = new QWidget(this);
@@ -66,18 +66,14 @@ MainWindow::MainWindow(QWidget *parent)
     searchLayout->addWidget(searchLineEdit);
     searchLayout->addWidget(searchButton);
 
+    //---------------------------------------------------
+
     //misure
     tbar->setMinimumSize(1024, 30);
     sensorListWidget->setMinimumSize(300, 400);
     centralLayout->setStretchFactor(sensorListWidget, 2);
     centralLayout->setStretchFactor(graphWidget, 2);
-    //graphWidget->setFixedSize(500, 400);
 
-/*
-    QScrollArea *scrollArea = new QScrollArea;
-    scrollArea->setWidget(sensorListWidget);
-    centralLayout->addWidget(scrollArea);
-*/
     // Connessione dei segnali di ToolBar agli slot di MainWindow
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::showNewSensorDialog);
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::openJsonFile);
