@@ -42,7 +42,7 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
         });
         //--------------------------------------
 
-        //PULSANTE "MODIFICA"-------------------
+        /*PULSANTE "MODIFICA"-------------------
         QPushButton* editButton = new QPushButton("Modifica", this);
         layoutBottoni->addWidget(editButton);
         connect(editButton, &QPushButton::clicked, this, [this, &sensori, sensore]() {
@@ -54,7 +54,7 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
                 qDebug() << "sensore modificato";
             }
         });
-        //--------------------------------------
+        //--------------------------------------*/
 
         // PULSANTE "ELIMINA"-------------------
         QPushButton* deleteButton = new QPushButton("Elimina", this);

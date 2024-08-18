@@ -12,11 +12,21 @@ View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string
 
     QVBoxLayout* layoutDati = new QVBoxLayout(this);
 
-    // Visualizzazione di ciascuna coppia chiave-valore
+    QStringList keysToDisplay = {"Tipo", "ID", "Nome"};
+
+    for (const auto& pair : info) {
+        QString key = QString::fromStdString(pair.first);
+        if (keysToDisplay.contains(key)) {
+            QLabel* label = new QLabel(key + ": " + QString::fromStdString(pair.second), this);
+            layoutDati->addWidget(label);
+        }
+    }
+
+    /* Visualizzazione di ciascuna coppia chiave-valore
     for (const auto& pair : info) {
         QLabel* label = new QLabel(QString::fromStdString(pair.first) + ": " + QString::fromStdString(pair.second), this);
         layoutDati->addWidget(label);
-    }
+    }*/
 
     setLayout(layoutDati);
 
