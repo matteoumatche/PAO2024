@@ -27,33 +27,45 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle("Greenhouse manager");
 
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
+
     //layout
-    mainLayout = new QVBoxLayout;
-    centralLayout = new QHBoxLayout;
+    mainLayout = new QVBoxLayout;           //layout principale: contiene Toolbar e centalLayout
+    centralLayout = new QHBoxLayout;        //layout sotto Toolbar: contiene sensorWidgetLayout e graphWidget
+    sensorWidgetLayout = new QVBoxLayout;   //layout della lista: contiene sensorListWidget e searchLayout
+    searchLayout = new QHBoxLayout;         //layout della barra di ricerca: contiene barra e bottone
 
     //toolbar e widget
+    centralWidget = new QWidget(this);      //widget della schermata principale
     tbar= new View::ToolBar;
-    centralWidget = new QWidget(this);
-    graphWidget = new QWidget(this);
     sensorListWidget= new View::SensorListWidget(sensori,this);
+    graphWidget = new QWidget(this);
+    searchLineEdit = new QLineEdit(this);
+    searchButton = new QPushButton("Cerca", this);
 
     // Area di scorrimento per la lista dei sensori
     scrollArea = new QScrollArea;
-
-    // Impostazione del widget della lista dei sensori nell'area di scorrimento
     scrollArea->setWidget(sensorListWidget);
 
-    centralLayout->addWidget(scrollArea);
+    //IMPOSTAZIONI LAYOUT--------------------------------
 
-    //impostazioni widget
+    //mainLayout
+    mainLayout->addWidget(tbar);
+    mainLayout->addLayout(centralLayout);
     setCentralWidget(centralWidget);
     centralWidget->setLayout(mainLayout);
 
-    mainLayout->addWidget(tbar);
-    mainLayout->addLayout(centralLayout);
-
-    centralLayout->addWidget(scrollArea);
+    //centralLayout
+    centralLayout->addLayout(sensorWidgetLayout);
     centralLayout->addWidget(graphWidget);
+    //centralLayout->addWidget(scrollArea);
+
+    //sensorWidgetLayout
+    sensorWidgetLayout->addWidget(scrollArea);
+    sensorWidgetLayout->addLayout(searchLayout);
+
+    //searchLayout
+    searchLayout->addWidget(searchLineEdit);
+    searchLayout->addWidget(searchButton);
 
     //misure
     tbar->setMinimumSize(1024, 30);

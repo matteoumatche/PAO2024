@@ -28,12 +28,16 @@ class MainWindow : public QMainWindow
 private:
     QVBoxLayout* mainLayout;
     QHBoxLayout* centralLayout;
+    QHBoxLayout* searchLayout;
     QWidget* centralWidget;
     View::ToolBar* tbar;
     View::SensorListWidget* sensorListWidget;
     View::SensorInfoWidget* sensorInfoWidget;
     QWidget* graphWidget;
+    QVBoxLayout* sensorWidgetLayout;
     QScrollArea* scrollArea;
+    QLineEdit *searchLineEdit;
+    QPushButton *searchButton;
 
     std::vector<Model::Sensore*> sensori;
     QString pathToFile;
