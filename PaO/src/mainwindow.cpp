@@ -57,7 +57,6 @@ MainWindow::MainWindow(QWidget *parent)
     //centralLayout
     centralLayout->addLayout(sensorWidgetLayout);
     centralLayout->addWidget(graphWidget);
-    //centralLayout->addWidget(scrollArea);
 
     //sensorWidgetLayout
     sensorWidgetLayout->addWidget(scrollArea);
