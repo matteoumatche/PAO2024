@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     sensorListWidget= new View::SensorListWidget(sensori,this);
     graphWidget = new QWidget(this);
     searchLineEdit = new QLineEdit(this);
+    searchLineEdit->setPlaceholderText("Cerca sensori per nome...");
     searchButton = new QPushButton("Cerca", this);
 
     // Area di scorrimento per la lista dei sensori
