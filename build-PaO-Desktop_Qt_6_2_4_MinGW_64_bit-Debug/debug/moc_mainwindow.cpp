@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    const uint offsetsAndSize[30];
-    char stringdata0[185];
+    const uint offsetsAndSize[28];
+    char stringdata0[156];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs), len 
@@ -41,16 +41,15 @@ QT_MOC_LITERAL(68, 12), // "saveJsonFile"
 QT_MOC_LITERAL(81, 14), // "saveJsonFileAs"
 QT_MOC_LITERAL(96, 14), // "reloadJsonFile"
 QT_MOC_LITERAL(111, 16), // "onSensorSelected"
-QT_MOC_LITERAL(128, 33), // "std::map<std::string,std::str..."
-QT_MOC_LITERAL(162, 10), // "sensorInfo"
-QT_MOC_LITERAL(173, 11) // "dataUpdated"
+QT_MOC_LITERAL(128, 15), // "Model::Sensore*"
+QT_MOC_LITERAL(144, 11) // "dataUpdated"
 
     },
     "MainWindow\0addSensor\0\0name\0type\0id\0"
     "showNewSensorDialog\0openJsonFile\0"
     "saveJsonFile\0saveJsonFileAs\0reloadJsonFile\0"
-    "onSensorSelected\0std::map<std::string,std::string>\0"
-    "sensorInfo\0dataUpdated"
+    "onSensorSelected\0Model::Sensore*\0"
+    "dataUpdated"
 };
 #undef QT_MOC_LITERAL
 
@@ -75,7 +74,7 @@ static const uint qt_meta_data_MainWindow[] = {
        9,    0,   72,    2, 0x08,    8 /* Private */,
       10,    0,   73,    2, 0x08,    9 /* Private */,
       11,    1,   74,    2, 0x0a,   10 /* Public */,
-      14,    0,   77,    2, 0x0a,   12 /* Public */,
+      13,    0,   77,    2, 0x0a,   12 /* Public */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,
@@ -84,7 +83,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void, 0x80000000 | 12,    2,
     QMetaType::Void,
 
        0        // eod
@@ -102,7 +101,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->saveJsonFile(); break;
         case 4: _t->saveJsonFileAs(); break;
         case 5: _t->reloadJsonFile(); break;
-        case 6: _t->onSensorSelected((*reinterpret_cast< std::add_pointer_t<std::map<std::string,std::string>>>(_a[1]))); break;
+        case 6: _t->onSensorSelected((*reinterpret_cast< std::add_pointer_t<Model::Sensore*>>(_a[1]))); break;
         case 7: _t->dataUpdated(); break;
         default: ;
         }
@@ -117,7 +116,7 @@ const QMetaObject MainWindow::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_MainWindow_t
 , QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const std::map<std::string,std::string> &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
 
 
 >,

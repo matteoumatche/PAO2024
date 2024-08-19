@@ -33,6 +33,11 @@ MainWindow::MainWindow(QWidget *parent)
     centralLayout = new QHBoxLayout;        //layout sotto Toolbar: contiene sensorWidgetLayout e graphWidget
     sensorWidgetLayout = new QVBoxLayout;   //layout della lista: contiene sensorListWidget e searchLayout
     searchLayout = new QHBoxLayout;         //layout della barra di ricerca: contiene barra e bottone
+    graphLayout = new QVBoxLayout;          //layout della zona a destra della lista: contiene graphWidget e optionsLayout
+    optionsLayout = new QHBoxLayout;        //layout delle opzioni sotto il grafico: contiene i dati, i pulsanti e i pulsanti simula
+    pulsantiLayout = new QVBoxLayout;       //layout dei pulsanti: clona, modifica, elimina
+    simulaLayout = new QVBoxLayout;         //layout dei pulsanti simula e simula misura
+
 
     //toolbar e widget
     centralWidget = new QWidget(this);
@@ -42,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     searchLineEdit = new QLineEdit(this);
     searchLineEdit->setPlaceholderText("Cerca sensori per nome...");
     searchButton = new QPushButton("Cerca", this);
+    dataWidget = new QWidget(this);
 
     // Area di scorrimento per la lista dei sensori
     scrollArea = new QScrollArea;
@@ -66,6 +72,11 @@ MainWindow::MainWindow(QWidget *parent)
     //searchLayout
     searchLayout->addWidget(searchLineEdit);
     searchLayout->addWidget(searchButton);
+
+    //optionsLayout
+    optionsLayout->addWidget(dataWidget);
+    optionsLayout->addLayout(pulsantiLayout);
+    optionsLayout->addLayout(simulaLayout);
 
     //---------------------------------------------------
 

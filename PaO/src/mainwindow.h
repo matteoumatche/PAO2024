@@ -29,11 +29,16 @@ private:
     QVBoxLayout* mainLayout;
     QHBoxLayout* centralLayout;
     QHBoxLayout* searchLayout;
+    QVBoxLayout* graphLayout;
+    QHBoxLayout* optionsLayout;
+    QVBoxLayout* pulsantiLayout;
+    QVBoxLayout* simulaLayout;
     QWidget* centralWidget;
     View::ToolBar* tbar;
     View::SensorListWidget* sensorListWidget;
     View::SensorInfoWidget* sensorInfoWidget;
     QWidget* graphWidget;
+    QWidget* dataWidget;
     QVBoxLayout* sensorWidgetLayout;
     QScrollArea* scrollArea;
     QLineEdit *searchLineEdit;

@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_View__SensorInfoWidget_t {
     const uint offsetsAndSize[10];
-    char stringdata0[84];
+    char stringdata0[63];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_View__SensorInfoWidget_t, stringdata0) + ofs), len 
@@ -32,13 +32,12 @@ static const qt_meta_stringdata_View__SensorInfoWidget_t qt_meta_stringdata_View
 QT_MOC_LITERAL(0, 22), // "View::SensorInfoWidget"
 QT_MOC_LITERAL(23, 14), // "sensorSelected"
 QT_MOC_LITERAL(38, 0), // ""
-QT_MOC_LITERAL(39, 33), // "std::map<std::string,std::str..."
-QT_MOC_LITERAL(73, 10) // "sensorInfo"
+QT_MOC_LITERAL(39, 15), // "Model::Sensore*"
+QT_MOC_LITERAL(55, 7) // "sensore"
 
     },
     "View::SensorInfoWidget\0sensorSelected\0"
-    "\0std::map<std::string,std::string>\0"
-    "sensorInfo"
+    "\0Model::Sensore*\0sensore"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,13 +69,13 @@ void View::SensorInfoWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _
         auto *_t = static_cast<SensorInfoWidget *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->sensorSelected((*reinterpret_cast< std::add_pointer_t<std::map<std::string,std::string>>>(_a[1]))); break;
+        case 0: _t->sensorSelected((*reinterpret_cast< std::add_pointer_t<Model::Sensore*>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (SensorInfoWidget::*)(const std::map<std::string,std::string> & );
+            using _t = void (SensorInfoWidget::*)(Model::Sensore * );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SensorInfoWidget::sensorSelected)) {
                 *result = 0;
                 return;
@@ -92,7 +91,7 @@ const QMetaObject View::SensorInfoWidget::staticMetaObject = { {
     qt_static_metacall,
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_View__SensorInfoWidget_t
-, QtPrivate::TypeAndForceComplete<SensorInfoWidget, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const std::map<std::string,std::string> &, std::false_type>
+, QtPrivate::TypeAndForceComplete<SensorInfoWidget, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>
 
 
 
@@ -132,7 +131,7 @@ int View::SensorInfoWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a
 }
 
 // SIGNAL 0
-void View::SensorInfoWidget::sensorSelected(const std::map<std::string,std::string> & _t1)
+void View::SensorInfoWidget::sensorSelected(Model::Sensore * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

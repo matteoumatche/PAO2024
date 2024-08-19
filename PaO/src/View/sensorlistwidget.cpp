@@ -28,7 +28,6 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
         layoutInterno->addWidget(sensorWidget);
 
         connect(sensorWidget, &SensorInfoWidget::sensorSelected,this,View::SensorListWidget::onSensorSelected);
-        connect(sensorWidget, &SensorInfoWidget::sensorSelected,this,View::SensorListWidget::onSensorSelectedT);
         // PULSANTE "CLONA"--------------------
         QPushButton* cloneButton = new QPushButton("Clona", this);
         layoutBottoni->addWidget(cloneButton);
@@ -84,10 +83,4 @@ void View::SensorListWidget::onSensorSelected(Model::Sensore* s){
     qDebug() << "View::SensorListWidget::onSensorSelected";
     emit sensorSelected(s);
     qDebug() << "View::SensorListWidget::onSensorSelected";
-}
-
-void View::SensorListWidget::onSensorSelectedT(Model::Sensore* s){
-    qDebug() << "tt";
-    emit sensorSelected(s);
-    //qDebug() << "View::SensorListWidget::onSensorSelected";
 }
