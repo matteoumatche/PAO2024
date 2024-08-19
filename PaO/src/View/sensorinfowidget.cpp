@@ -22,12 +22,6 @@ View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string
         }
     }
 
-    /* Visualizzazione di ciascuna coppia chiave-valore
-    for (const auto& pair : info) {
-        QLabel* label = new QLabel(QString::fromStdString(pair.first) + ": " + QString::fromStdString(pair.second), this);
-        layoutDati->addWidget(label);
-    }*/
-
     setLayout(layoutDati);
 
 }

@@ -380,5 +380,42 @@ void MainWindow::reloadJsonFile() {
 void MainWindow::onSensorSelected(Model::Sensore* s) {
     qDebug() << "onSensorSelected chiamato";
 
-    return;
+    if (!s) {
+        qDebug() << "Errore: sensore nullo";
+        return;
+    }
+
+    // Prima di creare un nuovo widget, eliminiamo il vecchio
+    if (dataWidget) {
+        qDebug() << "1";
+        delete dataWidget;
+        dataWidget = nullptr;
+    }
+
+    qDebug() << "2";
+    // Creiamo un nuovo widget per visualizzare i dettagli del sensore
+    dataWidget = new QWidget(this);
+    qDebug() << "3";
+    QVBoxLayout* dataLayout = new QVBoxLayout(dataWidget);
+    qDebug() << "4";
+    // Recuperiamo le informazioni del sensore
+    std::map<std::string, std::string> info = s->getInfo();
+    if (info.empty()) {
+        qDebug() << "Errore: informazioni del sensore vuote";
+        return;
+    }
+    qDebug() << "5";
+    // Visualizziamo solo le chiavi tranne "Tipo", "ID" e "Nome"
+        for (const auto& pair : info) {
+            qDebug() << "6";
+            QString key = QString::fromStdString(pair.first);
+            if (key != "Tipo" && key != "ID" && key != "Nome") {
+                QLabel* label = new QLabel(key + ": " + QString::fromStdString(pair.second), dataWidget);
+                dataLayout->addWidget(label);
+            }
+        }
+
+        // Imposta il layout del nuovo widget e aggiungilo a optionsLayout
+        dataWidget->setLayout(dataLayout);
+        optionsLayout->addWidget(dataWidget);
 }
