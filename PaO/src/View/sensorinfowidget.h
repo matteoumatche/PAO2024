@@ -15,10 +15,10 @@ public:
     SensorInfoWidget(const std::map<std::string, std::string>& info, QWidget* parent = nullptr);
 
 signals:
-    void sensorSelected(const std::map<std::string, std::string>& sensorInfo); // Segnale con informazioni del sensore
+    void sensorSelected(Model::Sensore* sensore); // Segnale con informazioni del sensore
 
 private:
-    std::map<std::string, std::string> m_sensorInfo; // Memorizza le informazioni del sensore
+    Model::Sensore* sensore; // Memorizza le informazioni del sensore
 
     void mousePressEvent(QMouseEvent* event) override; // Override per gestire i click
 };

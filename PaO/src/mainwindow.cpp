@@ -83,14 +83,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::dataUpdated);
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
-    //connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
+    connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
 
     qDebug() << "Configuro la connessione del segnale sensorSelected";
-
+/*
     connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, [this](const std::map<std::string, std::string>& sensorInfo) {
         qDebug() << "Segnale sensorSelected ricevuto in MainWindow";
         onSensorSelected(sensorInfo); // Chiama il metodo slot
-    });
+    });*/
 }
 
 MainWindow::~MainWindow(){}
@@ -319,6 +319,7 @@ void MainWindow::dataUpdated() {
 
     // Riconnetti i segnali
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
+    connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
 }
 
 void MainWindow::reloadJsonFile() {
@@ -365,7 +366,7 @@ void MainWindow::reloadJsonFile() {
     tbar->activateSaveAsAction();
 }
 
-void MainWindow::onSensorSelected(const std::map<std::string, std::string>& sensorInfo) {
+void MainWindow::onSensorSelected(Model::Sensore* s) {
     qDebug() << "onSensorSelected chiamato";
 
     return;

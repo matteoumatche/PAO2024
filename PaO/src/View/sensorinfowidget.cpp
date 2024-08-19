@@ -34,7 +34,7 @@ View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string
 
 void View::SensorInfoWidget::mousePressEvent(QMouseEvent* event) {
     qDebug() << "Sensore selezionato, emetto segnale";
-    emit sensorSelected(m_sensorInfo); // Emissione del segnale quando il widget viene cliccato
+    emit sensorSelected(sensore); // Emissione del segnale quando il widget viene cliccato
     QWidget::mousePressEvent(event); // Chiamata al gestore dell'evento padre
 }
 

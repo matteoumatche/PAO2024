@@ -20,7 +20,9 @@ public:
 
 signals:
     void updateList(); //emesso quando i dati dei sensori cambiano
-    void sensorSelected(const std::map<std::string, std::string>& sensorInfo);
+    void sensorSelected(Model::Sensore*);
+public slots:
+    void onSensorSelected(Model::Sensore*);
 
 };
 }

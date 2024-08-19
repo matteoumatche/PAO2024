@@ -63,7 +63,7 @@ public:
     static QJsonObject mapToJson(const std::map<std::string, std::string>& ) ;
 
 public slots:
-    void onSensorSelected(const std::map<std::string, std::string>& sensorInfo);
+    void onSensorSelected(Model::Sensore* );
     //aggiorna la finestra dopo la modifica dei dati
     void dataUpdated();
 
