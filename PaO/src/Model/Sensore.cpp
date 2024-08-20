@@ -10,10 +10,17 @@ Sensore::Sensore(const QJsonObject& json) : nome(json["Nome"].toString().toStdSt
     //int id=(json["ID"]).toInt();
     //qDebug() << json;
     //ID=id;
-    qDebug() << "JSON received:" << json;
-    int id = json["ID"].toInt();
-    qDebug() << "ID from JSON:" << id;
-    ID = id;
+
+    QString idString = json["ID"].toString();
+    bool ok;
+    int id = idString.toInt(&ok); // Utilizza QString::toInt per la conversione
+    if (ok) {
+        ID = static_cast<unsigned int>(id);
+        qDebug() << "ID successfully converted from JSON:" << ID;
+    } else {
+        qDebug() << "Failed to convert ID from string to int. Setting ID to 0.";
+        ID = 0; // Imposta un valore predefinito se la conversione fallisce
+    }
 }
 
 std::string Sensore::getNome() const {
