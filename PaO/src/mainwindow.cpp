@@ -63,11 +63,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     //centralLayout
     centralLayout->addLayout(sensorWidgetLayout);
-    centralLayout->addWidget(graphWidget);
+    centralLayout->addLayout(graphLayout);
 
     //sensorWidgetLayout
     sensorWidgetLayout->addWidget(scrollArea);
     sensorWidgetLayout->addLayout(searchLayout);
+
+    //graphLayout
+    graphLayout->addWidget(graphWidget);
+    graphLayout->addLayout(optionsLayout);
 
     //searchLayout
     searchLayout->addWidget(searchLineEdit);
@@ -84,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent)
     tbar->setMinimumSize(1024, 30);
     sensorListWidget->setMinimumSize(300, 400);
     centralLayout->setStretchFactor(sensorListWidget, 2);
-    centralLayout->setStretchFactor(graphWidget, 2);
+    centralLayout->setStretchFactor(graphLayout, 2);
 
     // Connessione dei segnali di ToolBar agli slot di MainWindow
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::showNewSensorDialog);
@@ -423,49 +427,4 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
         qDebug() << "selectedSensor è nullo!";
     }
 
-
-
-
-
-
-    /*
-    if (!s) {
-        qDebug() << "Errore: sensore nullo";
-        return;
-    }
-
-    // Prima di creare un nuovo widget, eliminiamo il vecchio
-    if (dataWidget) {
-        qDebug() << "1";
-        delete dataWidget;
-        dataWidget = nullptr;
-    }
-
-    qDebug() << "2";
-    // Creiamo un nuovo widget per visualizzare i dettagli del sensore
-    dataWidget = new QWidget(this);
-    qDebug() << "3";
-    QVBoxLayout* dataLayout = new QVBoxLayout(dataWidget);
-    qDebug() << "4";
-    // Recuperiamo le informazioni del sensore
-    std::map<std::string, std::string> info = s->getInfo();
-    if (info.empty()) {
-        qDebug() << "Errore: informazioni del sensore vuote";
-        return;
-    }
-    qDebug() << "5";
-    // Visualizziamo solo le chiavi tranne "Tipo", "ID" e "Nome"
-        for (const auto& pair : info) {
-            qDebug() << "6";
-            QString key = QString::fromStdString(pair.first);
-            if (key != "Tipo" && key != "ID" && key != "Nome") {
-                QLabel* label = new QLabel(key + ": " + QString::fromStdString(pair.second), dataWidget);
-                dataLayout->addWidget(label);
-            }
-        }
-
-        // Imposta il layout del nuovo widget e aggiungilo a optionsLayout
-        dataWidget->setLayout(dataLayout);
-        optionsLayout->addWidget(dataWidget);
-    */
 }
