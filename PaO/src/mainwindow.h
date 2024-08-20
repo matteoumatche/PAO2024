@@ -31,6 +31,7 @@ private:
     QHBoxLayout* searchLayout;
     QVBoxLayout* graphLayout;
     QHBoxLayout* optionsLayout;
+    QVBoxLayout* dataLayout;
     QVBoxLayout* pulsantiLayout;
     QVBoxLayout* simulaLayout;
     QWidget* centralWidget;
@@ -60,6 +61,10 @@ private slots:
     void saveJsonFile();
     void saveJsonFileAs();
     void reloadJsonFile();
+
+    void cloneSensor(Model::Sensore* sensor);
+    void modifySensor(Model::Sensore* sensor);
+    void deleteSensor(Model::Sensore* sensor);
 
 public:
     MainWindow(QWidget *parent = nullptr);

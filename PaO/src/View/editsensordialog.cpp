@@ -97,6 +97,7 @@ qDebug() << "6";
 
     layout->addWidget(buttons);
 }
+
 void EditSensorDialog::acceptChanges(Model::Sensore* s){}
 
 EditSensorDialog::~EditSensorDialog() {

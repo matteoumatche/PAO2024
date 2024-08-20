@@ -388,30 +388,32 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
     Model::Sensore* selectedSensor = nullptr;
     for (Model::Sensore* sensore : sensori) {
         if (std::to_string(sensore->getID()) == sensorID) {
-            qDebug() << "Trovato il sensore con ID:" << QString::fromStdString(sensorID)
-                << "Nome sensore:" << QString::fromStdString(sensore->getNome());
             selectedSensor = sensore;
             break;
         }
     }
 
     if (selectedSensor) {
-        qDebug() << "1";
         // Elimina il vecchio widget dati
         if (dataWidget) {
-            qDebug() << "2";
             delete dataWidget;
             dataWidget = nullptr;
         }
-        qDebug() << "3";
+
+        if (pulsantiLayout) {
+            QLayoutItem *item;
+            while ((item = pulsantiLayout->takeAt(0)) != nullptr) {
+                delete item->widget(); // Elimina i widget contenuti
+                delete item; // Elimina il layout item
+            }
+        }
+
         // Crea un nuovo widget per visualizzare i dettagli del sensore
         dataWidget = new QWidget(this);
         QVBoxLayout* dataLayout = new QVBoxLayout(dataWidget);
-        qDebug() << "4";
 
         // Recupera e mostra le informazioni del sensore
         std::map<std::string, std::string> info = selectedSensor->getInfo();
-        qDebug() << "5";
 
         for (const auto& pair : info) {
             QString key = QString::fromStdString(pair.first);
@@ -422,11 +424,61 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
         }
 
         dataWidget->setLayout(dataLayout);
+
+        // Creazione dei pulsanti "Clona", "Modifica", "Elimina"
+        QPushButton *cloneButton = new QPushButton("Clona", this);
+        QPushButton *modifyButton = new QPushButton("Modifica", this);
+        QPushButton *deleteButton = new QPushButton("Elimina", this);
+
+        // Aggiungi i pulsanti al layout
+        pulsantiLayout->addWidget(cloneButton);
+        pulsantiLayout->addWidget(modifyButton);
+        pulsantiLayout->addWidget(deleteButton);
+
         optionsLayout->addWidget(dataWidget);
+        optionsLayout->addLayout(pulsantiLayout);
+
+        // Connessione dei pulsanti ai rispettivi slot
+        connect(cloneButton, &QPushButton::clicked, this, [this, selectedSensor]() {
+            cloneSensor(selectedSensor);
+        });
+
+        connect(modifyButton, &QPushButton::clicked, this, [this, selectedSensor]() {
+            modifySensor(selectedSensor);
+        });
+
+        connect(deleteButton, &QPushButton::clicked, this, [this, selectedSensor]() {
+            deleteSensor(selectedSensor);
+        });
 
         dataUpdated();
         } else {
         qDebug() << "selectedSensor è nullo!";
     }
 
+}
+
+void MainWindow::cloneSensor(Model::Sensore* sensor) {
+    // Logica per clonare il sensore
+    qDebug() << "Clona sensore " << QString::fromStdString(sensor->getNome());
+
+
+}
+
+void MainWindow::modifySensor(Model::Sensore* sensor) {
+    // Logica per modificare il sensore
+    qDebug() << "Modifica sensore " << QString::fromStdString(sensor->getNome());
+    // Implementa la modifica
+}
+
+void MainWindow::deleteSensor(Model::Sensore* sensor) {
+    // Logica per eliminare il sensore
+    qDebug() << "Elimina sensore " << QString::fromStdString(sensor->getNome());
+    // Implementa l'eliminazione
+    auto it = std::find(sensori.begin(), sensori.end(), sensor);
+    if (it != sensori.end()) {
+        delete *it;  // Dealloca la memoria del sensore
+        sensori.erase(it);  // Rimuove il puntatore dalla lista
+        dataUpdated();  // Aggiorna la lista dei sensori
+    }
 }
