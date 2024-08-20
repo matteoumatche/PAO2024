@@ -89,6 +89,8 @@ MainWindow::MainWindow(QWidget *parent)
     sensorListWidget->setMinimumSize(300, 400);
     centralLayout->setStretchFactor(sensorListWidget, 2);
     centralLayout->setStretchFactor(graphLayout, 2);
+    dataWidget->adjustSize();
+    graphWidget->adjustSize();
 
     // Connessione dei segnali di ToolBar agli slot di MainWindow
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::showNewSensorDialog);
