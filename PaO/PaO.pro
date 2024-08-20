@@ -25,7 +25,8 @@ SOURCES += \
     src/Model/tempercepita.cpp \
     src/Model/umidita.cpp \
     src/Model/vento.cpp \
-    src/View/toolBar.cpp
+    src/View/toolBar.cpp \
+    src/View/widgetgrafico.cpp
 
 HEADERS += \
     src/Model/fotocellula.h \
@@ -43,7 +44,8 @@ HEADERS += \
     src/Model/tempercepita.h \
     src/Model/umidita.h \
     src/Model/vento.h \
-    src/View/toolBar.h
+    src/View/toolBar.h \
+    src/View/widgetgrafico.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

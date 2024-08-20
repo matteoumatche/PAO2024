@@ -2,8 +2,8 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
-WidgetVento::WidgetVento(QWidget *parent)
-    : QWidget(parent) {
+View::WidgetVento::WidgetVento(Model::Sensore* s,QWidget *parent)
+    : WidgetGrafico(s,parent) {
     // Layout di base per il widget
     QVBoxLayout* layout = new QVBoxLayout(this);
 
@@ -15,7 +15,7 @@ WidgetVento::WidgetVento(QWidget *parent)
     setLayout(layout);
 }
 
-void WidgetVento::updateData(/* data specific to wind sensor */) {
+void View::WidgetVento::simulazione(/* data specific to wind sensor */) {
     // Implementazione generica per evitare errori di compilazione
     // Qui puoi aggiornare il widget con nuovi dati, se necessario.
 }

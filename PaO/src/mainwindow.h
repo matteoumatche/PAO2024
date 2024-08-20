@@ -20,6 +20,7 @@
 #include "src/Model/vento.h"
 #include "View/sensorlistwidget.h"
 #include "View/sensorinfowidget.h"
+#include "View/widgetgrafico.h"
 
 class MainWindow : public QMainWindow
 {
@@ -37,12 +38,13 @@ private:
     View::ToolBar* tbar;
     View::SensorListWidget* sensorListWidget;
     View::SensorInfoWidget* sensorInfoWidget;
-    QWidget* graphWidget;
+    View::WidgetGrafico* graphWidget;
     QWidget* dataWidget;
     QVBoxLayout* sensorWidgetLayout;
     QScrollArea* scrollArea;
     QLineEdit *searchLineEdit;
     QPushButton *searchButton;
+    QPushButton *SimulaButton;
 
     std::vector<Model::Sensore*> sensori;
     QString pathToFile;

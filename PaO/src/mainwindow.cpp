@@ -19,6 +19,7 @@
 #include "View/widgettempercepita.h"
 #include "View/widgetumidita.h"
 #include "View/widgetvento.h"
+#include "View/widgetgrafico.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -43,10 +44,11 @@ MainWindow::MainWindow(QWidget *parent)
     centralWidget = new QWidget(this);
     tbar= new View::ToolBar;
     sensorListWidget= new View::SensorListWidget(sensori,this);
-    graphWidget = new QWidget(this);
+    graphWidget = new View::WidgetGrafico(nullptr,this);
     searchLineEdit = new QLineEdit(this);
     searchLineEdit->setPlaceholderText("Cerca sensori per nome...");
     searchButton = new QPushButton("Cerca", this);
+    SimulaButton = new QPushButton("Simula misure", this);
     dataWidget = new QWidget(this);
 
     // Area di scorrimento per la lista dei sensori
@@ -80,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     //optionsLayout
     optionsLayout->addWidget(dataWidget);
     optionsLayout->addLayout(pulsantiLayout);
-    optionsLayout->addLayout(simulaLayout);
+    //optionsLayout->addLayout(simulaLayout);
 
     //---------------------------------------------------
 
@@ -99,6 +101,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
+    connect(SimulaButton, &QPushButton::clicked, graphWidget, &View::WidgetGrafico::simulazione);
 
     qDebug() << "Configuro la connessione del segnale sensorSelected";
 /*
@@ -419,8 +422,12 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
             }
         }
 
+
+        simulaLayout->addWidget(SimulaButton);
+        dataLayout->addLayout(simulaLayout);
         dataWidget->setLayout(dataLayout);
         optionsLayout->addWidget(dataWidget);
+
 
         dataUpdated();
         } else {
@@ -428,3 +435,5 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
     }
 
 }
+
+
