@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     searchLineEdit = new QLineEdit(this);
     searchLineEdit->setPlaceholderText("Cerca sensori per nome...");
     searchButton = new QPushButton("Cerca", this);
-    SimulaButton = new QPushButton("Simula misure", this);
+    //SimulaButton = new QPushButton("Simula misure", this);
     dataWidget = new QWidget(this);
 
     // Area di scorrimento per la lista dei sensori
@@ -426,7 +426,7 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
             }
         }
 
-
+        SimulaButton = new QPushButton("Simula misure", this);
         simulaLayout->addWidget(SimulaButton);
         dataLayout->addLayout(simulaLayout);
         dataWidget->setLayout(dataLayout);
@@ -463,3 +463,8 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
     }
 
 }
+
+
+void MainWindow::cloneSensor(Model::Sensore* sensor){}
+void MainWindow::modifySensor(Model::Sensore* sensor){}
+void MainWindow::deleteSensor(Model::Sensore* sensor){}
