@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
     centralWidget = new QWidget(this);
     tbar= new View::ToolBar;
     sensorListWidget= new View::SensorListWidget(sensori,this);
-    graphWidget = new View::WidgetGrafico(nullptr,this);
+    graphWidget = new View::WidgetGrafico(nullptr,nullptr);
     searchLineEdit = new QLineEdit(this);
     searchLineEdit->setPlaceholderText("Cerca sensori per nome...");
     searchButton = new QPushButton("Cerca", this);
@@ -103,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
-    connect(SimulaButton, &QPushButton::clicked, graphWidget, &View::WidgetGrafico::simulazione);
+
 
     qDebug() << "Configuro la connessione del segnale sensorSelected";
 /*
@@ -403,6 +403,11 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
             dataWidget = nullptr;
         }
 
+        if(graphWidget){
+            delete graphWidget;
+            graphWidget=nullptr;
+        }
+
         if (pulsantiLayout) {
             QLayoutItem *item;
             while ((item = pulsantiLayout->takeAt(0)) != nullptr) {
@@ -414,6 +419,8 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
         // Crea un nuovo widget per visualizzare i dettagli del sensore
         dataWidget = new QWidget(this);
         QVBoxLayout* dataLayout = new QVBoxLayout(dataWidget);
+
+
 
         // Recupera e mostra le informazioni del sensore
         std::map<std::string, std::string> info = selectedSensor->getInfo();
@@ -428,6 +435,14 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
 
         SimulaButton = new QPushButton("Simula misure", this);
         simulaLayout->addWidget(SimulaButton);
+        //MisuraButton = new QPushButton("Misura", this);
+        //simulaLayout->addWidget(MisuraButton);
+        graphWidget= new View::WidgetVento(selectedSensor,this);
+
+        connect(SimulaButton, &QPushButton::clicked, graphWidget, &View::WidgetGrafico::simulazione);
+       // connect(MisuraButton, &QPushButton::clicked, graphWidget, &View::WidgetGrafico::valoreMisura);
+        graphLayout->addWidget(graphWidget);
+
         dataLayout->addLayout(simulaLayout);
         dataWidget->setLayout(dataLayout);
 

@@ -12,6 +12,7 @@ public:
 signals:
 public slots:
     virtual void simulazione();
+    //virtual void valoreMisura();
 };
 }
 #endif // WIDGETGRAFICO_H
