@@ -377,9 +377,58 @@ void MainWindow::reloadJsonFile() {
     tbar->activateSaveAsAction();
 }
 
-void MainWindow::onSensorSelected(Model::Sensore* s) {
-    qDebug() << "onSensorSelected chiamato";
+void MainWindow::onSensorSelected(const std::string& sensorID) {
 
+    Model::Sensore* selectedSensor = nullptr;
+    for (Model::Sensore* sensore : sensori) {
+        if (std::to_string(sensore->getID()) == sensorID) {
+            qDebug() << "Trovato il sensore con ID:" << QString::fromStdString(sensorID)
+                << "Nome sensore:" << QString::fromStdString(sensore->getNome());
+            selectedSensor = sensore;
+            break;
+        }
+    }
+
+    if (selectedSensor) {
+        qDebug() << "1";
+        // Elimina il vecchio widget dati
+        if (dataWidget) {
+            qDebug() << "2";
+            delete dataWidget;
+            dataWidget = nullptr;
+        }
+        qDebug() << "3";
+        // Crea un nuovo widget per visualizzare i dettagli del sensore
+        dataWidget = new QWidget(this);
+        QVBoxLayout* dataLayout = new QVBoxLayout(dataWidget);
+        qDebug() << "4";
+
+        // Recupera e mostra le informazioni del sensore
+        std::map<std::string, std::string> info = selectedSensor->getInfo();
+        qDebug() << "5";
+
+        for (const auto& pair : info) {
+            QString key = QString::fromStdString(pair.first);
+            if (key != "Tipo" && key != "ID" && key != "Nome") {
+                QLabel* label = new QLabel(key + ": " + QString::fromStdString(pair.second), dataWidget);
+                dataLayout->addWidget(label);
+            }
+        }
+
+        dataWidget->setLayout(dataLayout);
+        optionsLayout->addWidget(dataWidget);
+
+        dataUpdated();
+        } else {
+        qDebug() << "selectedSensor è nullo!";
+    }
+
+
+
+
+
+
+    /*
     if (!s) {
         qDebug() << "Errore: sensore nullo";
         return;
@@ -418,4 +467,5 @@ void MainWindow::onSensorSelected(Model::Sensore* s) {
         // Imposta il layout del nuovo widget e aggiungilo a optionsLayout
         dataWidget->setLayout(dataLayout);
         optionsLayout->addWidget(dataWidget);
+    */
 }

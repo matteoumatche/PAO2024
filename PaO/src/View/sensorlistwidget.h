@@ -14,15 +14,16 @@ class SensorListWidget : public QWidget {
 
 private:
     Model::Sensore* selezionato;
+    std::vector<Model::Sensore*>& sensori;
 
 public:
     SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidget* parent = nullptr);
 
 signals:
     void updateList(); //emesso quando i dati dei sensori cambiano
-    void sensorSelected(Model::Sensore*);
+    void sensorSelected(const std::string& sensorID);
 public slots:
-    void onSensorSelected(Model::Sensore*);
+    void onSensorSelected(const std::string& sensorID);
 
 };
 }

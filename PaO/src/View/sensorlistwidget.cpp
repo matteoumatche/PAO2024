@@ -13,7 +13,7 @@
 
 // Costruttore della classe SensorListWidget
 View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidget* parent)
-    : QWidget(parent) {
+    : QWidget(parent), sensori(sensori) {
 
     QVBoxLayout* layout = new QVBoxLayout();
 
@@ -27,7 +27,7 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
         QVBoxLayout* layoutBottoni = new QVBoxLayout();
         layoutInterno->addWidget(sensorWidget);
 
-        connect(sensorWidget, &SensorInfoWidget::sensorSelected,this,View::SensorListWidget::onSensorSelected);
+        connect(sensorWidget, &SensorInfoWidget::sensorSelected,this, &SensorListWidget::onSensorSelected);
 
         // PULSANTE "CLONA"--------------------
         QPushButton* cloneButton = new QPushButton("Clona", this);
@@ -80,7 +80,7 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
 }
 
 
-void View::SensorListWidget::onSensorSelected(Model::Sensore* s){
-    qDebug() << "View::SensorListWidget::onSensorSelected";
-    emit sensorSelected(s);
+void View::SensorListWidget::onSensorSelected(const std::string& sensorID){
+    qDebug() << "passo 2";
+    emit sensorSelected(sensorID);
 }
