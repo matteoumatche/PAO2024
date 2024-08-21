@@ -27,8 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setWindowTitle("Greenhouse manager");
 
-    connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
-
     //layout
     mainLayout = new QVBoxLayout;           //layout principale: contiene Toolbar e centalLayout
     centralLayout = new QHBoxLayout;        //layout sotto Toolbar: contiene sensorWidgetLayout e graphWidget
@@ -95,6 +93,7 @@ MainWindow::MainWindow(QWidget *parent)
     graphWidget->adjustSize();
 
     // Connessione dei segnali di ToolBar agli slot di MainWindow
+    connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
     connect(tbar, &View::ToolBar::newSignal, this, &MainWindow::showNewSensorDialog);
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::openJsonFile);
     connect(tbar, &View::ToolBar::saveSignal, this, &MainWindow::saveJsonFile);
@@ -104,13 +103,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
 
-
-    qDebug() << "Configuro la connessione del segnale sensorSelected";
-/*
-    connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, [this](const std::map<std::string, std::string>& sensorInfo) {
-        qDebug() << "Segnale sensorSelected ricevuto in MainWindow";
-        onSensorSelected(sensorInfo); // Chiama il metodo slot
-    });*/
 }
 
 MainWindow::~MainWindow(){}
