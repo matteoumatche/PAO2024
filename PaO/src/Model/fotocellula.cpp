@@ -2,16 +2,50 @@
 
 namespace Model{
 
-Fotocellula::Fotocellula(unsigned int id, std::string nome, double s, double t) :
+Fotocellula::Fotocellula(unsigned int id, std::string nome, double s) :
     Sensore(id,nome),
     attivo(false),
-    soglia(s),
-    tolleranza(t) {}
+    soglia(s) {}
 
 Fotocellula::Fotocellula(const QJsonObject& json) : Sensore(json) {
+    // Helper function to convert QString to double with error handling
+    auto stringToDouble = [](const QString& str) -> double {
+        bool ok;
+        double value = str.toDouble(&ok);
+        return ok ? value : 0.0; // Return 0.0 if conversion fails
+    };
+
+    // Helper function to convert QString to bool with error handling
+    auto stringToBool = [](const QString& str) -> bool {
+        return str.toLower() == "true"; // Convert "true" and "false" strings to bool
+    };
+
+    // Check and convert "Attivo"
+    if (json.contains("Attivo") && json["Attivo"].isString()) {
+        attivo = stringToBool(json["Attivo"].toString());
+    } else {
+        qDebug() << "Warning: Missing or incorrect 'Attivo' in JSON";
+        attivo = false; // Default value
+    }
+
+    // Check and convert "Soglia"
+    if (json.contains("Soglia")) {
+        if (json["Soglia"].isString()) {
+            soglia = stringToDouble(json["Soglia"].toString());
+        } else {
+            qDebug() << "Warning: 'Soglia' is of incorrect type in JSON";
+            soglia = 0.0; // Default value
+        }
+    } else {
+        qDebug() << "Warning: Missing 'Soglia' in JSON";
+        soglia = 0.0; // Default value
+    }
+
+    /*
     attivo = json["Attivo"].toBool();
     soglia = json["Soglia"].toDouble();
     tolleranza = json["Tolleranza"].toDouble();
+    */
 }
 
 bool Fotocellula::isAttivo() const {
@@ -29,10 +63,6 @@ bool Fotocellula::Misura(bool valoreReale) {
 
 double Fotocellula::getSoglia() const{
     return soglia;
-}
-
-double Fotocellula::getTolleranza() const{
-    return tolleranza;
 }
 
 std::map<std::string, std::string> Fotocellula::getInfo() const {
@@ -53,10 +83,6 @@ std::map<std::string, std::string> Fotocellula::getInfo() const {
 
 void Fotocellula::setSoglia(double s) {
     soglia = s;
-}
-
-void Fotocellula::setTolleranza(double t) {
-    tolleranza = t;
 }
 
 Fotocellula* Fotocellula::clone() const {

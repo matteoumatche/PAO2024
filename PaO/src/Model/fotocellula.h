@@ -14,19 +14,16 @@ private:
 
     bool attivo;
     double soglia;
-    double tolleranza;
 
 public:
-    Fotocellula(unsigned int id, std::string n, double s=0, double t=0);
+    Fotocellula(unsigned int id, std::string n, double s=0);
     Fotocellula(const QJsonObject& json);
 
     bool isAttivo() const;
     double getSoglia() const;
-    double getTolleranza() const;
     std::map<std::string, std::string> getInfo() const override;
 
     void setSoglia(double soglia);
-    void setTolleranza(double tolleranza);
 
     void simulaMisura() override;
     bool Misura(bool valoreReale);
