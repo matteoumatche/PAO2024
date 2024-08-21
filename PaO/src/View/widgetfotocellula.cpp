@@ -2,8 +2,8 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
-WidgetFotocellula::WidgetFotocellula(QWidget *parent)
-    : QWidget(parent) {
+View::WidgetFotocellula::WidgetFotocellula(Model::Sensore* s,QWidget *parent)
+    : WidgetGrafico(s,parent) {
     // Layout di base per il widget
     QVBoxLayout* layout = new QVBoxLayout(this);
 
@@ -15,7 +15,7 @@ WidgetFotocellula::WidgetFotocellula(QWidget *parent)
     setLayout(layout);
 }
 
-void WidgetFotocellula::updateData(/* data specific to wind sensor */) {
+void View::WidgetFotocellula::updateData(/* data specific to wind sensor */) {
     // Implementazione generica per evitare errori di compilazione
     // Qui puoi aggiornare il widget con nuovi dati, se necessario.
 }

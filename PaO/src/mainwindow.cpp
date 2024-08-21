@@ -437,7 +437,12 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
         simulaLayout->addWidget(SimulaButton);
         //MisuraButton = new QPushButton("Misura", this);
         //simulaLayout->addWidget(MisuraButton);
-        graphWidget= new View::WidgetVento(selectedSensor,this);
+
+        if(info["Tipo"]=="Vento")               graphWidget= new View::WidgetVento(selectedSensor,this);
+        else if (info["Tipo"]=="Temperatura")   graphWidget= new View::WidgetTemperatura(selectedSensor,this);
+        else if (info["Tipo"]=="Umidita")       graphWidget= new View::WidgetUmidita(selectedSensor,this);
+        else if (info["Tipo"]=="TemPercepita")  graphWidget= new View::WidgetTempercepita(selectedSensor,this);
+        else if (info["Tipo"]=="Fotocellula")   graphWidget= new View::WidgetFotocellula(selectedSensor,this);
 
         connect(SimulaButton, &QPushButton::clicked, graphWidget, &View::WidgetGrafico::simulazione);
        // connect(MisuraButton, &QPushButton::clicked, graphWidget, &View::WidgetGrafico::valoreMisura);

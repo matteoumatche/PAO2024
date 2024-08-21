@@ -2,8 +2,8 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
-WidgetTemperatura::WidgetTemperatura(Model::Temperatura* sensore, QWidget *parent)
-    : QWidget(parent), tempLabel(new QLabel(this)) {
+View::WidgetTemperatura::WidgetTemperatura(Model::Sensore* sensore, QWidget *parent)
+    : WidgetGrafico(sensore,parent), tempLabel(new QLabel(this)) {
 
     qDebug() << "WidgetTemperatura creato";
 
@@ -21,7 +21,7 @@ WidgetTemperatura::WidgetTemperatura(Model::Temperatura* sensore, QWidget *paren
 
 }
 
-void WidgetTemperatura::updateData(Model::Temperatura* sensore) {
+void View::WidgetTemperatura::updateData(Model::Temperatura* sensore) {
     // Aggiorna l'interfaccia con i dati forniti dal sensore
     tempLabel->setText("Temperatura: " + QString::number(sensore->getDato()) + " °C");
 

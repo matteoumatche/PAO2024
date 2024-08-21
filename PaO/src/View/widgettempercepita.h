@@ -1,12 +1,12 @@
 #ifndef WIDGETTEMPERCEPITA_H
 #define WIDGETTEMPERCEPITA_H
 #include <QWidget>
-
-class WidgetTempercepita : public QWidget {
-    Q_OBJECT
+#include "widgetgrafico.h"
+namespace View{
+class WidgetTempercepita : public WidgetGrafico{
 public:
-    explicit WidgetTempercepita(QWidget *parent = nullptr);
+    explicit WidgetTempercepita(Model::Sensore* s,QWidget *parent );
     void updateData(/* data specific to temperature sensor */);
 };
-
+}
 #endif // WIDGETTEMPERCEPITA_H
