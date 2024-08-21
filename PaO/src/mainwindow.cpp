@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     graphWidget = new View::WidgetGrafico(nullptr,nullptr);
     searchLineEdit = new QLineEdit(this);
     searchLineEdit->setPlaceholderText("Cerca sensori per nome...");
-    searchButton = new QPushButton("Cerca", this);
+    //searchButton = new QPushButton("Cerca", this);
     //SimulaButton = new QPushButton("Simula misure", this);
     dataWidget = new QWidget(this);
 
@@ -75,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //searchLayout
     searchLayout->addWidget(searchLineEdit);
-    searchLayout->addWidget(searchButton);
+    //searchLayout->addWidget(searchButton);
 
     //optionsLayout
     optionsLayout->addWidget(dataWidget);
@@ -102,6 +102,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
+
+    QPushButton* clearSearchButton;
+    searchButton = new QPushButton("Cerca", this);
+    clearSearchButton = new QPushButton("Annulla ricerca", this);
+    searchLayout->addWidget(searchButton);
+    searchLayout->addWidget(clearSearchButton);
+
+    connect(searchButton, &QPushButton::clicked, this, &MainWindow::onSearchButtonClicked);
+    connect(clearSearchButton, &QPushButton::clicked, this, &MainWindow::onClearSearchButtonClicked);
 
 }
 
@@ -480,4 +489,38 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
 void MainWindow::cloneSensor(Model::Sensore* sensor){}
 void MainWindow::modifySensor(Model::Sensore* sensor){}
 void MainWindow::deleteSensor(Model::Sensore* sensor){}
+
+void MainWindow::onSearchButtonClicked() {
+    QString searchText = searchLineEdit->text();
+    std::vector<Model::Sensore*> filteredSensors;
+
+    for (const auto& sensor : sensori) {
+        if (QString::fromStdString(sensor->getNome()).contains(searchText, Qt::CaseInsensitive)) {
+            filteredSensors.push_back(sensor);  // Usa push_back per aggiungere gli elementi
+        }
+    }
+
+    updateSensorList(filteredSensors);
+}
+
+void MainWindow::onClearSearchButtonClicked() {
+    searchLineEdit->clear();
+    updateSensorList(sensori); // Ripristina la lista originale
+}
+
+void MainWindow::updateSensorList(std::vector<Model::Sensore*>& sensors) {
+    if (sensorListWidget) {
+        delete sensorListWidget;
+        sensorListWidget = nullptr;
+    }
+
+    sensorListWidget = new View::SensorListWidget(sensors, this);
+    scrollArea->setWidget(sensorListWidget);
+
+    connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
+    connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
+}
+
+
+
 

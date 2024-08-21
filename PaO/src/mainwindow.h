@@ -54,6 +54,7 @@ private:
     Model::Sensore* creaSensore(const QJsonObject& ) const ;
 
     QStringList getAvailableSensorTypes();
+    void updateSensorList(std::vector<Model::Sensore*>&);
 
 private slots:
 
@@ -68,6 +69,9 @@ private slots:
     void cloneSensor(Model::Sensore* sensor);
     void modifySensor(Model::Sensore* sensor);
     void deleteSensor(Model::Sensore* sensor);
+
+    void onSearchButtonClicked();
+    void onClearSearchButtonClicked();
 
 public:
     MainWindow(QWidget *parent = nullptr);
