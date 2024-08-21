@@ -12,7 +12,7 @@ View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string
 
     QVBoxLayout* layoutDati = new QVBoxLayout(this);
 
-    QStringList keysToDisplay = {"Tipo", "ID", "Nome"};
+    QVector<QString> keysToDisplay = {"Tipo", "ID", "Nome"};
 
     for (const auto& pair : info) {
         QString key = QString::fromStdString(pair.first);

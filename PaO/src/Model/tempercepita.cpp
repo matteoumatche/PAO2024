@@ -15,7 +15,66 @@ TemPercepita::TemPercepita(const QJsonObject& json) :
     Sensore(json),
     u(json["Umidita"].toObject()),
     t(json["Temperatura"].toObject()),
-    IndiceCalore( json["IndiceCalore"].toInt()) {}
+    IndiceCalore( json["IndiceCalore"].toInt()) {
+    // Helper function to convert QString to double with error handling
+    auto stringToDouble = [](const QString& str) -> double {
+        bool ok;
+        double value = str.toDouble(&ok);
+        return ok ? value : 0.0; // Return 0.0 if conversion fails
+    };
+
+    // Helper function to handle errors
+    auto handleError = [](const QString& message) {
+        qDebug() << message;
+    };
+
+    // Check and initialize "Umidita"
+    if (json.contains("Umidita") && json["Umidita"].isString()) {
+        QString umiditaJsonString = json["Umidita"].toString();
+        QJsonDocument umiditaDoc = QJsonDocument::fromJson(umiditaJsonString.toUtf8());
+        if (!umiditaDoc.isNull() && umiditaDoc.isObject()) {
+            QJsonObject umiditaObj = umiditaDoc.object();
+            u = Model::Umidita(umiditaObj); // Assuming Umidita has a constructor accepting QJsonObject
+        } else {
+            handleError("Warning: Invalid 'Umidita' JSON string");
+            u = Model::Umidita(QJsonObject()); // Default constructor
+        }
+    } else {
+        handleError("Warning: Missing or incorrect 'Umidita' in JSON");
+        u = Model::Umidita(QJsonObject()); // Default constructor
+    }
+
+    // Check and initialize "Temperatura"
+    if (json.contains("Temperatura") && json["Temperatura"].isString()) {
+        QString temperaturaJsonString = json["Temperatura"].toString();
+        QJsonDocument temperaturaDoc = QJsonDocument::fromJson(temperaturaJsonString.toUtf8());
+        if (!temperaturaDoc.isNull() && temperaturaDoc.isObject()) {
+            QJsonObject temperaturaObj = temperaturaDoc.object();
+            t = Model::Temperatura(temperaturaObj); // Assuming Temperatura has a constructor accepting QJsonObject
+        } else {
+            handleError("Warning: Invalid 'Temperatura' JSON string");
+            t = Model::Temperatura(QJsonObject()); // Default constructor
+        }
+    } else {
+        handleError("Warning: Missing or incorrect 'Temperatura' in JSON");
+        t = Model::Temperatura(QJsonObject()); // Default constructor
+    }
+
+    // Check and convert "IndiceCalore"
+    if (json.contains("IndiceCalore")) {
+        if (json["IndiceCalore"].isDouble()) {
+            IndiceCalore = json["IndiceCalore"].toDouble();
+        } else if (json["IndiceCalore"].isString()) {
+            IndiceCalore = stringToDouble(json["IndiceCalore"].toString());
+        } else {
+            handleError("Warning: 'IndiceCalore' is of incorrect type in JSON");
+            IndiceCalore = 0.0; // Default value
+        }
+    } else {
+        handleError("Warning: Missing 'IndiceCalore' in JSON");
+        IndiceCalore = 0.0; // Default value
+    }
+}
 
 double TemPercepita::getIndiceCalore() const {
     return IndiceCalore;
