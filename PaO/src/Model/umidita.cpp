@@ -9,8 +9,28 @@ Umidita::Umidita(unsigned int id, std::string nome, double toll) :
     dato(0) {}
 
 Umidita::Umidita(const QJsonObject& json) : Sensore(json) {
-    tolleranza = json["Tolleranza"].toDouble();
-    dato = json["Dato"].toDouble();
+    // Helper function to convert QString to double with error handling
+    auto stringToDouble = [](const QString& str) -> double {
+        bool ok;
+        double value = str.toDouble(&ok);
+        return ok ? value : 0.0; // Return 0.0 if conversion fails
+    };
+
+    // Check and convert "Tolleranza"
+    if (json.contains("Tolleranza") && json["Tolleranza"].isString()) {
+        tolleranza = stringToDouble(json["Attivo"].toString());
+    } else {
+        qDebug() << "Warning: Missing or incorrect 'Tolleranza' in JSON";
+        tolleranza = false; // Default value
+    }
+
+    // Check and convert "Dato"
+    if (json.contains("Dato") && json["Dato"].isString()) {
+        dato = stringToDouble(json["Attivo"].toString());
+    } else {
+        qDebug() << "Warning: Missing or incorrect 'Attivo' in JSON";
+        dato = false; // Default value
+    }
 }
 
 double Umidita::getTolleranza() const {
