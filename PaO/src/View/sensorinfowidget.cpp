@@ -16,7 +16,6 @@ View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string
 
     for (const auto& pair : info) {
         QString key = QString::fromStdString(pair.first);
-        QString value = QString::fromStdString(pair.second);
 
         if (key == "ID") {
             sensorID = pair.second; // Memorizza l'ID del sensore
