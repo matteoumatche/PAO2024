@@ -6,10 +6,6 @@ namespace Model{
 Sensore::Sensore(unsigned int id, std::string n) : ID(id), nome(n) {}
 
 Sensore::Sensore(const QJsonObject& json) : nome(json["Nome"].toString().toStdString()) {
-    ///std::string id=(json["ID"]).toString().toStdString();
-    //int id=(json["ID"]).toInt();
-    //qDebug() << json;
-    //ID=id;
 
     QString idString = json["ID"].toString();
     bool ok;

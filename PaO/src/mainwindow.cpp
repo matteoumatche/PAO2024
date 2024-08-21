@@ -488,3 +488,4 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
 void MainWindow::cloneSensor(Model::Sensore* sensor){}
 void MainWindow::modifySensor(Model::Sensore* sensor){}
 void MainWindow::deleteSensor(Model::Sensore* sensor){}
+

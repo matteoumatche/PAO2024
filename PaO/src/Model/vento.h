@@ -10,10 +10,10 @@ namespace Model{
 class Vento : public Sensore {
 private:
 
-    double tolleranzaGoniometro;
-    double tolleranzaAnemometro;
     double offset;
     double valoreMaxVelocita;
+    double tolleranzaGoniometro;
+    double tolleranzaAnemometro;
     std::pair<double, double> dato;
 
     double limitaAngolo(double x) const;
