@@ -62,36 +62,22 @@ Vento::Vento(const QJsonObject& json) : Sensore(json) {
         tolleranzaAnemometro = 0.5;
     }
 
-    // Check and convert "Dato" object
-    if (json.contains("Dato") && json["Dato"].isObject()) {
-        QJsonObject datoObj = json["Dato"].toObject();
-        if (datoObj.contains("Velocita") && datoObj["Velocita"].isString()) {
-            dato.first = stringToDouble(datoObj["Velocita"].toString());
-        } else {
-            qDebug() << "Warning: Missing or incorrect 'Velocita' in 'Dato' object";
-            dato.first = 0.0;
-        }
-        if (datoObj.contains("Angolo") && datoObj["Angolo"].isString()) {
-            dato.second = stringToDouble(datoObj["Angolo"].toString());
-        } else {
-            qDebug() << "Warning: Missing or incorrect 'Angolo' in 'Dato' object";
-            dato.second = 0.0;
-        }
+    // Check and convert "Velocità" object
+
+    if (json.contains("Velocita") && json["Velocita"].isString()) {
+        dato.first = stringToDouble(json["Velocita"].toString());
     } else {
-        qDebug() << "Warning: Missing 'Dato' object in JSON";
+        qDebug() << "Warning: Missing or incorrect 'Velocita' in 'Dato' object";
         dato.first = 0.0;
-        dato.second = 0.0;
     }
 
-
-    /*
-    offset = json["Offset"].toDouble();
-    valoreMaxVelocita = json["MaxVelocita"].toDouble();
-    tolleranzaGoniometro = json["TolleranzaGoniometro"].toDouble();
-    tolleranzaAnemometro = json["TolleranzaAnemometro"].toDouble();
-    dato.first = json["Dato"].toObject()["Velocita"].toDouble();
-    dato.second = json["Dato"].toObject()["Angolo"].toDouble();
-    */
+    // Check and convert "Angolo" object
+    if (json.contains("Angolo") && json["Angolo"].isString()) {
+        dato.second = stringToDouble(json["Angolo"].toString());
+    } else {
+        qDebug() << "Warning: Missing or incorrect 'Angolo' in 'Dato' object";
+        dato.second = 0.0;
+    }
 }
 
 double Vento::limitaAngolo(double x) const {

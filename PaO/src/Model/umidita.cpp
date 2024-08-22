@@ -18,7 +18,7 @@ Umidita::Umidita(const QJsonObject& json) : Sensore(json) {
 
     // Check and convert "Tolleranza"
     if (json.contains("Tolleranza") && json["Tolleranza"].isString()) {
-        tolleranza = stringToDouble(json["Attivo"].toString());
+        tolleranza = stringToDouble(json["Tolleranza"].toString());
     } else {
         qDebug() << "Warning: Missing or incorrect 'Tolleranza' in JSON";
         tolleranza = false; // Default value
@@ -26,9 +26,9 @@ Umidita::Umidita(const QJsonObject& json) : Sensore(json) {
 
     // Check and convert "Dato"
     if (json.contains("Dato") && json["Dato"].isString()) {
-        dato = stringToDouble(json["Attivo"].toString());
+        dato = stringToDouble(json["Dato"].toString());
     } else {
-        qDebug() << "Warning: Missing or incorrect 'Attivo' in JSON";
+        qDebug() << "Warning: Missing or incorrect 'Dato' in JSON";
         dato = false; // Default value
     }
 }

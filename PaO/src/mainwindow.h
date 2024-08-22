@@ -46,7 +46,7 @@ private:
     QLineEdit *searchLineEdit;
     QPushButton *searchButton;
     QPushButton *SimulaButton;
-   // QPushButton *MisuraButton;
+    //QPushButton *MisuraButton;
 
     std::vector<Model::Sensore*> sensori;
     QString pathToFile;

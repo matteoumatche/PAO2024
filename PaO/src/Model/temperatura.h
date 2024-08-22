@@ -12,7 +12,7 @@ private:
     double dato;
 
 public:
-    Temperatura(unsigned int id, std::string nome, double toll = 0.5);
+    Temperatura(unsigned int id=0, std::string nome="temperatura", double toll = 0.5);
     Temperatura(const QJsonObject& json);
 
     double getTolleranza() const;

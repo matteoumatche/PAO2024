@@ -9,12 +9,10 @@ TemPercepita::TemPercepita(unsigned int id, std::string nome, Umidita um, Temper
         IndiceCalore = t.getDato();
 }
 
-TemPercepita::TemPercepita(unsigned int id, std::string nome) : Sensore(id, nome), u(1, "ok"), t(11, "ok") {}
+TemPercepita::TemPercepita(unsigned int id, std::string nome) : Sensore(id, nome), u(1, "umidità"), t(1, "temperatura") {}
 
 TemPercepita::TemPercepita(const QJsonObject& json) :
     Sensore(json),
-    u(json["Umidita"].toObject()),
-    t(json["Temperatura"].toObject()),
     IndiceCalore( json["IndiceCalore"].toInt()) {
     // Helper function to convert QString to double with error handling
     auto stringToDouble = [](const QString& str) -> double {
@@ -28,7 +26,7 @@ TemPercepita::TemPercepita(const QJsonObject& json) :
         qDebug() << message;
     };
 
-    // Check and initialize "Umidita"
+     //Check and initialize "Umidita"
     if (json.contains("Umidita") && json["Umidita"].isString()) {
         QString umiditaJsonString = json["Umidita"].toString();
         QJsonDocument umiditaDoc = QJsonDocument::fromJson(umiditaJsonString.toUtf8());
