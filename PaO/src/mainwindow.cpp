@@ -37,7 +37,6 @@ MainWindow::MainWindow(QWidget *parent)
     pulsantiLayout = new QVBoxLayout;       //layout dei pulsanti: clona, modifica, elimina
     simulaLayout = new QVBoxLayout;         //layout dei pulsanti simula e simula misura
 
-
     //toolbar e widget
     centralWidget = new QWidget(nullptr);
     tbar= new View::ToolBar;
@@ -70,17 +69,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     //graphLayout
     //graphLayout->addWidget(graphWidget);
-    //graphLayout->addLayout(optionsLayout);
+    graphLayout->addLayout(optionsLayout);
 
     //searchLayout
     searchLayout->addWidget(searchLineEdit);
     //searchLayout->addWidget(searchButton);
 
-    /*optionsLayout
-    optionsLayout->addWidget(dataWidget);
+    //optionsLayout
+    //optionsLayout->addWidget(dataWidget);
     optionsLayout->addLayout(pulsantiLayout);
     optionsLayout->addLayout(simulaLayout);
-    */
+
     //---------------------------------------------------
 
     //misure
@@ -433,6 +432,9 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
             }
         }
 
+        optionsLayout->addWidget(dataWidget);
+
+
         if(SimulaButton){
             delete SimulaButton;
             SimulaButton= nullptr;
@@ -440,7 +442,6 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
 
         SimulaButton = new QPushButton("Simula misure",nullptr);
         simulaLayout->addWidget(SimulaButton);
-        optionsLayout->addLayout(simulaLayout);
 /*
         if(MisuraButton){
             delete MisuraButton;
@@ -449,8 +450,8 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
 
         MisuraButton = new QPushButton("Misura",nullptr);
         simulaLayout->addWidget(MisuraButton);
-
 */
+
         if(graphWidget){
             delete graphWidget;
             graphWidget=nullptr;
@@ -492,10 +493,6 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
         connect(deleteButton, &QPushButton::clicked, this, [this, selectedSensor]() {
             deleteSensor(selectedSensor);
         });
-
-        optionsLayout->addWidget(dataWidget);
-        optionsLayout->addLayout(pulsantiLayout);
-        graphLayout->addLayout(optionsLayout);
 
         } else {
         qDebug() << "selectedSensor è nullo!";
