@@ -8,7 +8,7 @@ class WidgetGrafico : public QWidget
 {
     Q_OBJECT
 public:
-    explicit WidgetGrafico(Model::Sensore* s,QWidget *parent = nullptr);
+    explicit WidgetGrafico(QWidget *parent = nullptr);
 signals:
 public slots:
     virtual void simulazione();

@@ -3,7 +3,7 @@
 #include <QLabel>
 
 View::WidgetTempercepita::WidgetTempercepita(Model::Sensore* s,QWidget *parent)
-    : WidgetGrafico(s,parent) {
+    : WidgetGrafico(parent) {
 
 }
 

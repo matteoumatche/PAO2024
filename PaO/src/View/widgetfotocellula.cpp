@@ -3,7 +3,7 @@
 #include <QLabel>
 
 View::WidgetFotocellula::WidgetFotocellula(Model::Sensore* s,QWidget *parent)
-    : WidgetGrafico(s,parent) {
+    : WidgetGrafico(parent) {
     // Layout di base per il widget
     QVBoxLayout* layout = new QVBoxLayout(this);
 

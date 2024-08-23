@@ -7,7 +7,7 @@
 #include <QtCharts/QValueAxis>
 
 View::WidgetTemperatura::WidgetTemperatura(Model::Sensore* sensore, QWidget *parent)
-    : WidgetGrafico(sensore,parent),
+    : WidgetGrafico(parent),
       tempLabel(new QLabel(this)),
       timeSeries(new QLineSeries()),
       tempSeries(new QLineSeries()),

@@ -1,68 +1,93 @@
 #include "widgetvento.h"
+#include "../Model/vento.h"
 #include <QVBoxLayout>
-#include <QLabel>
 #include <QPainter>
 #include <QPen>
-#include <cmath>
+#include <QPair>
+#include <QValueAxis>
+#include <QChartView>
+#include <QDateTime>
+#include <QDateTimeAxis>
+#include <QLineSeries>
 
+
+//QT_CHARTS_USE_NAMESPACE
 
 View::WidgetVento::WidgetVento(Model::Sensore* s, QWidget* parent)
-    : WidgetGrafico(s,parent), vento(static_cast<Model::Vento*>(s)) {
-}
+    : WidgetGrafico(parent), vento(static_cast<Model::Vento*>(s)), mostraGrafico(false) {
+/*
+    // Create the chart and series
+    chart = new QChart();
+    series = new QLineSeries();
+    chart->addSeries(series);
 
+    // Configure the chart's axes
+    //chart->axisX()->setTitleText("Time");
+    //chart->axisY()->setTitleText("Speed");
+
+
+
+    // Use a QDateTimeAxis for time-based x-axis
+    QDateTimeAxis* axisX = new QDateTimeAxis;
+    axisX->setTitleText("ora misurazione");
+    axisX->setFormat("hh:mm:ss");
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
+
+    // Use a QValueAxis for speed-based y-axis
+    QValueAxis* axisY = new QValueAxis;
+    axisY->setLabelFormat("%.2f");
+    axisY->setTitleText("Velocità");
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
+
+    chartView = new QChartView(chart, this);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setGeometry(rect()); // Ensure the chart view fills the widget
+
+    // Create a layout to hold the chart view
+    QVBoxLayout* layout = new QVBoxLayout(this);
+    layout->addWidget(chartView);
+    setLayout(layout);*/
+}
 
 void View::WidgetVento::simulazione() {
-   // datiSimulati.clear();
-   // for (int i = 0; i < 10; ++i) {
+    /*datiSimulati.clear();
+    QDateTime currentTime = QDateTime::currentDateTime();
+    for (int i = 0; i < 10; ++i) {
         vento->simulaMisura();
-       // datiSimulati.push_back(vento->getDato());
-    //}
-   // mostraGrafico = true;
-    update();  // Trigger per il repaint
-}
-/*
-void View::WidgetVento::misura(double valoreReale) {
-    vento->Misura(std::make_pair(valoreReale, 0)); // Simula una misura reale
-    mostraGrafico = false;
-    update();  // Trigger per il repaint
-}*/
-/*
-void View::WidgetVento::valoreMisura() {
+        auto dato = vento->getDato();
+        datiSimulati[currentTime.addSecs(i)] = dato; // Use time increments
+        qDebug() << "Time:" << currentTime.addSecs(i).toString() << "Speed:" << dato.first;
+    }
 
-    misura(10);
-}*/
+    // pulizia
+    series->clear();
+
+    chartView->setGeometry(rect()); // Ensure the chart view fills the widget
+    chartView->update(); // Refresh the chart view
+
+    mostraGrafico = true;
+    update();  // Trigger for the repaint
+    */
+}
 
 void View::WidgetVento::paintEvent(QPaintEvent* event) {
-    QPainter painter(this);
+    /*QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    /*if (mostraGrafico) {
-        // Modalità grafico
-        int larghezza = this->width();
-        int altezza = this->height();
-        int margine = 20;
-        int areaGraficoLarghezza = larghezza - 2 * margine;
-        int areaGraficoAltezza = altezza - 2 * margine;
-
-        // Disegna gli assi
-        painter.setPen(Qt::black);
-        painter.drawLine(margine, altezza - margine, larghezza - margine, altezza - margine); // Asse X
-        painter.drawLine(margine, altezza - margine, margine, margine); // Asse Y
-
-        // Determina i range dei valori
-        double maxVelocita = vento->getMaxVelocita();
-        double maxAngolo = 360.0;
-
-        // Disegna i punti simulati
-        QPen penna(Qt::red, 2);
-        painter.setPen(penna);
-        for (const auto& dato : datiSimulati) {
-            double x = margine + dato.second / maxAngolo * areaGraficoLarghezza;
-            double y = altezza - margine - dato.first / maxVelocita * areaGraficoAltezza;
-            painter.drawPoint(static_cast<int>(x), static_cast<int>(y));
+    if (mostraGrafico) {
+        for (auto it = datiSimulati.begin(); it != datiSimulati.end(); ++it) {
+            double x = it.key().toMSecsSinceEpoch(); // Convert time to milliseconds
+            double y = it.value().first; // Speed
+            series->append(x, y);
         }
+        // Let the chart handle the drawing
 
-    } else {*/
+        chartView->update();
+        chartView->setGeometry(rect()); // Ensure the chart view fills the widget
+
+    } else {
         // Modalità bussola
         auto windData = vento->getDato();
         double velocita = windData.first;
@@ -83,6 +108,5 @@ void View::WidgetVento::paintEvent(QPaintEvent* event) {
         QPen penna(Qt::red, 2);
         painter.setPen(penna);
         painter.drawLine(centro, puntoFinale);
-    //}
+    }*/
 }
-

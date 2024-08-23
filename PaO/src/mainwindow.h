@@ -84,7 +84,7 @@ public:
     static QJsonObject mapToJson(const std::map<std::string, std::string>& ) ;
 
 public slots:
-    void onSensorSelected(const std::string& sensorID);
+    void onSensorSelected(const std::string sensorID);
     //aggiorna la finestra dopo la modifica dei dati
     void dataUpdated();
     void onSensorModified(std::map<std::string, std::string>&);

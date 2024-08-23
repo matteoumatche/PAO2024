@@ -3,7 +3,7 @@
 #include <QLabel>
 
 View::WidgetUmidita::WidgetUmidita(Model::Sensore* s,QWidget *parent)
-    : WidgetGrafico(s,this) {
+    : WidgetGrafico(this) {
     // Layout di base per il widget
     QVBoxLayout* layout = new QVBoxLayout(this);
 
