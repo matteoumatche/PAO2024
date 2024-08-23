@@ -20,6 +20,7 @@
 #include "View/widgetumidita.h"
 #include "View/widgetvento.h"
 #include "View/widgetgrafico.h"
+#include "View/editsensordialog.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -109,7 +110,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(searchButton, &QPushButton::clicked, this, &MainWindow::onSearchButtonClicked);
     connect(clearSearchButton, &QPushButton::clicked, this, &MainWindow::onClearSearchButtonClicked);
-
 }
 
 MainWindow::~MainWindow(){}
@@ -501,9 +501,48 @@ void MainWindow::onSensorSelected(const std::string& sensorID) {
 }
 
 
-void MainWindow::cloneSensor(Model::Sensore* sensor){}
-void MainWindow::modifySensor(Model::Sensore* sensor){}
-void MainWindow::deleteSensor(Model::Sensore* sensor){}
+void MainWindow::cloneSensor(Model::Sensore* selectedSensor){
+    if (selectedSensor) {
+        // Clona il sensore selezionato
+        Model::Sensore* clonedSensor = selectedSensor->clone();
+
+        // Aggiungi il sensore clonato alla lista dei sensori
+        sensori.push_back(clonedSensor);
+
+        // Aggiorna la visualizzazione
+        emit sensorListWidget->updateList();
+    }
+}
+
+void MainWindow::modifySensor(Model::Sensore* selectedSensor){
+    /*
+    if (selectedSensor) {
+        // Apri il dialogo di modifica con il sensore selezionato
+        EditSensorDialog* dialog = new EditSensorDialog(selectedSensor, this);
+        if (dialog->exec() == QDialog::Accepted) {
+            // Se l'utente ha accettato le modifiche, aggiorna la visualizzazione
+            emit sensorListWidget->updateList();
+        }
+    }*/
+}
+
+void MainWindow::deleteSensor(Model::Sensore* selectedSensor){
+    if (selectedSensor) {
+        // Trova ed elimina il sensore selezionato
+        auto it = std::find_if(sensori.begin(), sensori.end(),
+                               [&selectedSensor](Model::Sensore* sensore) {
+                                   return sensore->getID() == selectedSensor->getID();
+                               });
+        if (it != sensori.end()) {
+            delete *it;  // Dealloca la memoria del sensore
+            sensori.erase(it);  // Rimuovi il sensore dal vettore
+            selectedSensor = nullptr;  // Resetta il sensore selezionato
+        }
+
+        // Aggiorna la visualizzazione
+        emit sensorListWidget->updateList();
+    }
+}
 
 void MainWindow::onSearchButtonClicked() {
     QString searchText = searchLineEdit->text();

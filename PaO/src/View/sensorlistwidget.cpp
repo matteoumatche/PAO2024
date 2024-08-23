@@ -17,7 +17,6 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
 
     QVBoxLayout* layout = new QVBoxLayout();
 
-
     // Creazione di un SensorInfoWidget per ciascun sensore
     for (Model::Sensore* sensore : sensori) {
         std::map<std::string, std::string> info = sensore->getInfo();
@@ -85,3 +84,4 @@ void View::SensorListWidget::onSensorSelected(const std::string& sensorID){
     qDebug() << "passo 2";
     emit sensorSelected(sensorID);
 }
+

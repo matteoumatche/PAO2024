@@ -11,6 +11,7 @@
 #include <QHBoxLayout>
 #include <QScrollArea>
 #include <vector>
+#include "View/editsensordialog.h"
 #include "src/View/toolBar.h"
 #include "src/Model/sensore.h"
 #include "src/Model/fotocellula.h"

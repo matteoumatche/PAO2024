@@ -1,37 +1,30 @@
+// editsensordialog.h
+
 #ifndef EDITSENSORDIALOG_H
 #define EDITSENSORDIALOG_H
 
 #include <QDialog>
+#include <QMap>
 #include <QLineEdit>
 #include <QFormLayout>
 #include <QDialogButtonBox>
-#include "../Model/sensore.h"
-#include "../Model/temperatura.h"
-#include "../Model/umidita.h"
-#include "../Model/tempercepita.h"
-#include "../Model/vento.h"
-#include "../Model/fotocellula.h"
-#include "../mainwindow.h"
+
 
 namespace Model {
-    class Sensore;  // Forward declaration
+    class Sensore;
 }
 
 class EditSensorDialog : public QDialog {
     Q_OBJECT
-
 public:
-    explicit EditSensorDialog(Model::Sensore* sensore,std::vector<Model::Sensore*>& sensori, QWidget* parent = nullptr);
-    ~EditSensorDialog();
-
-
+    EditSensorDialog(Model::Sensore* sensore, QWidget* parent = nullptr);
 
 private slots:
-    void acceptChanges(Model::Sensore*);
+    void accept() override;
 
 private:
-    //Model::Sensore* sensore;
-    std::map<std::string, QLineEdit*> edits;  // Mappa per associare chiavi della mappa del sensore a QLineEdit
+    Model::Sensore* originalSensor;
+    std::map<std::string, QLineEdit*> editFields;
 };
 
-#endif
+#endif // EDITSENSORDIALOG_H
