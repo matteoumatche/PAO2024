@@ -207,7 +207,7 @@ QStringList MainWindow::getAvailableSensorTypes() {
     return QStringList() << "Fotocellula" << "Vento" << "Temperatura" << "Umidità" << "TemPercepita";
 }
 
-Model::Sensore* MainWindow::creaSensore(const QJsonObject& info) const {
+Model::Sensore* MainWindow::creaSensore(const QJsonObject& info)  {
     QString tipo = info["Tipo"].toString();
    // qWarning() << tipo;
     if (!tipo.isEmpty()) {
@@ -514,16 +514,24 @@ void MainWindow::cloneSensor(Model::Sensore* selectedSensor){
     }
 }
 
-void MainWindow::modifySensor(Model::Sensore* selectedSensor){
-    /*
+void MainWindow::modifySensor(Model::Sensore* selectedSensor) {
     if (selectedSensor) {
-        // Apri il dialogo di modifica con il sensore selezionato
+        // Crea il dialogo di modifica
         EditSensorDialog* dialog = new EditSensorDialog(selectedSensor, this);
+
+        // Connetti il segnale sensorModified allo slot onSensorModified
+        connect(dialog, &EditSensorDialog::sensorModified, this, &MainWindow::onSensorModified);
+
+        // Esegui il dialogo e attendi l'input dell'utente
         if (dialog->exec() == QDialog::Accepted) {
-            // Se l'utente ha accettato le modifiche, aggiorna la visualizzazione
+            qDebug() <<"accettato";
+            // Se l'utente ha accettato le modifiche, aggiorna la visualizzazione della lista dei sensori
             emit sensorListWidget->updateList();
         }
-    }*/
+
+        // Disconnetti il segnale per evitare connessioni multiple (opzionale, utile se la finestra viene ricreata)
+        disconnect(dialog, &EditSensorDialog::sensorModified, this, &MainWindow::onSensorModified);
+    }
 }
 
 void MainWindow::deleteSensor(Model::Sensore* selectedSensor){
@@ -573,6 +581,23 @@ void MainWindow::updateSensorList(std::vector<Model::Sensore*>& sensors) {
 
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
+}
+
+void MainWindow::onSensorModified(std::map<std::string, std::string>& info) {
+    // Cicla attraverso il vettore dei sensori per trovare quello selezionato
+    qDebug() <<"onsensor trovato";
+    qDebug() <<info;
+    for (auto sensore=sensori.begin();sensore!=sensori.end();sensore++) {
+        if ((*sensore)->getInfo()["ID"] == info["ID"]) {
+            qDebug() <<"onsensor trovato";
+            // Dealloca il vecchio oggetto sensore per evitare fughe di memoria
+            sensori.erase(sensore);
+            qDebug() <<"eliminato";
+            // Sostituisci il vecchio sensore con il nuovo
+            sensori.push_back(creaSensore(mapToJson(info)));
+            break;
+        }
+    }
 }
 
 

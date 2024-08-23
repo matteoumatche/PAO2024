@@ -52,7 +52,7 @@ private:
     std::vector<Model::Sensore*> sensori;
     QString pathToFile;
 
-    Model::Sensore* creaSensore(const QJsonObject& ) const ;
+
 
     QStringList getAvailableSensorTypes();
     void updateSensorList(std::vector<Model::Sensore*>&);
@@ -68,7 +68,9 @@ private slots:
     void reloadJsonFile();
 
     void cloneSensor(Model::Sensore* sensor);
+    // Slot per gestire la modifica del sensore
     void modifySensor(Model::Sensore* sensor);
+      // Slot per gestire la modifica del sensore
     void deleteSensor(Model::Sensore* sensor);
 
     void onSearchButtonClicked();
@@ -78,12 +80,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    static Model::Sensore* creaSensore(const QJsonObject& ) ;
     static QJsonObject mapToJson(const std::map<std::string, std::string>& ) ;
 
 public slots:
     void onSensorSelected(const std::string& sensorID);
     //aggiorna la finestra dopo la modifica dei dati
     void dataUpdated();
+    void onSensorModified(std::map<std::string, std::string>&);
 
 };
 #endif // MAINWINDOW_H

@@ -2,6 +2,7 @@
 
 #include "editsensordialog.h"
 #include "../Model/sensore.h"
+#include "../mainwindow.h"
 
 
 EditSensorDialog::EditSensorDialog(Model::Sensore* sensore, QWidget* parent)
@@ -15,9 +16,13 @@ EditSensorDialog::EditSensorDialog(Model::Sensore* sensore, QWidget* parent)
 
     for (auto& pair : info) {
         QString key = QString::fromStdString(pair.first);
-        if (key == "ID" || key == "Tipo") continue;
-
         QLineEdit* edit = new QLineEdit(QString::fromStdString(pair.second), this);
+
+        // Check if the field is "ID" or "Tipo" and make them read-only
+        if (key == "ID" || key == "Tipo") {
+            edit->setReadOnly(true);
+        }
+
         formLayout->addRow(key + ":", edit);
         editFields[pair.first] = edit;
     }
@@ -33,18 +38,16 @@ void EditSensorDialog::accept() {
     // Crea una mappa per memorizzare le informazioni aggiornate
     std::map<std::string, std::string> updatedInfo;
 
-    // Cicla attraverso i campi di modifica e raccogli i dati
+    // Cicla attraverso i campi di modifica e raccoglie i dati inseriti dall'utente
     for (const auto& pair : editFields) {
         QLineEdit* edit = pair.second;
         QString value = edit->text();
         updatedInfo[pair.first] = value.toStdString();
     }
 
-    // Aggiorna le informazioni del sensore esistente
-    if (originalSensor) {
-        //originalSensor->updateInfo(updatedInfo);
-    }
-
+    // Emetti il segnale con il nuovo sensore
+    emit sensorModified(updatedInfo);
+    qDebug() <<"emesso";
     // Conferma e chiudi il dialogo
     QDialog::accept();
 }
