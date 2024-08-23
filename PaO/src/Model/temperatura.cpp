@@ -5,7 +5,7 @@ namespace Model{
 
 Temperatura::Temperatura(unsigned int id, std::string nome, double toll) :
     Sensore(id, nome),
-    tolleranza(0.5),
+    tolleranza(toll),
     dato(0) {}
 
 Temperatura::Temperatura(const QJsonObject& json) : Sensore(json) {
@@ -21,15 +21,15 @@ Temperatura::Temperatura(const QJsonObject& json) : Sensore(json) {
         tolleranza = stringToDouble(json["Tolleranza"].toString());
     } else {
         qDebug() << "Warning: Missing or incorrect 'Tolleranza' in JSON";
-        tolleranza = false; // Default value
+        tolleranza = 0.5; // Default value
     }
 
     // Check and convert "Dato"
     if (json.contains("Dato") && json["Dato"].isString()) {
         dato = stringToDouble(json["Dato"].toString());
     } else {
-        qDebug() << "Warning: Missing or incorrect '' in JSON";
-        dato = false; // Default value
+        qDebug() << "Warning: Missing or incorrect 'Dato' in JSON";
+        dato = 0.0; // Default value
     }
 }
 

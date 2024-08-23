@@ -1,5 +1,9 @@
 #ifndef WIDGETTEMPERATURA_H
 #define WIDGETTEMPERATURA_H
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QValueAxis>
 
 #include <QLabel>
 #include <QWidget>
@@ -14,7 +18,14 @@ public:
     void updateData(Model::Temperatura* sensore);  // Ora accetta direttamente un sensore di tipo Temperatura
 
 private:
-    QLabel* tempLabel;  // Per mostrare la temperatura
+    QLabel* tempLabel;            // Etichetta per mostrare la temperatura
+    QLineSeries *timeSeries;      // Serie di dati per il tempo
+    QLineSeries *tempSeries;      // Serie di dati per la temperatura
+    QChart *chart;                // Oggetto per il grafico
+    QChartView *chartView;        // Oggetto per la visualizzazione del grafico
+
+    int timeCounter;              // Contatore per il tempo (associato ai dati)
+
 };
 }
 #endif // WIDGETTEMPERATURA_H
