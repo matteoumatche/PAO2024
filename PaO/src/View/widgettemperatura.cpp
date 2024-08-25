@@ -5,24 +5,21 @@
 #include <QRandomGenerator>
 #include <QBarSet>
 #include <QChart>
+#include <QChartView>
+#include <QBarCategoryAxis>
+#include <QValueAxis>
 
 View::WidgetTemperatura::WidgetTemperatura(Model::Sensore* sensore, QWidget *parent)
     : WidgetGrafico(parent)
 {
-/*
-    QLabel* tempLabel;            // Etichetta per mostrare la temperatura
-    QLineSeries *timeSeries;      // Serie di dati per il tempo
-    QLineSeries *tempSeries;      // Serie di dati per la temperatura
-    QChart *chart;                // Oggetto per il grafico
-    QChartView *chartView;        // Oggetto per la visualizzazione del grafico
 
-    int timeCounter;              // Contatore per il tempo (associato ai dati)
-*/
     QBarSet *set = new QBarSet("Prova");
 
     for (int i = 0; i < 10; ++i) {
-        int randomValue = QRandomGenerator::global()->bounded(0, 40);
-        *set << randomValue;  // Aggiungi il valore randomico al set
+        sensore->simulaMisura();  // Simula una misura
+        std::map<std::string, std::string> info = sensore->getInfo();  // Ottieni le informazioni dal sensore
+        double dato = std::stod(info["Dato"]);  // Converti il valore "Dato" da stringa a double
+        *set << dato;  // Aggiungi il valore al set
     }
 
     QBarSeries *series = new QBarSeries();
@@ -31,9 +28,27 @@ View::WidgetTemperatura::WidgetTemperatura(Model::Sensore* sensore, QWidget *par
     QChart *chart = new QChart();
     chart->addSeries(series);
 
+    QStringList categories;
+    categories << "9-10" << "10-11" << "11-12" << "12-13" << "13-14" << "14-15" << "15-16" << "16-17" << "17-18" << "18-19";
+    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+    axisX->append(categories);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
+
+    QValueAxis *axisY = new QValueAxis();
+    axisY->setRange(-10,40);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
+
     qDebug() << "WidgetTemperatura creato";
 
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
 
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->addWidget(chartView);
+
+    setLayout(layout);
 
     /*
     for (int i=0; i<8; i++) {
