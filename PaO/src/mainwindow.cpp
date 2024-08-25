@@ -612,7 +612,6 @@ void MainWindow::updateSensorList(std::vector<Model::Sensore*>& sensors) {
 void MainWindow::onSensorModified(std::map<std::string, std::string>& info) {
     // Cicla attraverso il vettore dei sensori per trovare quello selezionato
     qDebug() <<"onsensor trovato";
-    qDebug() <<info;
     for (auto sensore=sensori.begin();sensore!=sensori.end();sensore++) {
         if ((*sensore)->getInfo()["ID"] == info["ID"]) {
             qDebug() <<"onsensor trovato";

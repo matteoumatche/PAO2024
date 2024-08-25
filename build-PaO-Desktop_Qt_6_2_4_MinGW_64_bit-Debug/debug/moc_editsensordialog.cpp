@@ -22,19 +22,21 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EditSensorDialog_t {
-    const uint offsetsAndSize[6];
-    char stringdata0[25];
+    const uint offsetsAndSize[8];
+    char stringdata0[68];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_EditSensorDialog_t, stringdata0) + ofs), len 
 static const qt_meta_stringdata_EditSensorDialog_t qt_meta_stringdata_EditSensorDialog = {
     {
 QT_MOC_LITERAL(0, 16), // "EditSensorDialog"
-QT_MOC_LITERAL(17, 6), // "accept"
-QT_MOC_LITERAL(24, 0) // ""
+QT_MOC_LITERAL(17, 14), // "sensorModified"
+QT_MOC_LITERAL(32, 0), // ""
+QT_MOC_LITERAL(33, 34) // "std::map<std::string,std::str..."
 
     },
-    "EditSensorDialog\0accept\0"
+    "EditSensorDialog\0sensorModified\0\0"
+    "std::map<std::string,std::string>&"
 };
 #undef QT_MOC_LITERAL
 
@@ -49,13 +51,13 @@ static const uint qt_meta_data_EditSensorDialog[] = {
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
 
- // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   20,    2, 0x08,    1 /* Private */,
+ // signals: name, argc, parameters, tag, flags, initial metatype offsets
+       1,    1,   20,    2, 0x06,    1 /* Public */,
 
- // slots: parameters
-    QMetaType::Void,
+ // signals: parameters
+    QMetaType::Void, 0x80000000 | 3,    2,
 
        0        // eod
 };
@@ -66,11 +68,19 @@ void EditSensorDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         auto *_t = static_cast<EditSensorDialog *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->accept(); break;
+        case 0: _t->sensorModified((*reinterpret_cast< std::add_pointer_t<std::map<std::string,std::string>&>>(_a[1]))); break;
         default: ;
         }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (EditSensorDialog::*)(std::map<std::string,std::string> & );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&EditSensorDialog::sensorModified)) {
+                *result = 0;
+                return;
+            }
+        }
     }
-    (void)_a;
 }
 
 const QMetaObject EditSensorDialog::staticMetaObject = { {
@@ -80,8 +90,8 @@ const QMetaObject EditSensorDialog::staticMetaObject = { {
     qt_static_metacall,
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_EditSensorDialog_t
-, QtPrivate::TypeAndForceComplete<EditSensorDialog, std::true_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<EditSensorDialog, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<std::map<std::string,std::string> &, std::false_type>
+
 
 
 >,
@@ -117,6 +127,13 @@ int EditSensorDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 1;
     }
     return _id;
+}
+
+// SIGNAL 0
+void EditSensorDialog::sensorModified(std::map<std::string,std::string> & _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE
