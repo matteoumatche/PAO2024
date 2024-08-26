@@ -5,3 +5,4 @@ View::WidgetTempercepita::WidgetTempercepita(Model::Sensore* s, QWidget *parent)
 
 }
 
+void View::WidgetTempercepita::simulazione(Model::Sensore*) {}

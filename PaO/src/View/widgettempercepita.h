@@ -3,12 +3,15 @@
 
 #include "widgetgrafico.h"
 #include "../Model/Sensore.h"
+
 namespace View{
 
 class WidgetTempercepita : public WidgetGrafico{
 
 public:
-    explicit WidgetTempercepita(Model::Sensore* s,QWidget *parent );
+    explicit WidgetTempercepita(Model::Sensore* s, QWidget *parent);
+
+public slots:
     void simulazione(Model::Sensore*) override;
 };
 

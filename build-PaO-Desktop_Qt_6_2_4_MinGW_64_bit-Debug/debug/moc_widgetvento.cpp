@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_View__WidgetVento_t {
-    const uint offsetsAndSize[6];
-    char stringdata0[31];
+    const uint offsetsAndSize[10];
+    char stringdata0[49];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_View__WidgetVento_t, stringdata0) + ofs), len 
@@ -31,10 +31,13 @@ static const qt_meta_stringdata_View__WidgetVento_t qt_meta_stringdata_View__Wid
     {
 QT_MOC_LITERAL(0, 17), // "View::WidgetVento"
 QT_MOC_LITERAL(18, 11), // "simulazione"
-QT_MOC_LITERAL(30, 0) // ""
+QT_MOC_LITERAL(30, 0), // ""
+QT_MOC_LITERAL(31, 15), // "Model::Sensore*"
+QT_MOC_LITERAL(47, 1) // "s"
 
     },
-    "View::WidgetVento\0simulazione\0"
+    "View::WidgetVento\0simulazione\0\0"
+    "Model::Sensore*\0s"
 };
 #undef QT_MOC_LITERAL
 
@@ -52,10 +55,10 @@ static const uint qt_meta_data_View__WidgetVento[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   20,    2, 0x0a,    1 /* Public */,
+       1,    1,   20,    2, 0x0a,    1 /* Public */,
 
  // slots: parameters
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 3,    4,
 
        0        // eod
 };
@@ -66,11 +69,10 @@ void View::WidgetVento::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         auto *_t = static_cast<WidgetVento *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->simulazione(); break;
+        case 0: _t->simulazione((*reinterpret_cast< std::add_pointer_t<Model::Sensore*>>(_a[1]))); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 const QMetaObject View::WidgetVento::staticMetaObject = { {
@@ -81,7 +83,7 @@ const QMetaObject View::WidgetVento::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_View__WidgetVento_t
 , QtPrivate::TypeAndForceComplete<WidgetVento, std::true_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>
 
 
 >,
