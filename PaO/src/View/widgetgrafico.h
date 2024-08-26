@@ -1,6 +1,8 @@
 #ifndef WIDGETGRAFICO_H
 #define WIDGETGRAFICO_H
 
+#include "../Model/sensore.h"
+
 #include <QWidget>
 
 namespace View{
