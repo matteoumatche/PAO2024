@@ -3,110 +3,100 @@
 #include <QVBoxLayout>
 #include <QPainter>
 #include <QPen>
-#include <QPair>
-#include <QValueAxis>
-#include <QChartView>
-#include <QDateTime>
-#include <QDateTimeAxis>
-#include <QLineSeries>
-
-
-//QT_CHARTS_USE_NAMESPACE
+#include <QTableWidgetItem>
+#include <QHeaderView>
+#include <cmath>
 
 View::WidgetVento::WidgetVento(Model::Sensore* s, QWidget* parent)
-    : WidgetGrafico(parent), vento(static_cast<Model::Vento*>(s)), mostraGrafico(false) {
-/*
-    // Create the chart and series
-    chart = new QChart();
-    series = new QLineSeries();
-    chart->addSeries(series);
+    : WidgetGrafico(parent), vento(static_cast<Model::Vento*>(s)), angoloCorrente(0), iterazioniRimanenti(0) {
 
-    // Configure the chart's axes
-    //chart->axisX()->setTitleText("Time");
-    //chart->axisY()->setTitleText("Speed");
+    // Layout principale per contenere la bussola e la tabella
+    QHBoxLayout* mainLayout = new QHBoxLayout(this);
 
+    // Layout verticale per la bussola
+    QVBoxLayout* compassLayout = new QVBoxLayout();
+    mainLayout->addLayout(compassLayout);
 
+    // Creazione della tabella per visualizzare i dati
+    tabella = new QTableWidget(0, 2, this);
+    tabella->setHorizontalHeaderLabels(QStringList() << "Velocità" << "Angolo");
+    tabella->horizontalHeader()->setStretchLastSection(true);
+    tabella->verticalHeader()->setVisible(false);
+    mainLayout->addWidget(tabella);
 
-    // Use a QDateTimeAxis for time-based x-axis
-    QDateTimeAxis* axisX = new QDateTimeAxis;
-    axisX->setTitleText("ora misurazione");
-    axisX->setFormat("hh:mm:ss");
-    chart->addAxis(axisX, Qt::AlignBottom);
-    series->attachAxis(axisX);
+    setLayout(mainLayout);
 
-    // Use a QValueAxis for speed-based y-axis
-    QValueAxis* axisY = new QValueAxis;
-    axisY->setLabelFormat("%.2f");
-    axisY->setTitleText("Velocità");
-    chart->addAxis(axisY, Qt::AlignLeft);
-    series->attachAxis(axisY);
+    // Impostazione del timer per l'aggiornamento dell'animazione
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &WidgetVento::aggiornaBussola);
 
-    chartView = new QChartView(chart, this);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setGeometry(rect()); // Ensure the chart view fills the widget
-
-    // Create a layout to hold the chart view
-    QVBoxLayout* layout = new QVBoxLayout(this);
-    layout->addWidget(chartView);
-    setLayout(layout);*/
+    // Inizializzare la visualizzazione della bussola
+    update();
 }
 
 void View::WidgetVento::simulazione(Model::Sensore* s) {
-    /*datiSimulati.clear();
-    QDateTime currentTime = QDateTime::currentDateTime();
-    for (int i = 0; i < 10; ++i) {
+    if (vento == s) {
+        iterazioniRimanenti = 10;  // Imposta il numero di iterazioni
+        timer->start(1000);  // Avvia il timer per aggiornare la bussola ogni secondo
+    }
+}
+
+void View::WidgetVento::aggiornaBussola() {
+    if (iterazioniRimanenti > 0) {
         vento->simulaMisura();
-        auto dato = vento->getDato();
-        datiSimulati[currentTime.addSecs(i)] = dato; // Use time increments
-        qDebug() << "Time:" << currentTime.addSecs(i).toString() << "Speed:" << dato.first;
+        auto windData = vento->getDato();
+
+        // Aggiungi i nuovi dati alla tabella
+        int row = tabella->rowCount();
+        tabella->insertRow(row);
+        tabella->setItem(row, 0, new QTableWidgetItem(QString::number(windData.first, 'f', 2)));
+        tabella->setItem(row, 1, new QTableWidgetItem(QString::number(windData.second, 'f', 2)));
+
+        // Calcola il movimento graduale della freccia
+        double nuovoAngolo = windData.second;
+        double step = (nuovoAngolo - angoloCorrente) / 20.0;  // Dividi il movimento in 20 step
+
+        angoloCorrente = nuovoAngolo;
+        update();
+
+        iterazioniRimanenti--;
     }
 
-    // pulizia
-    series->clear();
-
-    chartView->setGeometry(rect()); // Ensure the chart view fills the widget
-    chartView->update(); // Refresh the chart view
-
-    mostraGrafico = true;
-    update();  // Trigger for the repaint
-    */
+    if (iterazioniRimanenti == 0) {
+        timer->stop();  // Ferma il timer dopo 10 aggiornamenti
+    }
 }
 
 void View::WidgetVento::paintEvent(QPaintEvent* event) {
-    /*QPainter painter(this);
+    QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    if (mostraGrafico) {
-        for (auto it = datiSimulati.begin(); it != datiSimulati.end(); ++it) {
-            double x = it.key().toMSecsSinceEpoch(); // Convert time to milliseconds
-            double y = it.value().first; // Speed
-            series->append(x, y);
-        }
-        // Let the chart handle the drawing
+    int larghezza = this->width() / 2;  // Disegna sulla metà sinistra
+    int altezza = this->height();
+    QPoint centro(larghezza / 2, altezza / 2);
 
-        chartView->update();
-        chartView->setGeometry(rect()); // Ensure the chart view fills the widget
+    int raggio = std::min(larghezza, altezza) / 2 - 10;
+    painter.setPen(Qt::black);
+    painter.drawEllipse(centro, raggio, raggio);
 
-    } else {
-        // Modalità bussola
-        auto windData = vento->getDato();
-        double velocita = windData.first;
-        double angolo = windData.second;
+    // Disegna le graduazioni della bussola
+    for (int i = 0; i < 360; ++i) {
+        double angoloRad = qDegreesToRadians(static_cast<double>(i));
+        QPoint tickStart(centro.x() + raggio * std::cos(angoloRad),
+                         centro.y() - raggio * std::sin(angoloRad));
+        QPoint tickEnd(centro.x() + (raggio - 10) * std::cos(angoloRad),
+                       centro.y() - (raggio - 10) * std::sin(angoloRad));
+        painter.drawLine(tickStart, tickEnd);
+    }
 
-        int larghezza = this->width();
-        int altezza = this->height();
-        QPoint centro(larghezza / 2, altezza / 2);
+    // Disegna la freccia
+    double velocita = vento->getDato().first;
+    double angoloRad = qDegreesToRadians(angoloCorrente);
+    QPoint puntoFinale(centro.x() + raggio * std::cos(angoloRad) * (velocita / vento->getMaxVelocita()),
+                       centro.y() - raggio * std::sin(angoloRad) * (velocita / vento->getMaxVelocita()));
 
-        int raggio = std::min(larghezza, altezza) / 2 - 10;
-        painter.setPen(Qt::black);
-        painter.drawEllipse(centro, raggio, raggio);
-
-        double angoloRad = qDegreesToRadians(angolo);
-        QPoint puntoFinale(centro.x() + raggio * std::cos(angoloRad) * (velocita / vento->getMaxVelocita()),
-                           centro.y() - raggio * std::sin(angoloRad) * (velocita / vento->getMaxVelocita()));
-
-        QPen penna(Qt::red, 2);
-        painter.setPen(penna);
-        painter.drawLine(centro, puntoFinale);
-    }*/
+    QPen penna(Qt::red, 2);
+    painter.setPen(penna);
+    painter.drawLine(centro, puntoFinale);
 }
+

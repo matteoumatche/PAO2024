@@ -3,40 +3,35 @@
 
 #include "widgetgrafico.h"
 #include "../Model/vento.h"
-#include <QChart>
-#include <QChartView>
-#include <QLineSeries>
-#include <QValueAxis>
-#include <QMap>
-#include <QPair>
-#include <QDateTime>
+#include <QTimer>
+#include <QTableWidget>
 
-//QT_CHARTS_USE_NAMESPACE
+namespace View {
 
-    namespace View {
+class WidgetVento : public WidgetGrafico {
+    Q_OBJECT
 
-    class WidgetVento : public WidgetGrafico {
-        Q_OBJECT
+public:
+    explicit WidgetVento(Model::Sensore* s, QWidget* parent = nullptr);
 
-    public:
-        WidgetVento(Model::Sensore* s, QWidget* parent = nullptr);
+public slots:
+    void simulazione(Model::Sensore* s) override;  // Slot per iniziare la simulazione
 
-    public slots:
-        void simulazione(Model::Sensore* s) override;
+protected:
+    void paintEvent(QPaintEvent* event) override;
 
-    protected:
-        void paintEvent(QPaintEvent* event) override;
+private slots:
+    void aggiornaBussola();  // Slot per aggiornare la bussola e animare la freccia
 
-    private:
-        Model::Vento* vento;
-        QChart* chart;
-        QChartView* chartView;
-        QLineSeries* series;
-        QMap<QDateTime, QPair<double, double>> datiSimulati;
-        bool mostraGrafico;
-    };
+private:
+    Model::Vento* vento;            // Puntatore al sensore del vento
+    QTimer* timer;                  // Timer per gestire l'animazione della bussola
+    QTableWidget* tabella;          // Tabella per visualizzare i dati di velocità e angolo
+    double angoloCorrente;          // Memorizza l'angolo corrente della freccia
+    int iterazioniRimanenti;        // Contatore per fermare l'aggiornamento dopo 10 iterazioni
+};
 
-} // namespace View
+}  // namespace View
 
 #endif // WIDGETVENTO_H
 
