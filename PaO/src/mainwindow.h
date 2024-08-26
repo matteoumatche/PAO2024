@@ -12,6 +12,7 @@
 #include "View/sensorlistwidget.h"
 #include "View/sensorinfowidget.h"
 #include "View/widgetgrafico.h"
+#include "View/optionsWidget.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -21,23 +22,18 @@ private:
     QHBoxLayout* centralLayout;
     QHBoxLayout* searchLayout;
     QVBoxLayout* graphLayout;
-    QHBoxLayout* optionsLayout;
-    QVBoxLayout* dataLayout;
-    QVBoxLayout* pulsantiLayout;
-    QVBoxLayout* simulaLayout;
     QWidget* centralWidget;
     View::ToolBar* tbar;
     View::SensorListWidget* sensorListWidget;
     View::SensorInfoWidget* sensorInfoWidget;
-    View::WidgetGrafico* graphWidget;
-    QWidget* dataWidget;
     QVBoxLayout* sensorWidgetLayout;
     QScrollArea* scrollArea;
     QLineEdit *searchLineEdit;
     QPushButton *searchButton;
-    QPushButton *SimulaButton;
     QPushButton* clearSearchButton;
     //QPushButton *MisuraButton;
+    View::optionsWidget* opzioni;
+    View::WidgetGrafico* graphWidget;
 
     std::vector<Model::Sensore*> sensori;
     QString pathToFile;

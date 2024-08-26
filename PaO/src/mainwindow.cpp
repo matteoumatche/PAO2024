@@ -11,6 +11,7 @@
 #include "View/widgetvento.h"
 #include "View/widgetgrafico.h"
 #include "View/editsensordialog.h"
+#include "View/optionsWidget.h"
 
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -31,9 +32,6 @@ MainWindow::MainWindow(QWidget *parent)
     sensorWidgetLayout = new QVBoxLayout;   //layout della lista: contiene sensorListWidget e searchLayout
     searchLayout = new QHBoxLayout;         //layout della barra di ricerca: contiene barra e bottone
     graphLayout = new QVBoxLayout;          //layout della zona a destra della lista: contiene graphWidget e optionsLayout
-    optionsLayout = new QHBoxLayout;        //layout delle opzioni sotto il grafico: contiene i dati, i pulsanti e i pulsanti simula
-    pulsantiLayout = new QVBoxLayout;       //layout dei pulsanti: clona, modifica, elimina
-    simulaLayout = new QVBoxLayout;         //layout dei pulsanti simula e simula misura
 
     //toolbar e widget
     centralWidget = new QWidget(nullptr);
@@ -42,7 +40,6 @@ MainWindow::MainWindow(QWidget *parent)
     graphWidget = new View::WidgetGrafico(nullptr);
     searchLineEdit = new QLineEdit(this);
     searchLineEdit->setPlaceholderText("Cerca sensori per nome...");
-    dataWidget = new QWidget(nullptr);
     searchButton = new QPushButton("Cerca", nullptr);
     clearSearchButton = new QPushButton("Annulla ricerca", nullptr);
 
@@ -67,16 +64,12 @@ MainWindow::MainWindow(QWidget *parent)
     sensorWidgetLayout->addLayout(searchLayout);
 
     //graphLayout
-    graphLayout->addLayout(optionsLayout);
+    //graphLayout->addWidget(optionsWidget);
 
     //searchLayout
     searchLayout->addWidget(searchLineEdit);
     searchLayout->addWidget(searchButton);
     searchLayout->addWidget(clearSearchButton);
-
-    //optionsLayout
-    optionsLayout->addLayout(pulsantiLayout);
-    optionsLayout->addLayout(simulaLayout);
 
     //---------------------------------------------------
 
@@ -85,7 +78,6 @@ MainWindow::MainWindow(QWidget *parent)
     sensorListWidget->setMinimumSize(300, 400);
     centralLayout->setStretchFactor(sensorListWidget, 2);
     centralLayout->setStretchFactor(graphLayout, 2);
-    dataWidget->adjustSize();
     graphWidget->adjustSize();
 
     // Connessione dei segnali di ToolBar agli slot di MainWindow
@@ -372,8 +364,10 @@ void MainWindow::reloadJsonFile() {
     tbar->activateSaveAction();
     tbar->activateSaveAsAction();
 }
+
 void MainWindow::onSensorSelected(const std::string sensorID) {
-    qDebug() << "ciao";
+    qDebug() << "1";
+
     Model::Sensore* selectedSensor = nullptr;
     for (Model::Sensore* sensore : sensori) {
         if (std::to_string(sensore->getID()) == sensorID) {
@@ -381,9 +375,20 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
             break;
         }
     }
-    qDebug() << "ciao1";
+    qDebug() << "2";
 
-    //se non trova il sensore, pulisce tutto e ritorna
+
+    if (!selectedSensor) {
+        qDebug() << "Errore: nessun sensore trovato";
+        return;
+    }
+    qDebug() << "3";
+
+    opzioni = new View::optionsWidget(selectedSensor, nullptr);
+    graphLayout->addWidget(opzioni);
+    qDebug() << "4";
+
+    /*se non trova il sensore, pulisce tutto e ritorna
     if (!selectedSensor) {
         if (pulsantiLayout) {
             QLayoutItem *item;
@@ -412,20 +417,22 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
         }
 
         return;
-    }
-    qDebug() << "ciao2";
+    }*/
 
-    //se il sensore è trovato, aggiorna i widget
+    /*se il sensore è trovato, aggiorna i widget
     if (dataWidget) {
         delete dataWidget;
         dataWidget = nullptr;
-    }
+    }*/
 
     if (graphWidget) {
         delete graphWidget;
         graphWidget = nullptr;
     }
 
+    qDebug() << "5";
+
+/*
     if (pulsantiLayout) {
         QLayoutItem *item;
         while ((item = pulsantiLayout->takeAt(0)) != nullptr) {
@@ -433,22 +440,8 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
             delete item;
         }
     }
-    qDebug() << "ciao3";
-
-    //crea e imposta un nuovo widget per i dati del sensore
-    dataWidget = new QWidget(this);
-    QVBoxLayout* dataLayout = new QVBoxLayout(dataWidget);
-
-    //recupera e mostra le informazioni del sensore
-    std::map<std::string, std::string> info = selectedSensor->getInfo();
-    for (const auto& pair : info) {
-        QString key = QString::fromStdString(pair.first);
-        if (key != "Tipo" && key != "ID" && key != "Nome") {
-            QLabel* label = new QLabel(key + ": " + QString::fromStdString(pair.second), dataWidget);
-            dataLayout->addWidget(label);
-        }
-    }
-
+*/
+/*
     optionsLayout->addWidget(dataWidget);
 
     if (SimulaButton) {
@@ -459,11 +452,9 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
 
     SimulaButton = new QPushButton("Simula misure", this);
     simulaLayout->addWidget(SimulaButton);
+*/
 
-    if (graphWidget) {
-        delete graphWidget;
-        graphWidget = nullptr;
-    }
+    std::map<std::string, std::string> info = selectedSensor->getInfo();
 
     if (info["Tipo"] == "Vento") {
         graphWidget = new View::WidgetVento(selectedSensor, this);
@@ -479,19 +470,19 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
         graphWidget = new View::WidgetGrafico(this);
     }
 
-    connect(SimulaButton, &QPushButton::clicked, graphWidget,[this,selectedSensor]{
+    connect(opzioni, &View::optionsWidget::onSimulaClicked, graphWidget, [this,selectedSensor]{
         graphWidget->simulazione(selectedSensor);
     });
 
     graphLayout->addWidget(graphWidget);
 
-    dataWidget->setLayout(dataLayout);
+    //dataWidget->setLayout(dataLayout);
 
     //pulsanti "Clona", "Modifica", "Elimina"
-    QPushButton *cloneButton = new QPushButton("Clona", this);
-    QPushButton *modifyButton = new QPushButton("Modifica", this);
-    QPushButton *deleteButton = new QPushButton("Elimina", this);
-
+    //QPushButton *cloneButton = new QPushButton("Clona", this);
+    //QPushButton *modifyButton = new QPushButton("Modifica", this);
+    //QPushButton *deleteButton = new QPushButton("Elimina", this);
+/*
     pulsantiLayout->addWidget(cloneButton);
     pulsantiLayout->addWidget(modifyButton);
     pulsantiLayout->addWidget(deleteButton);
@@ -506,10 +497,8 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
 
     connect(deleteButton, &QPushButton::clicked, this, [this, selectedSensor]() {
         deleteSensor(selectedSensor);
-    });
+    });*/
 }
-
-
 
 void MainWindow::cloneSensor(Model::Sensore* selectedSensor){
     if (selectedSensor) {
@@ -558,6 +547,7 @@ void MainWindow::deleteSensor(Model::Sensore* selectedSensor){
         onSensorSelected("eliminato");
     }
 }
+
 
 void MainWindow::onSearchButtonClicked() {
     QString searchText = searchLineEdit->text();
