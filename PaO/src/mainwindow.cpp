@@ -367,7 +367,6 @@ void MainWindow::reloadJsonFile() {
 }
 
 void MainWindow::onSensorSelected(const std::string sensorID) {
-    qDebug() << "1";
     // Elimina il widget precedente
     if (opzioni) {
         delete opzioni;
@@ -381,24 +380,19 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
             break;
         }
     }
-    qDebug() << "2";
 
     if (!selectedSensor) {
         qDebug() << "Errore: nessun sensore trovato";
         return;
     }
-    qDebug() << "3";
 
     opzioni = new View::optionsWidget(selectedSensor, nullptr);
     graphLayout->addWidget(opzioni);
-    qDebug() << "4";
 
     if (graphWidget) {
         delete graphWidget;
         graphWidget = nullptr;
     }
-
-    qDebug() << "5";
 
     std::map<std::string, std::string> info = selectedSensor->getInfo();
 
@@ -418,33 +412,10 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
 
     connect(opzioni, &View::optionsWidget::onSimulaClicked, graphWidget, [this,selectedSensor]{
         graphWidget->simulazione(selectedSensor);
-        qDebug() << "connect";
     });
 
     graphLayout->addWidget(graphWidget);
 
-    //dataWidget->setLayout(dataLayout);
-
-    //pulsanti "Clona", "Modifica", "Elimina"
-    //QPushButton *cloneButton = new QPushButton("Clona", this);
-    //QPushButton *modifyButton = new QPushButton("Modifica", this);
-    //QPushButton *deleteButton = new QPushButton("Elimina", this);
-/*
-    pulsantiLayout->addWidget(cloneButton);
-    pulsantiLayout->addWidget(modifyButton);
-    pulsantiLayout->addWidget(deleteButton);
-
-    connect(cloneButton, &QPushButton::clicked, this, [this, selectedSensor]() {
-        cloneSensor(selectedSensor);
-    });
-
-    connect(modifyButton, &QPushButton::clicked, this, [this, selectedSensor]() {
-        modifySensor(selectedSensor);
-    });
-
-    connect(deleteButton, &QPushButton::clicked, this, [this, selectedSensor]() {
-        deleteSensor(selectedSensor);
-    });*/
 }
 
 void MainWindow::cloneSensor(Model::Sensore* selectedSensor){

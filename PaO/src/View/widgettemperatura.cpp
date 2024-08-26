@@ -98,11 +98,4 @@ void View::WidgetTemperatura::simulazione(Model::Sensore* sensore) {
 
     setLayout(layout);
 
-    /*
-    for (int i=0; i<8; i++) {
-        sensore->simulaMisura();
-        std::map<std::string, std::string> info = sensore->getInfo();
-        double dato = std::stod(info["Dato"]); // Converti da stringa a double
-        tempSeries->append(1,dato);
-    }*/
 }
