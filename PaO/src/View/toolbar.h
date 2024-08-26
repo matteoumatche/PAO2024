@@ -2,12 +2,6 @@
 #define TOOLBAR_H
 
 #include <QToolBar>
-#include <QMessageBox>
-#include <QFileDialog>
-#include <QToolButton>
-#include <string>
-#include <QFormLayout>
-
 
 namespace View {
 
@@ -19,8 +13,6 @@ private:
     QAction* openAction;
     QAction* saveAction;
     QAction* saveAsAction;
-
-
 
 signals:
     void newSignal();

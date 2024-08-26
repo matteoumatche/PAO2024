@@ -9,27 +9,24 @@ Umidita::Umidita(unsigned int id, std::string nome, double toll) :
     dato(0) {}
 
 Umidita::Umidita(const QJsonObject& json) : Sensore(json) {
-    // Helper function to convert QString to double with error handling
     auto stringToDouble = [](const QString& str) -> double {
         bool ok;
         double value = str.toDouble(&ok);
-        return ok ? value : 0.0; // Return 0.0 if conversion fails
+        return ok ? value : 0.0;
     };
 
-    // Check and convert "Tolleranza"
     if (json.contains("Tolleranza") && json["Tolleranza"].isString()) {
         tolleranza = stringToDouble(json["Tolleranza"].toString());
     } else {
         qDebug() << "Warning: Missing or incorrect 'Tolleranza' in JSON";
-        tolleranza = false; // Default value
+        tolleranza = false;
     }
 
-    // Check and convert "Dato"
     if (json.contains("Dato") && json["Dato"].isString()) {
         dato = stringToDouble(json["Dato"].toString());
     } else {
         qDebug() << "Warning: Missing or incorrect 'Dato' in JSON";
-        dato = false; // Default value
+        dato = false;
     }
 }
 
@@ -70,7 +67,6 @@ std::map<std::string, std::string> Umidita::getInfo() const {
 }
 
 Umidita* Umidita::clone() const {
-    // Supponendo che tu abbia un costruttore di copia
     return new Umidita(*this);
 }
 

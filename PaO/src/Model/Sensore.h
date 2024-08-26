@@ -22,9 +22,9 @@ public:
 
     virtual void simulaMisura()=0;
 
-    virtual Sensore* clone() const = 0; // Metodo virtuale puro per clonazione
+    virtual Sensore* clone() const = 0;
 };
 
 }
 
-#endif // SENSORE_H
+#endif

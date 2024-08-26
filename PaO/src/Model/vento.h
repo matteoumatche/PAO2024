@@ -1,8 +1,6 @@
 #ifndef VENTO_H
 #define VENTO_H
 
-#include <utility>
-#include <map>
 #include "sensore.h"
 
 namespace Model{
@@ -37,9 +35,9 @@ public:
     void simulaMisura() override;
     std::pair<double, double> Misura(std::pair<double, double> valoreReale);
 
-    virtual Vento* clone() const override; // Metodo clone
+    virtual Vento* clone() const override;
 };
 
 }
 
-#endif // VENTO_H
+#endif

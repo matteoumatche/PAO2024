@@ -1,10 +1,6 @@
 #ifndef FOTOCELLULA_H
 #define FOTOCELLULA_H
 
-#include <map>
-#include <string>
-#include <QJsonObject>
-#include "math.h"
 #include "sensore.h"
 
 namespace Model{
@@ -28,10 +24,9 @@ public:
     void simulaMisura() override;
     bool Misura(bool valoreReale);
 
-    //metodo clonazione
     Fotocellula* clone() const override;
 };
 
 }
 
-#endif // FOTOCELLULA_H
+#endif

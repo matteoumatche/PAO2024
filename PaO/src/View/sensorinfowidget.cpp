@@ -1,12 +1,7 @@
 #include "sensorinfowidget.h"
 #include <QVBoxLayout>
 #include <QLabel>
-#include <QMap>
-#include <QString>
-#include <QPushButton>
-#include <QTimer>
 
-// Costruttore della classe SensorInfoWidget
 View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string>& info, QWidget* parent)
     : QWidget(parent), sensorID(""){
 
@@ -18,7 +13,7 @@ View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string
         QString key = QString::fromStdString(pair.first);
 
         if (key == "ID") {
-            sensorID = pair.second; // Memorizza l'ID del sensore
+            sensorID = pair.second;
         }
 
         if (keysToDisplay.contains(key)) {
@@ -33,7 +28,7 @@ View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string
 
 void View::SensorInfoWidget::mousePressEvent(QMouseEvent* event) {
     qDebug() << "passo 1";
-    emit sensorSelected(sensorID); // Emissione del segnale quando il widget viene cliccato
+    emit sensorSelected(sensorID);
     //QWidget::mousePressEvent(event); // Chiamata al gestore dell'evento padre
 }
 

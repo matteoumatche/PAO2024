@@ -9,6 +9,8 @@
 #include <QLineSeries>
 #include <QTimer>
 #include <QTableWidget>
+#include <QChartView>
+#include <QLineSeries>
 
 
 
@@ -17,10 +19,10 @@ class WidgetVento : public WidgetGrafico {
     Q_OBJECT
 
 public:
-    explicit WidgetVento(Model::Sensore* s, QWidget* parent = nullptr);
+    WidgetVento(Model::Sensore* s, QWidget* parent = nullptr);
 
 public slots:
-    void simulazione(Model::Sensore* s);
+    void simulazione(Model::Sensore* s) override;
 
 protected:
     void aggiornaGrafico();
@@ -37,8 +39,13 @@ private:
 
     int iterazioniRimanenti;
     double angoloCorrente;
+
+
+
 };
+
+
 }
 
-#endif // WIDGETVENTO_H
+#endif
 

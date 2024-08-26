@@ -1,18 +1,23 @@
 #ifndef WIDGETGRAFICO_H
 #define WIDGETGRAFICO_H
 
+#include "../Model/Sensore.h"
+
 #include <QWidget>
-#include "src/Model/sensore.h"
+
 namespace View{
-class WidgetGrafico : public QWidget
-{
+
+class WidgetGrafico : public QWidget {
     Q_OBJECT
+
 public:
     explicit WidgetGrafico(QWidget *parent = nullptr);
-signals:
+
 public slots:
     virtual void simulazione(Model::Sensore*);
     virtual void valoreMisura();
 };
+
 }
-#endif // WIDGETGRAFICO_H
+
+#endif

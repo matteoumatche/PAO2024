@@ -1,9 +1,8 @@
 #ifndef TEMPERCIPITA_H
 #define TEMPERCIPITA_H
 
-#include <map>
-#include "src/Model/temperatura.h"
-#include "src/Model/umidita.h"
+#include "temperatura.h"
+#include "umidita.h"
 
 namespace Model{
 
@@ -23,9 +22,9 @@ public:
     void simulaMisura() override;
     double Misura(double);
 
-    virtual TemPercepita* clone() const override; // Metodo clone
+    virtual TemPercepita* clone() const override;
 };
 
 }
 
-#endif // TEMPERCIPITA_H
+#endif

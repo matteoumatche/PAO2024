@@ -5,7 +5,7 @@
 #include <QTableWidgetItem>
 #include <QHeaderView>
 #include <QtMath>
-#include <QPainter>
+#include <QScatterSeries>
 
 View::WidgetVento::WidgetVento(Model::Sensore* s, QWidget* parent)
     : WidgetGrafico(parent), vento(static_cast<Model::Vento*>(s)), iterazioniRimanenti(0), angoloCorrente(0) {
@@ -34,8 +34,8 @@ View::WidgetVento::WidgetVento(Model::Sensore* s, QWidget* parent)
     polarChart->setTitle("");
 
     // Creazione della tabella per visualizzare i dati
-    tabella = new QTableWidget(0, 2, this);
-    tabella->setHorizontalHeaderLabels(QStringList() << "Velocità (m/s)" << "Angolo (°)");
+    tabella = new QTableWidget(0, 3, this);
+    tabella->setHorizontalHeaderLabels(QStringList() << "Velocità (m/s)" << "Angolo (°)"<<"ora(hh:mm:ss)");
     tabella->horizontalHeader()->setStretchLastSection(true);
     tabella->verticalHeader()->setVisible(false);
 
@@ -70,37 +70,24 @@ void View::WidgetVento::aggiornaGrafico() {
         tabella->insertRow(row);
         tabella->setItem(row, 0, new QTableWidgetItem(QString::number(windData.first, 'f', 2)));
         tabella->setItem(row, 1, new QTableWidgetItem(QString::number(windData.second, 'f', 2)));
+        tabella->setItem(row, 2, new QTableWidgetItem(QDateTime::currentDateTime().toString("HH:mm:ss")));
 
-        // Disegna una freccia dal centro al punto
-        QPainter painter(chartView->viewport());
-        painter.setRenderHint(QPainter::Antialiasing);
+        // Create a scatter series to represent the point
+        QScatterSeries* scatterSeries = new QScatterSeries();
+        scatterSeries->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+        scatterSeries->setMarkerSize(10.0);
+        scatterSeries->append(windData.second, windData.first);
+        polarChart->addSeries(scatterSeries);
+        scatterSeries->attachAxis(angularAxis);
+        scatterSeries->attachAxis(radialAxis);
 
-        // Calcola la posizione del centro del grafico
-        QPointF center(chartView->width() / 2, chartView->height() / 2);
-
-        // Calcola la posizione del punto finale
-        double radius = (windData.first / vento->getMaxVelocita()) * (chartView->height() / 2.0);
-        double radians = qDegreesToRadians(windData.second);
-        QPointF endPoint(center.x() + radius * qCos(radians), center.y() - radius * qSin(radians));
-
-        // Disegna la linea
-        QPen pen(Qt::red, 2);
-        painter.setPen(pen);
-        painter.drawLine(center, endPoint);
-
-        // Disegna la freccia
-        static const double arrowSize = 10.0;
-        double angle = qAtan2(-(endPoint.y() - center.y()), endPoint.x() - center.x());
-
-        QPointF arrowP1 = endPoint + QPointF(sin(angle + M_PI / 3) * arrowSize,
-                                             cos(angle + M_PI / 3) * arrowSize);
-        QPointF arrowP2 = endPoint + QPointF(sin(angle + M_PI - M_PI / 3) * arrowSize,
-                                             cos(angle + M_PI - M_PI / 3) * arrowSize);
-
-        QPolygonF arrowHead;
-        arrowHead << endPoint << arrowP1 << arrowP2;
-
-        painter.drawPolygon(arrowHead);
+        // Create a line series to represent the arrow from the center to the point
+        QLineSeries* arrowSeries = new QLineSeries();
+        arrowSeries->append(0, 0);  // Start at the center (0,0)
+        arrowSeries->append(windData.second, windData.first);  // Point to the current data point
+        polarChart->addSeries(arrowSeries);
+        arrowSeries->attachAxis(angularAxis);
+        arrowSeries->attachAxis(radialAxis);
 
         iterazioniRimanenti--;
     }
@@ -109,3 +96,4 @@ void View::WidgetVento::aggiornaGrafico() {
         timer->stop();  // Ferma il timer dopo 10 aggiornamenti
     }
 }
+

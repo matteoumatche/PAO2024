@@ -1,5 +1,6 @@
 release/fotocellula.o
 release/editsensordialog.o
+release/optionsWidget.o
 release/sensorinfowidget.o
 release/sensorlistwidget.o
 release/widgetfotocellula.o
@@ -17,6 +18,7 @@ release/vento.o
 release/toolBar.o
 release/widgetgrafico.o
 release/moc_editsensordialog.o
+release/moc_optionsWidget.o
 release/moc_sensorinfowidget.o
 release/moc_sensorlistwidget.o
 release/moc_widgetfotocellula.o

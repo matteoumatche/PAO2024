@@ -13,6 +13,7 @@ CONFIG += c++17
 SOURCES += \
     src/Model/fotocellula.cpp \
     src/View/editsensordialog.cpp \
+    src/View/optionsWidget.cpp \
     src/View/sensorinfowidget.cpp \
     src/View/sensorlistwidget.cpp \
     src/View/widgetfotocellula.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
 HEADERS += \
     src/Model/fotocellula.h \
     src/View/editsensordialog.h \
+    src/View/optionsWidget.h \
     src/View/sensorinfowidget.h \
     src/View/sensorlistwidget.h \
     src/View/widgetfotocellula.h \
