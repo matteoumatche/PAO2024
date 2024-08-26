@@ -494,7 +494,9 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
         graphWidget = new View::WidgetGrafico(this); // Corretto
     }
 
-    connect(SimulaButton, &QPushButton::clicked, graphWidget, &View::WidgetGrafico::simulazione);
+    connect(SimulaButton, &QPushButton::clicked, graphWidget,[this,selectedSensor]{
+        graphWidget->simulazione(selectedSensor);
+    });
 
     graphLayout->addWidget(graphWidget);
 

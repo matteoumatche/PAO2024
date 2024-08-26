@@ -11,7 +11,7 @@ public:
     explicit WidgetGrafico(QWidget *parent = nullptr);
 signals:
 public slots:
-    virtual void simulazione();
+    virtual void simulazione(Model::Sensore*);
     virtual void valoreMisura();
 };
 }

@@ -10,9 +10,10 @@
 namespace View{
 class WidgetTemperatura : public WidgetGrafico {
     Q_OBJECT
+public slots:
+    void simulazione(Model::Sensore* sensore) override;
 public:
     explicit WidgetTemperatura(Model::Sensore* sensore, QWidget *parent = nullptr);
-    void updateData(Model::Temperatura* sensore);  // Ora accetta direttamente un sensore di tipo Temperatura
     QBarSeries graficoTemperatura;
 
 private:

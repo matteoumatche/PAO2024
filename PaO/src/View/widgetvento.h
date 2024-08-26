@@ -22,7 +22,7 @@
         WidgetVento(Model::Sensore* s, QWidget* parent = nullptr);
 
     public slots:
-        void simulazione() override;
+        void simulazione(Model::Sensore* s) override;
 
     protected:
         void paintEvent(QPaintEvent* event) override;

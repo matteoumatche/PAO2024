@@ -7,7 +7,7 @@ View::WidgetTempercepita::WidgetTempercepita(Model::Sensore* s,QWidget *parent)
 
 }
 
-void View::WidgetTempercepita::updateData(/* data specific to temperature sensor */) {
+void View::WidgetTempercepita::simulazione(Model::Sensore* s) {
     // Implementazione generica per evitare errori di compilazione
     // Qui puoi aggiornare il widget con nuovi dati, se necessario.
 }

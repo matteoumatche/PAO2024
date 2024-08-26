@@ -51,7 +51,7 @@ View::WidgetVento::WidgetVento(Model::Sensore* s, QWidget* parent)
     setLayout(layout);*/
 }
 
-void View::WidgetVento::simulazione() {
+void View::WidgetVento::simulazione(Model::Sensore* s) {
     /*datiSimulati.clear();
     QDateTime currentTime = QDateTime::currentDateTime();
     for (int i = 0; i < 10; ++i) {
