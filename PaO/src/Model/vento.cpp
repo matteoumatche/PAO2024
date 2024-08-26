@@ -23,14 +23,12 @@ Vento::Vento(unsigned int id, std::string n, double o, double max, double tollG,
 }
 
 Vento::Vento(const QJsonObject& json) : Sensore(json) {
-    // Helper function to convert QString to double with error handling
     auto stringToDouble = [](const QString& str) -> double {
         bool ok;
         double value = str.toDouble(&ok);
-        return ok ? value : 0.0; // Return 0.0 if conversion fails
+        return ok ? value : 0.0;
     };
 
-    // Check and convert "Offset"
     if (json.contains("Offset") && json["Offset"].isString()) {
         offset = stringToDouble(json["Offset"].toString());
     } else {
@@ -38,7 +36,6 @@ Vento::Vento(const QJsonObject& json) : Sensore(json) {
         offset = 0.0;
     }
 
-    // Check and convert "MaxVelocita"
     if (json.contains("MaxVelocita") && json["MaxVelocita"].isString()) {
         valoreMaxVelocita = stringToDouble(json["MaxVelocita"].toString());
     } else {
@@ -46,7 +43,6 @@ Vento::Vento(const QJsonObject& json) : Sensore(json) {
         valoreMaxVelocita = 30.0;
     }
 
-    // Check and convert "TolleranzaGoniometro"
     if (json.contains("TolleranzaGoniometro") && json["TolleranzaGoniometro"].isString()) {
         tolleranzaGoniometro = stringToDouble(json["TolleranzaGoniometro"].toString());
     } else {
@@ -54,15 +50,12 @@ Vento::Vento(const QJsonObject& json) : Sensore(json) {
         tolleranzaGoniometro = 0.1;
     }
 
-    // Check and convert "TolleranzaAnemometro"
     if (json.contains("TolleranzaAnemometro") && json["TolleranzaAnemometro"].isString()) {
         tolleranzaAnemometro = stringToDouble(json["TolleranzaAnemometro"].toString());
     } else {
         qDebug() << "Warning: Missing or incorrect 'TolleranzaAnemometro' in JSON";
         tolleranzaAnemometro = 0.5;
     }
-
-    // Check and convert "Velocità" object
 
     if (json.contains("Velocita") && json["Velocita"].isString()) {
         dato.first = stringToDouble(json["Velocita"].toString());
@@ -71,7 +64,6 @@ Vento::Vento(const QJsonObject& json) : Sensore(json) {
         dato.first = 0.0;
     }
 
-    // Check and convert "Angolo" object
     if (json.contains("Angolo") && json["Angolo"].isString()) {
         dato.second = stringToDouble(json["Angolo"].toString());
     } else {
@@ -154,7 +146,6 @@ std::map<std::string, std::string> Vento::getInfo() const {
 }
 
 Vento* Vento::clone() const {
-    // Supponendo che tu abbia un costruttore di copia
     return new Vento(*this);
 }
 

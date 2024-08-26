@@ -1,5 +1,7 @@
 #include "tempercepita.h"
+
 #include <QJsonDocument>
+
 namespace Model{
 
 TemPercepita::TemPercepita(unsigned int id, std::string nome, Umidita um, Temperatura te) : Sensore(id,nome), u(um), t(te)  {
@@ -14,51 +16,46 @@ TemPercepita::TemPercepita(unsigned int id, std::string nome) : Sensore(id, nome
 TemPercepita::TemPercepita(const QJsonObject& json) :
     Sensore(json),
     IndiceCalore( json["IndiceCalore"].toInt()) {
-    // Helper function to convert QString to double with error handling
     auto stringToDouble = [](const QString& str) -> double {
         bool ok;
         double value = str.toDouble(&ok);
-        return ok ? value : 0.0; // Return 0.0 if conversion fails
+        return ok ? value : 0.0;
     };
 
-    // Helper function to handle errors
     auto handleError = [](const QString& message) {
         qDebug() << message;
     };
 
-     //Check and initialize "Umidita"
     if (json.contains("Umidita") && json["Umidita"].isString()) {
         QString umiditaJsonString = json["Umidita"].toString();
         QJsonDocument umiditaDoc = QJsonDocument::fromJson(umiditaJsonString.toUtf8());
         if (!umiditaDoc.isNull() && umiditaDoc.isObject()) {
             QJsonObject umiditaObj = umiditaDoc.object();
-            u = Model::Umidita(umiditaObj); // Assuming Umidita has a constructor accepting QJsonObject
+            u = Model::Umidita(umiditaObj);
         } else {
             handleError("Warning: Invalid 'Umidita' JSON string");
-            u = Model::Umidita(QJsonObject()); // Default constructor
+            u = Model::Umidita(QJsonObject());
         }
     } else {
         handleError("Warning: Missing or incorrect 'Umidita' in JSON");
-        u = Model::Umidita(QJsonObject()); // Default constructor
+        u = Model::Umidita(QJsonObject());
     }
 
-    // Check and initialize "Temperatura"
     if (json.contains("Temperatura") && json["Temperatura"].isString()) {
         QString temperaturaJsonString = json["Temperatura"].toString();
         QJsonDocument temperaturaDoc = QJsonDocument::fromJson(temperaturaJsonString.toUtf8());
         if (!temperaturaDoc.isNull() && temperaturaDoc.isObject()) {
             QJsonObject temperaturaObj = temperaturaDoc.object();
-            t = Model::Temperatura(temperaturaObj); // Assuming Temperatura has a constructor accepting QJsonObject
+            t = Model::Temperatura(temperaturaObj);
         } else {
             handleError("Warning: Invalid 'Temperatura' JSON string");
-            t = Model::Temperatura(QJsonObject()); // Default constructor
+            t = Model::Temperatura(QJsonObject());
         }
     } else {
         handleError("Warning: Missing or incorrect 'Temperatura' in JSON");
-        t = Model::Temperatura(QJsonObject()); // Default constructor
+        t = Model::Temperatura(QJsonObject());
     }
 
-    // Check and convert "IndiceCalore"
     if (json.contains("IndiceCalore")) {
         if (json["IndiceCalore"].isDouble()) {
             IndiceCalore = json["IndiceCalore"].toDouble();
@@ -66,11 +63,11 @@ TemPercepita::TemPercepita(const QJsonObject& json) :
             IndiceCalore = stringToDouble(json["IndiceCalore"].toString());
         } else {
             handleError("Warning: 'IndiceCalore' is of incorrect type in JSON");
-            IndiceCalore = 0.0; // Default value
+            IndiceCalore = 0.0;
         }
     } else {
         handleError("Warning: Missing 'IndiceCalore' in JSON");
-        IndiceCalore = 0.0; // Default value
+        IndiceCalore = 0.0;
     }
 }
 
@@ -94,19 +91,15 @@ double TemPercepita::Misura(double valoreReale) {
 std::map<std::string, std::string> TemPercepita::getInfo() const {
     std::map<std::string, std::string> info;
 
-    // Uniamo le informazioni dalla classe base (Sensore)
     auto baseInfo = Sensore::getInfo();
     info.insert(baseInfo.begin(), baseInfo.end());
 
-    // Aggiungiamo le informazioni specifiche per TemPercepita
     info["Tipo"] = "TemPercepita";
     info["IndiceCalore"] = std::to_string(IndiceCalore);
 
-    // Otteniamo le informazioni da Umidita e Temperatura
     auto umiditaInfo = u.getInfo();
     auto temperaturaInfo = t.getInfo();
 
-    // Convertiamo le mappe in QJsonObject manualmente
     QJsonObject umiditaJson;
     for (const auto& pair : umiditaInfo) {
         umiditaJson[QString::fromStdString(pair.first)] = QString::fromStdString(pair.second);
@@ -117,7 +110,6 @@ std::map<std::string, std::string> TemPercepita::getInfo() const {
         temperaturaJson[QString::fromStdString(pair.first)] = QString::fromStdString(pair.second);
     }
 
-    // Convertiamo i QJsonObject in stringhe JSON compatte
     QJsonDocument umiditaDoc(umiditaJson);
     QJsonDocument temperaturaDoc(temperaturaJson);
 
@@ -128,7 +120,6 @@ std::map<std::string, std::string> TemPercepita::getInfo() const {
 }
 
 TemPercepita* TemPercepita::clone() const {
-    // Supponendo che tu abbia un costruttore di copia
     return new TemPercepita(*this);
 }
 

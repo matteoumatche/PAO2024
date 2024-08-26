@@ -2,7 +2,6 @@
 #define TEMPERATURA_H
 
 #include "sensore.h"
-#include <map>
 
 namespace Model{
 
@@ -24,9 +23,9 @@ public:
     void simulaMisura() override;
     double Misura(double valoreReale);
 
-    virtual Temperatura* clone() const override; // Metodo clone
+    virtual Temperatura* clone() const override;
 };
 
 }
 
-#endif // TEMPERATURA_H
+#endif

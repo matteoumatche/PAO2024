@@ -1,4 +1,5 @@
 #include "temperatura.h"
+
 #include <random>
 
 namespace Model{
@@ -9,27 +10,24 @@ Temperatura::Temperatura(unsigned int id, std::string nome, double toll) :
     dato(0) {}
 
 Temperatura::Temperatura(const QJsonObject& json) : Sensore(json) {
-    // Helper function to convert QString to double with error handling
     auto stringToDouble = [](const QString& str) -> double {
         bool ok;
         double value = str.toDouble(&ok);
-        return ok ? value : 0.0; // Return 0.0 if conversion fails
+        return ok ? value : 0.0;
     };
 
-    // Check and convert "Tolleranza"
     if (json.contains("Tolleranza") && json["Tolleranza"].isString()) {
         tolleranza = stringToDouble(json["Tolleranza"].toString());
     } else {
         qDebug() << "Warning: Missing or incorrect 'Tolleranza' in JSON";
-        tolleranza = 0.5; // Default value
+        tolleranza = 0.5;
     }
 
-    // Check and convert "Dato"
     if (json.contains("Dato") && json["Dato"].isString()) {
         dato = stringToDouble(json["Dato"].toString());
     } else {
         qDebug() << "Warning: Missing or incorrect 'Dato' in JSON";
-        dato = 0.0; // Default value
+        dato = 0.0;
     }
 }
 
@@ -70,7 +68,6 @@ void Temperatura::setTolleranza(double t) {
 }
 
 Temperatura* Temperatura::clone() const {
-    // Supponendo che tu abbia un costruttore di copia
     return new Temperatura(*this);
 }
 

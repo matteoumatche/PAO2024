@@ -1,11 +1,9 @@
 #ifndef SENSORLISTWIDGET_H
 #define SENSORLISTWIDGET_H
 
-#include <QWidget>
-#include <QPushButton>
-#include <vector>
 #include "../Model/sensore.h"
-#include "sensorinfowidget.h"
+
+#include <QWidget>
 
 namespace View{
 
@@ -20,11 +18,13 @@ public:
     SensorListWidget(std::vector<Model::Sensore*>& sensori, QWidget* parent = nullptr);
 
 signals:
-    void updateList(); //emesso quando i dati dei sensori cambiano
+    void updateList();
     void sensorSelected(const std::string& sensorID);
+
 public slots:
     void onSensorSelected(const std::string& sensorID);
-
 };
+
 }
-#endif // SENSORLISTWIDGET_H
+
+#endif

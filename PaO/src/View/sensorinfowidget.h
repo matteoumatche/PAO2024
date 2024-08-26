@@ -2,9 +2,6 @@
 #define SENSORINFOWIDGET_H
 
 #include <QWidget>
-#include <map>
-#include <string>
-#include "../Model/sensore.h"
 
 namespace View{
 
@@ -15,14 +12,15 @@ public:
     SensorInfoWidget(const std::map<std::string, std::string>& info, QWidget* parent = nullptr);
 
 signals:
-    void sensorSelected(const std::string& sensorID); // Segnale con informazioni del sensore
+    void sensorSelected(const std::string& sensorID);
 
 private:
-    std::string sensorID; // Memorizza l'ID del sensore
+    std::string sensorID;
 
-    void mousePressEvent(QMouseEvent* event) override; // Override per gestire i click
+    void mousePressEvent(QMouseEvent* event) override;
 };
+
 }
 
-#endif // SENSORINFOWIDGET_H
+#endif
 

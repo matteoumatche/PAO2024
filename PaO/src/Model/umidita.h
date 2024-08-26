@@ -1,6 +1,6 @@
 #ifndef UMIDITA_H
 #define UMIDITA_H
-#include <map>
+
 #include "sensore.h"
 
 namespace Model{
@@ -23,9 +23,9 @@ public:
     void simulaMisura() override;
     double Misura(double valoreReale);
 
-    virtual Umidita* clone() const override; // Metodo clone
+    virtual Umidita* clone() const override;
 };
 
 }
 
-#endif // UMIDITA_H
+#endif
