@@ -58,7 +58,7 @@ View::WidgetTemperatura::WidgetTemperatura(Model::Sensore* sensore, QWidget *par
 }
 
 void View::WidgetTemperatura::simulazione(Model::Sensore* sensore) {
-    qDebug() << "updateData chiamato per WidgetTemperatura.";
+    qDebug() << "simulazione chiamato per WidgetTemperatura.";
     delete layout();
 
     QBarSet *set = new QBarSet("Prova");
@@ -87,8 +87,6 @@ void View::WidgetTemperatura::simulazione(Model::Sensore* sensore) {
     axisY->setRange(-10,40);
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
-
-    qDebug() << "WidgetTemperatura creato";
 
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);

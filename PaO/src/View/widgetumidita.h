@@ -11,7 +11,8 @@ class WidgetUmidita : public WidgetGrafico {
 
 public:
     explicit WidgetUmidita(Model::Sensore* s,QWidget *parent = nullptr);
-    void updateData(/* data specific to wind sensor */);
+    void simulazione(Model::Sensore* sensore);
+
 };
 
 }

@@ -401,6 +401,7 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
     } else if (info["Tipo"] == "Temperatura") {
         graphWidget = new View::WidgetTemperatura(selectedSensor, this);
     } else if (info["Tipo"] == "Umidita") {
+        qDebug() << "ciaooooooooo";
         graphWidget = new View::WidgetUmidita(selectedSensor, this);
     } else if (info["Tipo"] == "TemPercepita") {
         graphWidget = new View::WidgetTempercepita(selectedSensor, this);
