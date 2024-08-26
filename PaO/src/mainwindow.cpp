@@ -373,7 +373,7 @@ void MainWindow::reloadJsonFile() {
     tbar->activateSaveAsAction();
 }
 void MainWindow::onSensorSelected(const std::string sensorID) {
-
+    qDebug() << "ciao";
     Model::Sensore* selectedSensor = nullptr;
     for (Model::Sensore* sensore : sensori) {
         if (std::to_string(sensore->getID()) == sensorID) {
@@ -381,6 +381,7 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
             break;
         }
     }
+    qDebug() << "ciao1";
 
     //se non trova il sensore, pulisce tutto e ritorna
     if (!selectedSensor) {
@@ -412,6 +413,7 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
 
         return;
     }
+    qDebug() << "ciao2";
 
     //se il sensore è trovato, aggiorna i widget
     if (dataWidget) {
@@ -431,6 +433,7 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
             delete item;
         }
     }
+    qDebug() << "ciao3";
 
     //crea e imposta un nuovo widget per i dati del sensore
     dataWidget = new QWidget(this);
@@ -449,9 +452,11 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
     optionsLayout->addWidget(dataWidget);
 
     if (SimulaButton) {
+        //CRASH durante l'esecuzione del delete
         delete SimulaButton;
         SimulaButton = nullptr;
     }
+
     SimulaButton = new QPushButton("Simula misure", this);
     simulaLayout->addWidget(SimulaButton);
 
