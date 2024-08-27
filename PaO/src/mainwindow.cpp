@@ -179,7 +179,17 @@ void MainWindow::addSensor(const QString &type, const QString &id, const QString
     }
 
     if (nuovoSensore) {
-        sensori.push_back(nuovoSensore);
+        if (type == "Fotocellula") {
+            //è una fotocellula: aggiunge alla fine della lista
+            sensori.push_back(nuovoSensore);
+        } else {
+            //non è fotocellula: inserisce prima delle fotocellule
+            auto it = std::find_if(sensori.begin(), sensori.end(), [](const Model::Sensore* s) {
+                return dynamic_cast<const Model::Fotocellula*>(s) != nullptr;
+            });
+
+            sensori.insert(it, nuovoSensore);
+        }
     }
 
     QMessageBox::information(this, "Sensore Aggiunto", "Tipo: " + type + "\nID: " + id + "\nNome: " + name);
@@ -315,6 +325,13 @@ void MainWindow::dataUpdated() {
         delete sensorListWidget;
         sensorListWidget = nullptr;
     }
+
+    // Ordina i sensori in modo che i Fotocellula siano alla fine
+    std::sort(sensori.begin(), sensori.end(), [](Model::Sensore* a, Model::Sensore* b) {
+        auto isFotocellulaA = dynamic_cast<Model::Fotocellula*>(a) != nullptr;
+        auto isFotocellulaB = dynamic_cast<Model::Fotocellula*>(b) != nullptr;
+        return isFotocellulaA < isFotocellulaB; // Fotocellula deve essere "più grande" di tutti gli altri
+    });
 
     //ricrea il widget con la lista aggiornata
     sensorListWidget = new View::SensorListWidget(sensori, this);
