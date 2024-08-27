@@ -3,6 +3,7 @@
 
 #include "widgetgrafico.h"
 #include "../Model/Sensore.h"
+#include <QTableWidgetItem>
 
 namespace View{
 

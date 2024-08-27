@@ -5,6 +5,8 @@
 #include <QChart>
 #include <QValueAxis>
 #include <QChartView>
+#include <QTableWidgetItem>
+#include <QHeaderView>
 
 View::WidgetUmidita::WidgetUmidita(Model::Sensore* s, QWidget *parent)
     : WidgetGrafico(parent) {
@@ -29,6 +31,13 @@ void View::WidgetUmidita::simulazione(Model::Sensore* sensore) {
         }
         delete oldLayout;
     }
+    // Creazione della tabella per visualizzare i dati
+
+    QTableWidget* tabella;
+    tabella = new QTableWidget(0, 2, this);
+    tabella->setHorizontalHeaderLabels(QStringList() << "misura" <<"umidità relativa (%)");
+    tabella->horizontalHeader()->setStretchLastSection(true);
+    tabella->verticalHeader()->setVisible(false);
 
     QSplineSeries *series = new QSplineSeries();
     series->setName("spline");
@@ -38,6 +47,10 @@ void View::WidgetUmidita::simulazione(Model::Sensore* sensore) {
         std::map<std::string, std::string> info = sensore->getInfo();  //ottiene le informazioni dal sensore
         double dato = std::stod(info["Dato"]);  //conversione "Dato" da stringa a double
         series->append(i, dato);
+        int row = tabella->rowCount();
+        tabella->insertRow(row);
+        tabella->setItem(row, 0, new QTableWidgetItem(QString::number(i, 'f', 2)));
+        tabella->setItem(row, 1, new QTableWidgetItem(QString::number(dato, 'f', 2)));
     }
 
     QChart *chart = new QChart();
@@ -50,7 +63,8 @@ void View::WidgetUmidita::simulazione(Model::Sensore* sensore) {
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    QHBoxLayout *layout = new QHBoxLayout(this);
     layout->addWidget(chartView);
+    layout->addWidget(tabella);
     setLayout(layout);
 }

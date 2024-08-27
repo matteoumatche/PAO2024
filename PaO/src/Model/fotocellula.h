@@ -22,7 +22,7 @@ public:
     void setSoglia(double soglia);
 
     void simulaMisura() override;
-    bool Misura(bool valoreReale);
+    bool Misura(std::tm*);
 
     Fotocellula* clone() const override;
 };
