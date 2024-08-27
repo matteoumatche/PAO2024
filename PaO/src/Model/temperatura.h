@@ -1,7 +1,7 @@
 #ifndef TEMPERATURA_H
 #define TEMPERATURA_H
 
-#include "sensore.h"
+#include "Sensore.h"
 
 namespace Model{
 

@@ -1,5 +1,5 @@
 #include "editsensordialog.h"
-#include "../Model/sensore.h"
+#include "../Model/Sensore.h"
 #include "../mainwindow.h"
 
 #include <QFormLayout>

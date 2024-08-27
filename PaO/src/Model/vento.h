@@ -1,7 +1,7 @@
 #ifndef VENTO_H
 #define VENTO_H
 
-#include "sensore.h"
+#include "Sensore.h"
 
 namespace Model{
 

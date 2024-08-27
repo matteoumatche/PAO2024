@@ -1,7 +1,7 @@
 #ifndef SENSORLISTWIDGET_H
 #define SENSORLISTWIDGET_H
 
-#include "../Model/sensore.h"
+#include "../Model/Sensore.h"
 
 #include <QWidget>
 

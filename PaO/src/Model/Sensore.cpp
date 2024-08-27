@@ -1,4 +1,4 @@
-#include "sensore.h"
+#include "Sensore.h"
 
 #include <string>
 

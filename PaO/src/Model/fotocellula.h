@@ -1,7 +1,7 @@
 #ifndef FOTOCELLULA_H
 #define FOTOCELLULA_H
 
-#include "sensore.h"
+#include "Sensore.h"
 
 namespace Model{
 

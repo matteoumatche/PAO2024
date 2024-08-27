@@ -1,11 +1,19 @@
-#include "toolBar.h"
+#include "toolbar.h"
+
+#include <QDir>
 
 namespace View {
 
 ToolBar::ToolBar(QToolBar *parent)
     : QToolBar(parent)
 {
-    newAction = new QAction( tr("Nuovo sensore"), this);
+    QIcon icon("PAO2024/PaO/src/Assets/Pulsanti/webcam.svg");
+    qDebug() << "Current path: " << QDir::currentPath();
+
+    if (icon.isNull()) {
+        qDebug() << "Icon not loaded correctly";
+    }
+    newAction = new QAction(icon, tr("Nuovo sensore"), this);
     openAction = new QAction( tr("Apri"), this);
     saveAction = new QAction( tr("Salva"), this);
     saveAsAction = new QAction( tr("Salva con nome"), this);

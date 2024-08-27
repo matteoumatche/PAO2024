@@ -1,7 +1,7 @@
 #ifndef OPTIONSWIDGET_H
 #define OPTIONSWIDGET_H
 
-#include "../Model/sensore.h"
+#include "../Model/Sensore.h"
 #include "widgetgrafico.h"
 
 #include <QWidget>

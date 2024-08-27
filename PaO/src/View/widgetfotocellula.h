@@ -2,7 +2,7 @@
 #define WIDGETFOTOCELLULA_H
 
 #include "widgetgrafico.h"
-#include "../Model/sensore.h"
+#include "../Model/Sensore.h"
 
 namespace View{
 

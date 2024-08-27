@@ -1,7 +1,7 @@
 #ifndef EDITSENSORDIALOG_H
 #define EDITSENSORDIALOG_H
 
-#include "../Model/sensore.h"
+#include "../Model/Sensore.h"
 
 #include <QDialog>
 #include <QLineEdit>

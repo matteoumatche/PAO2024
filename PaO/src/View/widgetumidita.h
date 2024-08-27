@@ -2,7 +2,7 @@
 #define WIDGETUMIDITA_H
 
 #include "widgetgrafico.h"
-#include "src/Model/sensore.h"
+#include "src/Model/Sensore.h"
 
 namespace View{
 
