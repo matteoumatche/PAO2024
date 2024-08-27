@@ -26,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setWindowTitle("Greenhouse manager");
 
+    resize(1280, 720); // Large initial size
+
     //layout
     mainLayout = new QVBoxLayout;           //layout principale: contiene Toolbar e centalLayout
     centralLayout = new QHBoxLayout;        //layout sotto Toolbar: contiene sensorWidgetLayout e graphWidget
@@ -387,7 +389,6 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
     }
 
     opzioni = new View::optionsWidget(selectedSensor, nullptr);
-    graphLayout->addWidget(opzioni);
 
     if (graphWidget) {
         delete graphWidget;
@@ -416,7 +417,9 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
     });
 
     graphLayout->addWidget(graphWidget);
+    graphLayout->addWidget(opzioni);
 
+    opzioni->setMaximumSize(1600, 200);
 }
 
 void MainWindow::cloneSensor(Model::Sensore* selectedSensor){
