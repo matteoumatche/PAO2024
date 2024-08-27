@@ -1,6 +1,9 @@
 #include "sensorinfowidget.h"
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QMouseEvent>
+#include <QTimer>
+#include <QPalette>
 
 View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string>& info, QWidget* parent)
     : QWidget(parent), sensorID(""){
@@ -23,32 +26,22 @@ View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string
     }
 
     setLayout(layoutDati);
-
 }
 
 void View::SensorInfoWidget::mousePressEvent(QMouseEvent* event) {
     qDebug() << "passo 1";
     emit sensorSelected(sensorID);
-    //QWidget::mousePressEvent(event); // Chiamata al gestore dell'evento padre
-}
 
-/* Gestione dell'evento di pressione del mouse
-void View::SensorInfoWidget::mousePressEvent(QMouseEvent* event, Model::Sensore* sensore) {
-    emit widgetClicked(sensore); // Emissione del segnale quando il widget viene cliccato
-    qDebug() << "Widget cliccato!"; // Aggiungi questa riga per il debug
-
-    // Cambia il colore di sfondo utilizzando QPalette
     QPalette palette = this->palette();
-    palette.setColor(QPalette::Window, Qt::lightGray); // Colore al clic
+    palette.setColor(QPalette::Window, Qt::lightGray); //clore al clic
     this->setAutoFillBackground(true);
     this->setPalette(palette);
 
-    // Ripristina il colore di sfondo dopo un breve intervallo
     QTimer::singleShot(200, this, [this]() {
         QPalette palette = this->palette();
-        palette.setColor(QPalette::Window, QColor(255, 255, 255, 0)); // Colore originale
+        palette.setColor(QPalette::Window, QColor(255, 255, 255, 0)); //colore originale
         this->setPalette(palette);
     });
 
-    QWidget::mousePressEvent(event); // Chiamata al gestore dell'evento padre
-}*/
+    QWidget::mousePressEvent(event);
+}

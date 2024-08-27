@@ -98,8 +98,15 @@ std::map<std::string, std::string> TemPercepita::getInfo() const {
     info["IndiceCalore"] = std::to_string(IndiceCalore);
 
     auto umiditaInfo = u.getInfo();
-    auto temperaturaInfo = t.getInfo();
+    if (umiditaInfo.find("Dato") != umiditaInfo.end()) {
+        info["Umidita"] = umiditaInfo["Dato"];
+    }
 
+    auto temperaturaInfo = t.getInfo();
+    if (temperaturaInfo.find("Dato") != temperaturaInfo.end()) {
+        info["Temperatura"] = temperaturaInfo["Dato"];
+    }
+/*
     QJsonObject umiditaJson;
     for (const auto& pair : umiditaInfo) {
         umiditaJson[QString::fromStdString(pair.first)] = QString::fromStdString(pair.second);
@@ -115,7 +122,7 @@ std::map<std::string, std::string> TemPercepita::getInfo() const {
 
     info["Umidita"] = umiditaDoc.toJson(QJsonDocument::Compact).toStdString();
     info["Temperatura"] = temperaturaDoc.toJson(QJsonDocument::Compact).toStdString();
-
+*/
     return info;
 }
 
