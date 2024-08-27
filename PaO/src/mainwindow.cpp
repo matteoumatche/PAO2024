@@ -429,6 +429,18 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
         graphWidget = new View::WidgetGrafico(this);
     }
 
+    connect(opzioni, &View::optionsWidget::onCloneClicked, graphWidget, [this,selectedSensor]{
+        cloneSensor(selectedSensor);
+    });
+
+    connect(opzioni, &View::optionsWidget::onModifyClicked, graphWidget, [this,selectedSensor]{
+        modifySensor(selectedSensor);
+    });
+
+    connect(opzioni, &View::optionsWidget::onDeleteClicked, graphWidget, [this,selectedSensor]{
+        deleteSensor(selectedSensor);
+    });
+
     connect(opzioni, &View::optionsWidget::onSimulaClicked, graphWidget, [this,selectedSensor]{
         graphWidget->simulazione(selectedSensor);
     });
