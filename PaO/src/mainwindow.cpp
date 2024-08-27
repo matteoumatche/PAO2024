@@ -406,7 +406,7 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
     } else if (info["Tipo"] == "TemPercepita") {
         graphWidget = new View::WidgetTempercepita(selectedSensor, this);
     } else if (info["Tipo"] == "Fotocellula") {
-        graphWidget = new View::WidgetFotocellula(selectedSensor, this);
+        graphWidget = new View::WidgetFotocellula(&sensori, this);
     } else {
         graphWidget = new View::WidgetGrafico(this);
     }

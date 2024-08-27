@@ -8,10 +8,11 @@ namespace View{
 
 class WidgetFotocellula : public WidgetGrafico {
     Q_OBJECT
-
+private:
+    std::vector<Model::Sensore*>* sensori;
 public:
-    explicit WidgetFotocellula(Model::Sensore* s, QWidget *parent = nullptr);
-    void updateData(/* data specific to wind sensor */);
+    explicit WidgetFotocellula(std::vector<Model::Sensore*>* s, QWidget *parent = nullptr);
+    void simulazione(Model::Sensore*) override;
 };
 
 }
