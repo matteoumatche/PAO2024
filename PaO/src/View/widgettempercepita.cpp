@@ -16,17 +16,22 @@ void View::WidgetTempercepita::simulazione(Model::Sensore* sensore) {
     qDebug() << "simulazione chiamato per WidgetTemperatura.";
     delete layout();
 
-    QBarSet *set = new QBarSet("Prova");
+    QBarSet *setTP = new QBarSet("Temperatura percepita");
+    QBarSet *setTR = new QBarSet("Temperatura registrata");
+
+    QBarSeries *series = new QBarSeries();
 
     for (int i = 0; i < 10; ++i) {
         sensore->simulaMisura();  //simula una misura
         std::map<std::string, std::string> info = sensore->getInfo();  //ottiene le informazioni dal sensore
-        double dato = std::stod(info["IndiceCalore"]);  //conversione "Dato" da stringa a double
-        *set << dato;
+        double percepita = std::stod(info["IndiceCalore"]);  //conversione "Dato" da stringa a double
+        double registrata = std::stod(info["Temperatura"]);
+        *setTP << percepita;
+        *setTR << registrata;
     }
 
-    QBarSeries *series = new QBarSeries();
-    series->append(set);
+    series->append(setTP);
+    series->append(setTR);
 
     QChart *chart = new QChart();
     chart->addSeries(series);
