@@ -21,7 +21,7 @@ void View::WidgetTempercepita::simulazione(Model::Sensore* sensore) {
     for (int i = 0; i < 10; ++i) {
         sensore->simulaMisura();  //simula una misura
         std::map<std::string, std::string> info = sensore->getInfo();  //ottiene le informazioni dal sensore
-        double dato = std::stod(info["Dato"]);  //conversione "Dato" da stringa a double
+        double dato = std::stod(info["IndiceCalore"]);  //conversione "Dato" da stringa a double
         *set << dato;
     }
 

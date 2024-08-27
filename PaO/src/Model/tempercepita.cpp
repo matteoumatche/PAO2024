@@ -76,8 +76,8 @@ double TemPercepita::getIndiceCalore() const {
 }
 
 void TemPercepita::simulaMisura() {
-    u.simulaMisura();
-    t.simulaMisura();
+    u.Umidita::simulaMisura();
+    t.Temperatura::simulaMisura();
     IndiceCalore = 13.12 + 0.6215 * t.getDato() - 11.37 * pow(u.getDato(), 0.16) + 0.3965 * t.getDato() * pow(u.getDato(), 0.16);
 }
 
