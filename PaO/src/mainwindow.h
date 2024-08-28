@@ -1,18 +1,20 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "src/View/toolbar.h"
+#include "View/sensorlistwidget.h"
+#include "View/sensorinfowidget.h"
+#include "View/widgetgrafico.h"
+#include "View/optionsWidget.h"
+
 #include <QMainWindow>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QScrollArea>
-
-#include "src/View/toolBar.h"
-#include "View/sensorlistwidget.h"
-#include "View/sensorinfowidget.h"
-#include "View/widgetgrafico.h"
-#include "View/optionsWidget.h"
+#include <QComboBox>
+#include <QLabel>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -29,11 +31,11 @@ private:
     QVBoxLayout* sensorWidgetLayout;
     QScrollArea* scrollArea;
     QLineEdit *searchLineEdit;
-    QPushButton *searchButton;
-    QPushButton* clearSearchButton;
+    QComboBox* filterComboBox;
     //QPushButton *MisuraButton;
     View::optionsWidget* opzioni;
     View::WidgetGrafico* graphWidget;
+    QLabel* titoloLabel;
 
     std::vector<Model::Sensore*> sensori;
     QString pathToFile;
@@ -55,8 +57,8 @@ private slots:
     void modifySensor(Model::Sensore* sensor);
     void deleteSensor(Model::Sensore* sensor);
 
-    void onSearchButtonClicked();
-    void onClearSearchButtonClicked();
+    void onSearchTextChanged(const QString& searchText);
+    void onFilterComboBoxChanged(const QString& sensorType);
 
 public:
     MainWindow(QWidget *parent = nullptr);

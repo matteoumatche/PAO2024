@@ -42,9 +42,11 @@ MainWindow::MainWindow(QWidget *parent)
     graphWidget = new View::WidgetGrafico(nullptr);
     searchLineEdit = new QLineEdit(this);
     searchLineEdit->setPlaceholderText("Cerca sensori per nome...");
-    searchButton = new QPushButton("Cerca", nullptr);
-    clearSearchButton = new QPushButton("Annulla ricerca", nullptr);
     opzioni = nullptr;
+    filterComboBox = new QComboBox(this);
+    filterComboBox->addItem("Tutti");  // Aggiungi un'opzione per mostrare tutti i sensori
+    filterComboBox->addItems(getAvailableSensorTypes());  // Aggiungi i tipi di sensori disponibili
+    searchLayout->addWidget(filterComboBox);
 
     // Area di scorrimento per la lista dei sensori
     scrollArea = new QScrollArea;
@@ -66,13 +68,8 @@ MainWindow::MainWindow(QWidget *parent)
     sensorWidgetLayout->addWidget(scrollArea);
     sensorWidgetLayout->addLayout(searchLayout);
 
-    //graphLayout
-    //graphLayout->addWidget(optionsWidget);
-
     //searchLayout
     searchLayout->addWidget(searchLineEdit);
-    searchLayout->addWidget(searchButton);
-    searchLayout->addWidget(clearSearchButton);
 
     //---------------------------------------------------
 
@@ -93,8 +90,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tbar, &View::ToolBar::openSignal, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
-    connect(searchButton, &QPushButton::clicked, this, &MainWindow::onSearchButtonClicked);
-    connect(clearSearchButton, &QPushButton::clicked, this, &MainWindow::onClearSearchButtonClicked);
+    connect(searchLineEdit, &QLineEdit::textChanged, this, &MainWindow::onSearchTextChanged);
+    connect(filterComboBox, &QComboBox::currentTextChanged, this, &MainWindow::onFilterComboBoxChanged);
 }
 
 MainWindow::~MainWindow(){}
@@ -386,7 +383,18 @@ void MainWindow::reloadJsonFile() {
 }
 
 void MainWindow::onSensorSelected(const std::string sensorID) {
-    // Elimina il widget precedente
+
+    if (titoloLabel) {
+        graphLayout->removeWidget(titoloLabel);
+        delete titoloLabel;
+        titoloLabel = nullptr;
+    }
+
+    if (graphWidget) {
+        delete graphWidget;
+        graphWidget = nullptr;
+    }
+
     if (opzioni) {
         delete opzioni;
         opzioni = nullptr;
@@ -406,20 +414,24 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
     }
 
     opzioni = new View::optionsWidget(selectedSensor, nullptr);
-
-    if (graphWidget) {
-        delete graphWidget;
-        graphWidget = nullptr;
-    }
-
     std::map<std::string, std::string> info = selectedSensor->getInfo();
+
+    // Creare e configurare il widget del titolo
+    QString titolo = QString("%1 - %2")
+                      .arg(QString::fromStdString(selectedSensor->getNome()))
+                      .arg(QString::number(selectedSensor->getID()));
+    titoloLabel = new QLabel(titolo, this);
+    titoloLabel->setAlignment(Qt::AlignCenter);
+    titoloLabel->setStyleSheet("font-weight: bold; font-size: 16px; padding: 10px;");
+
+    // Aggiungere il widget del titolo al layout
+    graphLayout->addWidget(titoloLabel);
 
     if (info["Tipo"] == "Vento") {
         graphWidget = new View::WidgetVento(selectedSensor, this);
     } else if (info["Tipo"] == "Temperatura") {
         graphWidget = new View::WidgetTemperatura(selectedSensor, this);
     } else if (info["Tipo"] == "Umidita") {
-        qDebug() << "ciaooooooooo";
         graphWidget = new View::WidgetUmidita(selectedSensor, this);
     } else if (info["Tipo"] == "TemPercepita") {
         graphWidget = new View::WidgetTempercepita(selectedSensor, this);
@@ -443,18 +455,6 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
 
     connect(opzioni, &View::optionsWidget::onSimulaClicked, graphWidget, [this,selectedSensor]{
         graphWidget->simulazione(selectedSensor);
-    });
-
-    connect(opzioni, &View::optionsWidget::onCloneClicked, graphWidget, [this,selectedSensor]{
-        cloneSensor(selectedSensor);
-    });
-
-    connect(opzioni, &View::optionsWidget::onModifyClicked, graphWidget, [this,selectedSensor]{
-        modifySensor(selectedSensor);
-    });
-
-    connect(opzioni, &View::optionsWidget::onDeleteClicked, graphWidget, [this,selectedSensor]{
-        deleteSensor(selectedSensor);
     });
 
     graphLayout->addWidget(graphWidget);
@@ -511,9 +511,7 @@ void MainWindow::deleteSensor(Model::Sensore* selectedSensor){
     }
 }
 
-
-void MainWindow::onSearchButtonClicked() {
-    QString searchText = searchLineEdit->text();
+void MainWindow::onSearchTextChanged(const QString& searchText) {
     std::vector<Model::Sensore*> filteredSensors;
 
     for (const auto& sensor : sensori) {
@@ -525,10 +523,27 @@ void MainWindow::onSearchButtonClicked() {
     updateSensorList(filteredSensors);
 }
 
+void MainWindow::onFilterComboBoxChanged(const QString& sensorType) {
+    std::vector<Model::Sensore*> filteredSensors;
+
+    if (sensorType == "Tutti") {
+        filteredSensors = sensori;  // Mostra tutti i sensori
+    } else {
+        for (const auto& sensor : sensori) {
+            if (QString::fromStdString(sensor->getInfo()["Tipo"]) == sensorType) {
+                filteredSensors.push_back(sensor);
+            }
+        }
+    }
+
+    updateSensorList(filteredSensors);  // Aggiorna la lista con i sensori filtrati
+}
+
+/*
 void MainWindow::onClearSearchButtonClicked() {
     searchLineEdit->clear();
     updateSensorList(sensori);
-}
+}*/
 
 void MainWindow::updateSensorList(std::vector<Model::Sensore*>& sensors) {
     if (sensorListWidget) {

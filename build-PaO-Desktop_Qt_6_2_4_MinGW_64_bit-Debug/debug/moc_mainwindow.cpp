@@ -8,6 +8,7 @@
 
 #include <memory>
 #include "../../PaO/src/mainwindow.h"
+#include <QtGui/qtextcursor.h>
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -22,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    const uint offsetsAndSize[50];
-    char stringdata0[327];
+    const uint offsetsAndSize[52];
+    char stringdata0[340];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs), len 
@@ -45,24 +46,25 @@ QT_MOC_LITERAL(123, 15), // "Model::Sensore*"
 QT_MOC_LITERAL(139, 6), // "sensor"
 QT_MOC_LITERAL(146, 12), // "modifySensor"
 QT_MOC_LITERAL(159, 12), // "deleteSensor"
-QT_MOC_LITERAL(172, 21), // "onSearchButtonClicked"
-QT_MOC_LITERAL(194, 19), // "onSearchTextChanged"
-QT_MOC_LITERAL(214, 10), // "searchText"
-QT_MOC_LITERAL(225, 16), // "onSensorSelected"
-QT_MOC_LITERAL(242, 11), // "std::string"
-QT_MOC_LITERAL(254, 8), // "sensorID"
-QT_MOC_LITERAL(263, 11), // "dataUpdated"
-QT_MOC_LITERAL(275, 16), // "onSensorModified"
-QT_MOC_LITERAL(292, 34) // "std::map<std::string,std::str..."
+QT_MOC_LITERAL(172, 19), // "onSearchTextChanged"
+QT_MOC_LITERAL(192, 10), // "searchText"
+QT_MOC_LITERAL(203, 23), // "onFilterComboBoxChanged"
+QT_MOC_LITERAL(227, 10), // "sensorType"
+QT_MOC_LITERAL(238, 16), // "onSensorSelected"
+QT_MOC_LITERAL(255, 11), // "std::string"
+QT_MOC_LITERAL(267, 8), // "sensorID"
+QT_MOC_LITERAL(276, 11), // "dataUpdated"
+QT_MOC_LITERAL(288, 16), // "onSensorModified"
+QT_MOC_LITERAL(305, 34) // "std::map<std::string,std::str..."
 
     },
     "MainWindow\0addSensor\0\0name\0type\0id\0"
     "showNewSensorDialog\0openJsonFile\0"
     "saveJsonFile\0saveJsonFileAs\0reloadJsonFile\0"
     "cloneSensor\0Model::Sensore*\0sensor\0"
-    "modifySensor\0deleteSensor\0"
-    "onSearchButtonClicked\0onSearchTextChanged\0"
-    "searchText\0onSensorSelected\0std::string\0"
+    "modifySensor\0deleteSensor\0onSearchTextChanged\0"
+    "searchText\0onFilterComboBoxChanged\0"
+    "sensorType\0onSensorSelected\0std::string\0"
     "sensorID\0dataUpdated\0onSensorModified\0"
     "std::map<std::string,std::string>&"
 };
@@ -91,11 +93,11 @@ static const uint qt_meta_data_MainWindow[] = {
       11,    1,  110,    2, 0x08,   10 /* Private */,
       14,    1,  113,    2, 0x08,   12 /* Private */,
       15,    1,  116,    2, 0x08,   14 /* Private */,
-      16,    0,  119,    2, 0x08,   16 /* Private */,
-      17,    1,  120,    2, 0x08,   17 /* Private */,
-      19,    1,  123,    2, 0x0a,   19 /* Public */,
-      22,    0,  126,    2, 0x0a,   21 /* Public */,
-      23,    1,  127,    2, 0x0a,   22 /* Public */,
+      16,    1,  119,    2, 0x08,   16 /* Private */,
+      18,    1,  122,    2, 0x08,   18 /* Private */,
+      20,    1,  125,    2, 0x0a,   20 /* Public */,
+      23,    0,  128,    2, 0x0a,   22 /* Public */,
+      24,    1,  129,    2, 0x0a,   23 /* Public */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,
@@ -107,11 +109,11 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, 0x80000000 | 12,   13,
     QMetaType::Void, 0x80000000 | 12,   13,
     QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void, QMetaType::QString,   17,
+    QMetaType::Void, QMetaType::QString,   19,
+    QMetaType::Void, 0x80000000 | 21,   22,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   18,
-    QMetaType::Void, 0x80000000 | 20,   21,
-    QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 24,    2,
+    QMetaType::Void, 0x80000000 | 25,    2,
 
        0        // eod
 };
@@ -131,8 +133,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 6: _t->cloneSensor((*reinterpret_cast< std::add_pointer_t<Model::Sensore*>>(_a[1]))); break;
         case 7: _t->modifySensor((*reinterpret_cast< std::add_pointer_t<Model::Sensore*>>(_a[1]))); break;
         case 8: _t->deleteSensor((*reinterpret_cast< std::add_pointer_t<Model::Sensore*>>(_a[1]))); break;
-        case 9: _t->onSearchButtonClicked(); break;
-        case 10: _t->onSearchTextChanged((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 9: _t->onSearchTextChanged((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 10: _t->onFilterComboBoxChanged((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 11: _t->onSensorSelected((*reinterpret_cast< std::add_pointer_t<std::string>>(_a[1]))); break;
         case 12: _t->dataUpdated(); break;
         case 13: _t->onSensorModified((*reinterpret_cast< std::add_pointer_t<std::map<std::string,std::string>&>>(_a[1]))); break;
@@ -149,7 +151,7 @@ const QMetaObject MainWindow::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_MainWindow_t
 , QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const std::string, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<std::map<std::string,std::string> &, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<Model::Sensore *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const std::string, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<std::map<std::string,std::string> &, std::false_type>
 
 
 >,

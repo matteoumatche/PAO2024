@@ -29,7 +29,6 @@ View::SensorInfoWidget::SensorInfoWidget(const std::map<std::string, std::string
 }
 
 void View::SensorInfoWidget::mousePressEvent(QMouseEvent* event) {
-    qDebug() << "passo 1";
     emit sensorSelected(sensorID);
 
     QPalette palette = this->palette();

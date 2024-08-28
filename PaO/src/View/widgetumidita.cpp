@@ -1,5 +1,61 @@
 #include "widgetumidita.h"
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QTableWidgetItem>
+#include <QHeaderView>
+
+View::WidgetUmidita::WidgetUmidita(Model::Sensore* s, QWidget *parent)
+    : WidgetGrafico(parent),
+      chart(new QChart()),
+      chartView(new QChartView(chart)),
+      tabella(new QTableWidget(0, 2, this)),
+      series(new QSplineSeries())
+{
+    // Configure table
+    tabella->setHorizontalHeaderLabels(QStringList() << "misura" << "umidità relativa (%)");
+    tabella->horizontalHeader()->setStretchLastSection(true);
+    tabella->verticalHeader()->setVisible(false);
+
+    // Configure chart
+    chart->legend()->hide();
+    series->setName("spline");
+    chart->addSeries(series);
+    chart->setTitle("Andamento umidità giornaliera");
+    chart->createDefaultAxes();
+    chart->axes(Qt::Vertical).first()->setRange(0, 100);
+
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    // Layout
+    QHBoxLayout *layout = new QHBoxLayout(this);
+    layout->addWidget(chartView);
+    layout->addWidget(tabella);
+    setLayout(layout);
+}
+
+void View::WidgetUmidita::simulazione(Model::Sensore* sensore) {
+    // Clear the series and table
+    series->clear();
+    tabella->setRowCount(0);
+
+    for (int i = 0; i < 24; ++i) {
+        sensore->simulaMisura();  // Simula una misura
+        std::map<std::string, std::string> info = sensore->getInfo();  // Ottiene le informazioni dal sensore
+        double dato = std::stod(info["Dato"]);  // Conversione "Dato" da stringa a double
+        series->append(i, dato);
+        int row = tabella->rowCount();
+        tabella->insertRow(row);
+        tabella->setItem(row, 0, new QTableWidgetItem(QString::number(i, 'f', 2)));
+        tabella->setItem(row, 1, new QTableWidgetItem(QString::number(dato, 'f', 2)));
+    }
+
+    // Update the chart if necessary
+    chart->update();  // Optional: depending on how Qt handles updates
+}
+
+/*
+#include "widgetumidita.h"
+#include <QVBoxLayout>
 #include <QLabel>
 #include <QSplineSeries>
 #include <QChart>
@@ -10,18 +66,10 @@
 
 View::WidgetUmidita::WidgetUmidita(Model::Sensore* s, QWidget *parent)
     : WidgetGrafico(parent) {
-    /*
-    QVBoxLayout* layout = new QVBoxLayout(this);
 
-    QLabel* label = new QLabel("Dati del sensore Umidità", this);
-    layout->addWidget(label);
-
-    setLayout(layout);
-    */
 }
 
 void View::WidgetUmidita::simulazione(Model::Sensore* sensore) {
-    qDebug() << "simulazione chiamato per WidgetUmidita.";
 
     if (QLayout* oldLayout = layout()) {
         QLayoutItem* item;
@@ -31,11 +79,10 @@ void View::WidgetUmidita::simulazione(Model::Sensore* sensore) {
         }
         delete oldLayout;
     }
-    // Creazione della tabella per visualizzare i dati
 
     QTableWidget* tabella;
     tabella = new QTableWidget(0, 2, this);
-    tabella->setHorizontalHeaderLabels(QStringList() << "misura" <<"umidità relativa (%)");
+    tabella->setHorizontalHeaderLabels(QStringList() << "misura" << "umidità relativa (%)");
     tabella->horizontalHeader()->setStretchLastSection(true);
     tabella->verticalHeader()->setVisible(false);
 
@@ -68,3 +115,4 @@ void View::WidgetUmidita::simulazione(Model::Sensore* sensore) {
     layout->addWidget(tabella);
     setLayout(layout);
 }
+*/

@@ -49,7 +49,5 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
 }
 
 void View::SensorListWidget::onSensorSelected(const std::string& sensorID){
-    qDebug() << "passo 2";
     emit sensorSelected(sensorID);
 }
-
