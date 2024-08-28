@@ -3,6 +3,8 @@
 #include <QHBoxLayout>
 #include <QTableWidgetItem>
 #include <QHeaderView>
+#include <QValueAxis>
+#include <QSplitter>
 
 View::WidgetUmidita::WidgetUmidita(Model::Sensore* s, QWidget *parent)
     : WidgetGrafico(parent),
@@ -21,16 +23,41 @@ View::WidgetUmidita::WidgetUmidita(Model::Sensore* s, QWidget *parent)
     series->setName("spline");
     chart->addSeries(series);
     chart->setTitle("Andamento umidità giornaliera");
-    chart->createDefaultAxes();
-    chart->axes(Qt::Vertical).first()->setRange(0, 100);
+
+    // Configure axes
+    QValueAxis *axisX = new QValueAxis();
+    axisX->setLabelFormat("%d");  // Display integer values on the x-axis
+    axisX->setTitleText("Ora");
+    axisX->setRange(0, 24);  // Set range from 0 to 24
+
+    QValueAxis *axisY = new QValueAxis();
+    axisY->setTitleText("Umidità (%)");
+    axisY->setRange(0, 100);  // Set range for the y-axis
+
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisX);
+    series->attachAxis(axisY);
 
     chartView->setRenderHint(QPainter::Antialiasing);
 
-    // Layout
+    // Create a QSplitter to manage the layout
+    QSplitter *splitter = new QSplitter(Qt::Horizontal, this);
+    splitter->addWidget(chartView);
+    splitter->addWidget(tabella);
+
+    // Set the initial sizes for the splitter
+    splitter->setSizes(QList<int>() << 2 * 100 << 100);  // 2/3 for chart, 1/3 for table
+
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->addWidget(splitter);
+    setLayout(layout);
+
+    /* Layout
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->addWidget(chartView);
     layout->addWidget(tabella);
-    setLayout(layout);
+    setLayout(layout);*/
 }
 
 void View::WidgetUmidita::simulazione(Model::Sensore* sensore) {

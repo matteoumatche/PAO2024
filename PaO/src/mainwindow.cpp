@@ -422,7 +422,17 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
                       .arg(QString::number(selectedSensor->getID()));
     titoloLabel = new QLabel(titolo, this);
     titoloLabel->setAlignment(Qt::AlignCenter);
-    titoloLabel->setStyleSheet("font-weight: bold; font-size: 16px; padding: 10px;");
+
+    // Impostazione della QSizePolicy per il titolo
+    titoloLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    titoloLabel->setMinimumHeight(30);  // Altezza minima del titolo
+    titoloLabel->setMaximumHeight(30);  // Altezza massima del titolo
+
+    // Impostazione della dimensione del font (sostituzione del CSS)
+    QFont font = titoloLabel->font();
+    font.setPointSize(12);  // Imposta la dimensione del font (puoi adattarla alle tue esigenze)
+    font.setBold(true);  // Imposta il font in grassetto
+    titoloLabel->setFont(font);
 
     // Aggiungere il widget del titolo al layout
     graphLayout->addWidget(titoloLabel);
