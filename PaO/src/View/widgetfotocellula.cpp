@@ -21,9 +21,6 @@ void View::WidgetFotocellula::simulazione(Model::Sensore* s) {
     QSplineSeries *series = new QSplineSeries();
     series->setName("visitatori");
 
-
-
-
     // Creazione della tabella per visualizzare i dati
 
     QTableWidget* tabella;
