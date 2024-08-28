@@ -55,8 +55,6 @@ View::WidgetTemperatura::WidgetTemperatura(Model::Sensore* sensore, QWidget *par
 }
 
 void View::WidgetTemperatura::simulazione(Model::Sensore* sensore) {
-    qDebug() << "simulazione chiamato per WidgetTemperatura.";
-
     set->remove(0, set->count());
     tabella->setRowCount(0);
 

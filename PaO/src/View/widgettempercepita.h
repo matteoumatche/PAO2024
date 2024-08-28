@@ -14,7 +14,7 @@ class WidgetTempercepita : public WidgetGrafico{
     Q_OBJECT
 
 public:
-    explicit WidgetTempercepita(Model::Sensore* s, QWidget *parent);
+    explicit WidgetTempercepita(QWidget *parent);
 
 public slots:
     void simulazione(Model::Sensore*) override;

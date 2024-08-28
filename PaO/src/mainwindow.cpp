@@ -444,7 +444,7 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
     } else if (info["Tipo"] == "Umidita") {
         graphWidget = new View::WidgetUmidita(selectedSensor, this);
     } else if (info["Tipo"] == "TemPercepita") {
-        graphWidget = new View::WidgetTempercepita(selectedSensor, this);
+        graphWidget = new View::WidgetTempercepita(this);
     } else if (info["Tipo"] == "Fotocellula") {
         graphWidget = new View::WidgetFotocellula(&sensori, this);
     } else {
@@ -524,8 +524,19 @@ void MainWindow::deleteSensor(Model::Sensore* selectedSensor){
 void MainWindow::onSearchTextChanged(const QString& searchText) {
     std::vector<Model::Sensore*> filteredSensors;
 
+    // Ottieni il tipo di sensore selezionato dalla QComboBox
+    QString selectedType = filterComboBox->currentText();
+
     for (const auto& sensor : sensori) {
-        if (QString::fromStdString(sensor->getNome()).contains(searchText, Qt::CaseInsensitive)) {
+        bool matchesSearchText = QString::fromStdString(sensor->getNome()).contains(searchText, Qt::CaseInsensitive);
+
+        bool matchesType = true;
+        if (selectedType != "Tutti") {
+            QString sensorType = QString::fromStdString(sensor->getInfo()["Tipo"]);
+            matchesType = (sensorType == selectedType);
+        }
+
+        if (matchesSearchText && matchesType) {
             filteredSensors.push_back(sensor);
         }
     }
@@ -549,12 +560,6 @@ void MainWindow::onFilterComboBoxChanged(const QString& sensorType) {
     updateSensorList(filteredSensors);  // Aggiorna la lista con i sensori filtrati
 }
 
-/*
-void MainWindow::onClearSearchButtonClicked() {
-    searchLineEdit->clear();
-    updateSensorList(sensori);
-}*/
-
 void MainWindow::updateSensorList(std::vector<Model::Sensore*>& sensors) {
     if (sensorListWidget) {
         delete sensorListWidget;
@@ -571,7 +576,7 @@ void MainWindow::updateSensorList(std::vector<Model::Sensore*>& sensors) {
 void MainWindow::onSensorModified(std::map<std::string, std::string>& info) {
     //ciclo attraverso il vettore dei sensori per trovare quello selezionato
     qDebug() <<"onsensor trovato";
-    for (auto sensore=sensori.begin();sensore!=sensori.end();sensore++) {
+    for (auto sensore=sensori.begin(); sensore!=sensori.end(); sensore++) {
         if ((*sensore)->getInfo()["ID"] == info["ID"]) {
             qDebug() <<"onsensor trovato";
             //dealloco il vecchio sensore per evitare fughe di memoria

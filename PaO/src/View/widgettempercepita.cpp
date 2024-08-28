@@ -10,7 +10,7 @@
 #include <QHeaderView>
 #include <QSplitter>
 
-View::WidgetTempercepita::WidgetTempercepita(Model::Sensore* s, QWidget *parent)
+View::WidgetTempercepita::WidgetTempercepita(QWidget *parent)
     : WidgetGrafico(parent),
       setTP(new QBarSet("Temperatura percepita")),
       setTR(new QBarSet("Temperatura registrata")),
@@ -57,9 +57,6 @@ View::WidgetTempercepita::WidgetTempercepita(Model::Sensore* s, QWidget *parent)
 }
 
 void View::WidgetTempercepita::simulazione(Model::Sensore* sensore) {
-
-    qDebug() << "simulazione chiamato per WidgetTemperatura.";
-
     // Pulizia dati precedenti
     setTP->remove(0, setTP->count());
     setTR->remove(0, setTR->count());

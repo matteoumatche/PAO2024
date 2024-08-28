@@ -25,15 +25,9 @@ View::optionsWidget::optionsWidget(Model::Sensore* s, QWidget *parent) :
     SimulaButton = new QPushButton("Simula misure", this);
 
     std::map<std::string, std::string> info = s->getInfo();
-    // Prima controlliamo se la chiave "Tipo" esiste e la gestiamo separatamente
-    if (info.find("Tipo") != info.end()) {
-        QString key = "Tipo";
-        QLabel* label = new QLabel(key + ": " + QString::fromStdString(info.at("Tipo")), dataWidget);
-        dataLayout->addWidget(label);
-    }
 
     // Definire l'insieme delle chiavi da escludere
-    std::set<std::string> excludeKeys = {"Dato", "ID", "Nome", "Temperatura", "Umidita", "IndiceCalore", "Tipo", "Velocita"};
+    std::set<std::string> excludeKeys = {"Dato", "ID", "Nome", "Temperatura", "Umidita", "IndiceCalore", "Tipo", "Velocita", "Angolo", "IndiceCalore", "Umidita"};
 
     for (const auto& pair : info) {
         QString key = QString::fromStdString(pair.first);
@@ -61,7 +55,7 @@ View::optionsWidget::optionsWidget(Model::Sensore* s, QWidget *parent) :
         emit onDeleteClicked(s);
     });
 
-    connect(SimulaButton, &QPushButton::clicked, this, [this, s]() {
+    connect(SimulaButton, &QPushButton::clicked, this, [this]() {
         emit onSimulaClicked();
     });
 
