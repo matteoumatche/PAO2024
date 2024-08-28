@@ -23,6 +23,7 @@ debug/moc_sensorinfowidget.o
 debug/moc_sensorlistwidget.o
 debug/moc_widgetfotocellula.o
 debug/moc_widgettemperatura.o
+debug/moc_widgettempercepita.o
 debug/moc_widgetumidita.o
 debug/moc_widgetvento.o
 debug/moc_mainwindow.o
