@@ -13,6 +13,7 @@ View::WidgetFotocellula::WidgetFotocellula(std::vector<Model::Sensore*>* s ,QWid
     : WidgetGrafico(parent), sensori(s){
 
 }
+
 void View::WidgetFotocellula::simulazione(Model::Sensore* s) {
 
     delete layout();
@@ -28,7 +29,6 @@ void View::WidgetFotocellula::simulazione(Model::Sensore* s) {
     tabella->setHorizontalHeaderLabels(QStringList() << "numero di ospiti" <<"ora(hh:mm:ss)");
     tabella->horizontalHeader()->setStretchLastSection(true);
     tabella->verticalHeader()->setVisible(false);
-
 
     std::tm ora;
     ora.tm_hour = 10; // Imposta l'ora di apertura alle 10:00
@@ -69,9 +69,6 @@ void View::WidgetFotocellula::simulazione(Model::Sensore* s) {
     chart->setTitle("andamento numero visitatori");
     chart->createDefaultAxes();
     chart->axes(Qt::Vertical).first()->setRange(0, j+(0.2*j));
-
-
-
 
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
