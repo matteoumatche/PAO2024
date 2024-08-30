@@ -10,7 +10,7 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
 
     QVBoxLayout* layout = new QVBoxLayout();
 
-    // Ordinare la lista dei sensori in modo che le Fotocellule siano alla fine
+    //Fotocellule alla fine
     std::sort(this->sensori.begin(), this->sensori.end(), [](Model::Sensore* a, Model::Sensore* b) {
         auto isFotocellulaA = dynamic_cast<Model::Fotocellula*>(a) != nullptr;
         auto isFotocellulaB = dynamic_cast<Model::Fotocellula*>(b) != nullptr;
@@ -19,7 +19,7 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
 
     bool addedDivider = false;
 
-    // Creazione di un SensorInfoWidget per ciascun sensore
+    //SensorInfoWidget per ciascun sensore
     for (Model::Sensore* sensore : sensori) {
         std::map<std::string, std::string> info = sensore->getInfo();
         SensorInfoWidget* sensorWidget = new SensorInfoWidget(info, this);
@@ -33,13 +33,13 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
 
         layoutInterno->addLayout(layoutBottoni);
 
-        // Aggiungi il divisore prima dei Fotocellula
+        //divisore prima dei Fotocellula
         if (!addedDivider && dynamic_cast<Model::Fotocellula*>(sensore)) {
             QFrame* line = new QFrame();
             line->setFrameShape(QFrame::HLine);
             line->setFrameShadow(QFrame::Sunken);
             layout->addWidget(line);
-            addedDivider = true; // Impedisce di aggiungere più di un divisore
+            addedDivider = true; //non più di un divisore
         }
 
         layout->addLayout(layoutInterno);

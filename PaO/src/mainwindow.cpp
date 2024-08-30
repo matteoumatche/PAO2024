@@ -416,25 +416,24 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
     opzioni = new View::optionsWidget(selectedSensor, nullptr);
     std::map<std::string, std::string> info = selectedSensor->getInfo();
 
-    // Creare e configurare il widget del titolo
+    //widget del titolo
     QString titolo = QString("%1 - %2")
                       .arg(QString::fromStdString(selectedSensor->getNome()))
                       .arg(QString::number(selectedSensor->getID()));
     titoloLabel = new QLabel(titolo, this);
     titoloLabel->setAlignment(Qt::AlignCenter);
 
-    // Impostazione della QSizePolicy per il titolo
+    //QSizePolicy per il titolo
     titoloLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    titoloLabel->setMinimumHeight(30);  // Altezza minima del titolo
-    titoloLabel->setMaximumHeight(30);  // Altezza massima del titolo
+    titoloLabel->setMinimumHeight(30);  //altezza minima del titolo
+    titoloLabel->setMaximumHeight(30);  //altezza massima del titolo
 
-    // Impostazione della dimensione del font (sostituzione del CSS)
+    //dimensione del font
     QFont font = titoloLabel->font();
-    font.setPointSize(12);  // Imposta la dimensione del font (puoi adattarla alle tue esigenze)
-    font.setBold(true);  // Imposta il font in grassetto
+    font.setPointSize(12);
+    font.setBold(true);
     titoloLabel->setFont(font);
 
-    // Aggiungere il widget del titolo al layout
     graphLayout->addWidget(titoloLabel);
 
     if (info["Tipo"] == "Vento") {

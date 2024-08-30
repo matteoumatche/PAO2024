@@ -14,7 +14,6 @@ private:
 public:
     Sensore(unsigned int id, std::string nome);
     Sensore(const QJsonObject& json);
-    virtual ~Sensore(){};
     std::string getNome() const;
     unsigned int getID() const;
     void setNome(std::string n);
@@ -23,6 +22,8 @@ public:
     virtual void simulaMisura()=0;
 
     virtual Sensore* clone() const = 0;
+
+    virtual ~Sensore(){};
 };
 
 }
