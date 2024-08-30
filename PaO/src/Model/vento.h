@@ -35,7 +35,7 @@ public:
     void simulaMisura() override;
     std::pair<double, double> Misura(std::pair<double, double> valoreReale);
 
-    virtual Vento* clone() const override;
+    Vento* clone() const override;
 };
 
 }

@@ -22,7 +22,7 @@ public:
     void simulaMisura() override;
     double Misura(double);
 
-    virtual TemPercepita* clone() const override;
+    TemPercepita* clone() const override;
 };
 
 }
