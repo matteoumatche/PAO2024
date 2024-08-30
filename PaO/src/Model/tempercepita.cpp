@@ -26,8 +26,8 @@ TemPercepita::TemPercepita(const QJsonObject& json) :
         qDebug() << message;
     };
 
-    if (json.contains("Umidita") && json["Umidita"].isString()) {
-        QString umiditaJsonString = json["Umidita"].toString();
+    if (json.contains("Umidità") && json["Umidità"].isString()) {
+        QString umiditaJsonString = json["Umidità"].toString();
         QJsonDocument umiditaDoc = QJsonDocument::fromJson(umiditaJsonString.toUtf8());
         if (!umiditaDoc.isNull() && umiditaDoc.isObject()) {
             QJsonObject umiditaObj = umiditaDoc.object();
@@ -94,12 +94,12 @@ std::map<std::string, std::string> TemPercepita::getInfo() const {
     auto baseInfo = Sensore::getInfo();
     info.insert(baseInfo.begin(), baseInfo.end());
 
-    info["Tipo"] = "TemPercepita";
+    info["Tipo"] = "Temp. Percepita";
     info["IndiceCalore"] = std::to_string(IndiceCalore);
 
     auto umiditaInfo = u.getInfo();
     if (umiditaInfo.find("Dato") != umiditaInfo.end()) {
-        info["Umidita"] = umiditaInfo["Dato"];
+        info["Umidità"] = umiditaInfo["Dato"];
     }
 
     auto temperaturaInfo = t.getInfo();

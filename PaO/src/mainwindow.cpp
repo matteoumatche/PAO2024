@@ -171,7 +171,7 @@ void MainWindow::addSensor(const QString &type, const QString &id, const QString
         nuovoSensore = new Model::Temperatura(id.toUInt(), name.toStdString());
     } else if (type == "Umidità") {
         nuovoSensore = new Model::Umidita(id.toUInt(), name.toStdString());
-    } else if (type == "TemPercepita") {
+    } else if (type == "Temp. Percepita") {
         nuovoSensore = new Model::TemPercepita(id.toUInt(), name.toStdString());
     }
 
@@ -196,7 +196,7 @@ void MainWindow::addSensor(const QString &type, const QString &id, const QString
 }
 
 QStringList MainWindow::getAvailableSensorTypes() {
-    return QStringList() << "Fotocellula" << "Vento" << "Temperatura" << "Umidità" << "TemPercepita";
+    return QStringList() << "Fotocellula" << "Vento" << "Temperatura" << "Umidità" << "Temp. Percepita";
 }
 
 Model::Sensore* MainWindow::creaSensore(const QJsonObject& info)  {
@@ -209,9 +209,9 @@ Model::Sensore* MainWindow::creaSensore(const QJsonObject& info)  {
             return new Model::Temperatura(info);
         }else if (tipo == "Vento") {
             return new Model::Vento(info);
-        }else if (tipo == "Umidita") {
+        }else if (tipo == "Umidità") {
             return new Model::Umidita(info);
-        }else if (tipo == "TemPercepita") {
+        }else if (tipo == "Temp. Percepita") {
             return new Model::TemPercepita(info);
         }
 
@@ -440,9 +440,9 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
         graphWidget = new View::WidgetVento(selectedSensor, this);
     } else if (info["Tipo"] == "Temperatura") {
         graphWidget = new View::WidgetTemperatura(selectedSensor, this);
-    } else if (info["Tipo"] == "Umidita") {
+    } else if (info["Tipo"] == "Umidità") {
         graphWidget = new View::WidgetUmidita(selectedSensor, this);
-    } else if (info["Tipo"] == "TemPercepita") {
+    } else if (info["Tipo"] == "Temp. Percepita") {
         graphWidget = new View::WidgetTempercepita(this);
     } else if (info["Tipo"] == "Fotocellula") {
         graphWidget = new View::WidgetFotocellula(&sensori, this);
