@@ -474,6 +474,54 @@ void MainWindow::onSensorSelected(const std::string sensorID) {
 
 void MainWindow::cloneSensor(Model::Sensore* selectedSensor){
     if (selectedSensor) {
+        // Clona il sensore selezionato
+        Model::Sensore* clonedSensor = selectedSensor->clone();
+
+        // Ottieni l'ID originale e creane uno nuovo
+        int newID = selectedSensor->getID();
+
+        // Funzione lambda per incrementare l'ID seguendo la logica specificata
+        auto incrementID = [](int id) -> int {
+            std::string idStr = std::to_string(id);
+            while (idStr.length() < 4) {
+                idStr = "0" + idStr;
+            }
+            for (int i = 3; i >= 0; --i) {
+                if (idStr[i] == '9') {
+                    idStr[i] = '0';
+                } else {
+                    idStr[i]++;
+                    break;
+                }
+            }
+            return std::stoi(idStr);
+        };
+
+        // Trova un ID unico per il clone
+        bool idExists;
+        do {
+            newID = incrementID(newID);
+            idExists = std::any_of(sensori.begin(), sensori.end(),
+                                   [newID](Model::Sensore* sensore) {
+                                       return sensore->getID() == newID;
+                                   });
+        } while (idExists);
+
+        // Imposta il nuovo ID al sensore clonato
+        clonedSensor->setID(newID);
+
+        // Aggiungi il clone alla lista dei sensori
+        sensori.push_back(clonedSensor);
+
+        // Aggiorna la visualizzazione
+        emit sensorListWidget->updateList();
+    }
+}
+
+
+/*
+void MainWindow::cloneSensor(Model::Sensore* selectedSensor){
+    if (selectedSensor) {
         //clona il sensore selezionato
         Model::Sensore* clonedSensor = selectedSensor->clone();
 
@@ -484,6 +532,7 @@ void MainWindow::cloneSensor(Model::Sensore* selectedSensor){
         emit sensorListWidget->updateList();
     }
 }
+*/
 
 void MainWindow::modifySensor(Model::Sensore* selectedSensor) {
     if (selectedSensor) {
@@ -503,22 +552,34 @@ void MainWindow::modifySensor(Model::Sensore* selectedSensor) {
 
 void MainWindow::deleteSensor(Model::Sensore* selectedSensor){
     if (selectedSensor) {
-        //trova ed elimina il sensore selezionato
-        auto it = std::find_if(sensori.begin(), sensori.end(),
-                               [&selectedSensor](Model::Sensore* sensore) {
-                                   return sensore->getID() == selectedSensor->getID();
-                               });
-        if (it != sensori.end()) {
-            delete *it;
-            sensori.erase(it);
-            selectedSensor = nullptr;
-        }
+        // Mostra un QMessageBox per confermare l'eliminazione
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Conferma eliminazione",
+                                      "Sei sicuro di voler eliminare il sensore selezionato?",
+                                      QMessageBox::Yes | QMessageBox::No);
 
-        //aggiorna la visualizzazione
-        emit sensorListWidget->updateList();
-        onSensorSelected("eliminato");
+        if (reply == QMessageBox::Yes) {
+            // Trova ed elimina il sensore selezionato
+            auto it = std::find_if(sensori.begin(), sensori.end(),
+                                   [&selectedSensor](Model::Sensore* sensore) {
+                                       return sensore->getID() == selectedSensor->getID();
+                                   });
+            if (it != sensori.end()) {
+                delete *it;
+                sensori.erase(it);
+                selectedSensor = nullptr;
+            }
+
+            // Aggiorna la visualizzazione
+            emit sensorListWidget->updateList();
+            onSensorSelected("eliminato");
+        } else {
+            // Se l'utente ha selezionato "No", non fare nulla
+            return;
+        }
     }
 }
+
 
 void MainWindow::onSearchTextChanged(const QString& searchText) {
     std::vector<Model::Sensore*> filteredSensors;
