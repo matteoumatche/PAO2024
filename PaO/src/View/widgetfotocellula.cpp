@@ -13,23 +13,46 @@
 View::WidgetFotocellula::WidgetFotocellula(std::vector<Model::Sensore*>* s ,QWidget *parent)
     : WidgetGrafico(parent), sensori(s){
 
-}
 
-void View::WidgetFotocellula::simulazione(Model::Sensore* s) {
-
-    delete layout();
-
-    qDebug()<<"sim foto 4";
-    QSplineSeries *series = new QSplineSeries();
+    series = new QSplineSeries();
     series->setName("visitatori");
+    chart = new QChart();
+    chart->legend()->hide();
+    chart->addSeries(series);
+    chart->setTitle("andamento numero visitatori");
+    chart->createDefaultAxes();
+    chart->axes(Qt::Vertical).first()->setRange(0, 1000);
+    chart->axes(Qt::Horizontal).first()->setRange(10, 18);
+    chart->axes(Qt::Vertical).first()->setTitleText("numero visitatori");
+    chart->axes(Qt::Horizontal).first()->setTitleText("ore (hh)");
 
-    // Creazione della tabella per visualizzare i dati
+    chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
 
-    QTableWidget* tabella;
+
     tabella = new QTableWidget(0, 2, this);
     tabella->setHorizontalHeaderLabels(QStringList() << "numero di ospiti" <<"ora(hh:mm:ss)");
     tabella->horizontalHeader()->setStretchLastSection(true);
     tabella->verticalHeader()->setVisible(false);
+
+    splitter = new QSplitter(Qt::Horizontal, this);
+    splitter->addWidget(chartView);
+    splitter->addWidget(tabella);
+
+    splitter->setSizes(QList<int>() << 2 * 100 << 100);  // 2/3 per il grafico, 1/3 per la tabella
+
+    // Layout principale per contenere il grafico e la tabella
+    QHBoxLayout* mainLayout = new QHBoxLayout(this);
+
+    mainLayout->addWidget(splitter);
+    setLayout(mainLayout);
+
+}
+
+void View::WidgetFotocellula::simulazione(Model::Sensore* s) {
+    tabella->setRowCount(0);
+    chart->removeAllSeries();
+    QSplineSeries* serie = new QSplineSeries();
 
     std::tm ora;
     ora.tm_hour = 10; // Imposta l'ora di apertura alle 10:00
@@ -43,9 +66,7 @@ void View::WidgetFotocellula::simulazione(Model::Sensore* s) {
 
         for (std::vector<Model::Sensore*>::iterator it = sensori->begin(); it != sensori->end(); it++) {
             if ((*it)->getInfo()["Tipo"] == "Fotocellula") {
-                qDebug() << "sim foto j:" << j;
                 bool attivo = dynamic_cast<Model::Fotocellula*>(*it)->Misura(&ora);  // Simula una misura per l'ora corrente
-                qDebug() << "sim foto simula j:" << j;
                 attivo ? j++ :j;
             }
         }
@@ -56,7 +77,7 @@ void View::WidgetFotocellula::simulazione(Model::Sensore* s) {
 
         qDebug() << "series";
         // Aggiungi i valori ottenuti alla serie per la visualizzazione grafica
-        series->append(ora.tm_hour + ora.tm_min / 60.0, j); // 'i' rappresenta l'indice di iterazione, 'j' il valore di attivo/non attivo
+        serie->append(ora.tm_hour + ora.tm_min / 60.0, j);
         // Incrementa l'ora di 10 minuti per ogni iterazione
         ora.tm_min += 10;
 
@@ -64,32 +85,15 @@ void View::WidgetFotocellula::simulazione(Model::Sensore* s) {
         std::mktime(&ora);
     }
 
-    QChart *chart = new QChart();
-    chart->legend()->hide();
-    chart->addSeries(series);
-    chart->setTitle("andamento numero visitatori");
-    chart->createDefaultAxes();
-    chart->axes(Qt::Vertical).first()->setRange(0, j+(0.2*j));
 
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-
-    QSplitter *splitter = new QSplitter(Qt::Horizontal, this);
-    splitter->addWidget(chartView);
-    splitter->addWidget(tabella);
-
-    splitter->setSizes(QList<int>() << 2 * 100 << 100);  // 2/3 per il grafico, 1/3 per la tabella
-
+    chart->axes(Qt::Vertical).first()->setRange(0, j+(0.3*j));
+    chart->addSeries(serie);
+    chart->update();
+    //chart->repaint();
+    delete layout();
     // Layout principale per contenere il grafico e la tabella
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
-    //mainLayout->addWidget(chartView, 3);  // 3/4 of the space for the polar chart
-    //mainLayout->addWidget(tabella, 1);    // 1/4 of the space for the table
 
     mainLayout->addWidget(splitter);
     setLayout(mainLayout);
-    /*
-    QHBoxLayout *layout = new QHBoxLayout(this);
-    layout->addWidget(chartView);
-    layout->addWidget(tabella);
-    setLayout(layout);*/
 }

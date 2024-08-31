@@ -32,7 +32,7 @@ View::WidgetVento::WidgetVento(Model::Sensore* s, QWidget* parent)
     chartView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     polarChart->setMargins(QMargins(0, 0, 0, 0));
     polarChart->legend()->hide();
-    polarChart->setTitle("");
+    polarChart->setTitle("tracciamento direzione rispetto all'offset(°) e velocità(m/s) vento");
 
     // Creazione della tabella per visualizzare i dati
     tabella = new QTableWidget(0, 3, this);

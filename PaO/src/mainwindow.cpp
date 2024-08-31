@@ -633,7 +633,7 @@ void MainWindow::updateSensorList(std::vector<Model::Sensore*>& sensors) {
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
 }
-
+/*
 void MainWindow::onSensorModified(std::map<std::string, std::string>& info) {
     //ciclo attraverso il vettore dei sensori per trovare quello selezionato
     qDebug() <<"onsensor trovato";
@@ -648,8 +648,28 @@ void MainWindow::onSensorModified(std::map<std::string, std::string>& info) {
             break;
         }
     }
-}
+}*/
+void MainWindow::onSensorModified(std::map<std::string, std::string>& info) {
+    // Ciclo attraverso il vettore dei sensori per trovare quello selezionato
+    qDebug() << "onSensor trovato";
+    for (auto sensore = sensori.begin(); sensore != sensori.end(); ++sensore) {
+        if ((*sensore)->getInfo()["ID"] == info["ID"]) {
+            qDebug() << "onSensor trovato";
 
+            // Creo il nuovo sensore usando i dati passati
+            Model::Sensore* newSensor = creaSensore(mapToJson(info));
+
+            // Dealloco il vecchio sensore per evitare fughe di memoria
+            delete *sensore;
+
+            // Sostituisco il vecchio sensore con il nuovo nella stessa posizione
+            *sensore = newSensor;
+
+            qDebug() << "Sensore sostituito";
+            break;
+        }
+    }
+}
 
 
 
