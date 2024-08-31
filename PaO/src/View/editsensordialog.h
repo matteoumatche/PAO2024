@@ -20,7 +20,7 @@ protected:
 
 private:
     Model::Sensore* originalSensor;
-    std::map<std::string, QWidget*> editFields;
+    std::map<std::string, QLineEdit*> editFields;
 };
 
 #endif

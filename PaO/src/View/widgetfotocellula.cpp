@@ -8,6 +8,7 @@
 #include <QChartView>
 #include <QTableWidgetItem>
 #include <QHeaderView>
+#include <QSplitter>
 
 View::WidgetFotocellula::WidgetFotocellula(std::vector<Model::Sensore*>* s ,QWidget *parent)
     : WidgetGrafico(parent), sensori(s){
@@ -73,8 +74,22 @@ void View::WidgetFotocellula::simulazione(Model::Sensore* s) {
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
+    QSplitter *splitter = new QSplitter(Qt::Horizontal, this);
+    splitter->addWidget(chartView);
+    splitter->addWidget(tabella);
+
+    splitter->setSizes(QList<int>() << 2 * 100 << 100);  // 2/3 per il grafico, 1/3 per la tabella
+
+    // Layout principale per contenere il grafico e la tabella
+    QHBoxLayout* mainLayout = new QHBoxLayout(this);
+    //mainLayout->addWidget(chartView, 3);  // 3/4 of the space for the polar chart
+    //mainLayout->addWidget(tabella, 1);    // 1/4 of the space for the table
+
+    mainLayout->addWidget(splitter);
+    setLayout(mainLayout);
+    /*
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->addWidget(chartView);
     layout->addWidget(tabella);
-    setLayout(layout);
+    setLayout(layout);*/
 }

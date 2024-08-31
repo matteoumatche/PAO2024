@@ -7,7 +7,7 @@ namespace View {
 ToolBar::ToolBar(QToolBar *parent)
     : QToolBar(parent)
 {
-    QIcon icon("PAO2024/PaO/src/Assets/Pulsanti/webcam.svg");
+    QIcon icon(":Assets/Pulsanti/webcam.svg");
     qDebug() << "Current path: " << QDir::currentPath();
 
     if (icon.isNull()) {

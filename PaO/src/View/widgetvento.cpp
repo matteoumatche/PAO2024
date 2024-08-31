@@ -6,6 +6,7 @@
 #include <QHeaderView>
 #include <QtMath>
 #include <QScatterSeries>
+#include <QSplitter>
 
 View::WidgetVento::WidgetVento(Model::Sensore* s, QWidget* parent)
     : WidgetGrafico(parent), vento(static_cast<Model::Vento*>(s)), iterazioniRimanenti(0), angoloCorrente(0) {
@@ -39,10 +40,18 @@ View::WidgetVento::WidgetVento(Model::Sensore* s, QWidget* parent)
     tabella->horizontalHeader()->setStretchLastSection(true);
     tabella->verticalHeader()->setVisible(false);
 
+    QSplitter *splitter = new QSplitter(Qt::Horizontal, this);
+    splitter->addWidget(chartView);
+    splitter->addWidget(tabella);
+
+    splitter->setSizes(QList<int>() << 2 * 100 << 100);  // 2/3 per il grafico, 1/3 per la tabella
+
     // Layout principale per contenere il grafico e la tabella
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
-    mainLayout->addWidget(chartView, 3);  // 3/4 of the space for the polar chart
-    mainLayout->addWidget(tabella, 1);    // 1/4 of the space for the table
+    //mainLayout->addWidget(chartView, 3);  // 3/4 of the space for the polar chart
+    //mainLayout->addWidget(tabella, 1);    // 1/4 of the space for the table
+
+    mainLayout->addWidget(splitter);
     setLayout(mainLayout);
 
     // Impostazione del timer per l'aggiornamento dell'animazione

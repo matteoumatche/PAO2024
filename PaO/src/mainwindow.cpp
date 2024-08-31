@@ -92,6 +92,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
     connect(searchLineEdit, &QLineEdit::textChanged, this, &MainWindow::onSearchTextChanged);
     connect(filterComboBox, &QComboBox::currentTextChanged, this, &MainWindow::onFilterComboBoxChanged);
+
 }
 
 MainWindow::~MainWindow(){}

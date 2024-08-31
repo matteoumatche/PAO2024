@@ -11,7 +11,7 @@ TemPercepita::TemPercepita(unsigned int id, std::string nome, Umidita um, Temper
         IndiceCalore = t.getDato();
 }
 
-TemPercepita::TemPercepita(unsigned int id, std::string nome) : Sensore(id, nome), u(1, "umidità"), t(1, "temperatura") {}
+TemPercepita::TemPercepita(unsigned int id, std::string nome) : Sensore(id, nome), u(1, "umidita"), t(1, "temperatura") {}
 
 TemPercepita::TemPercepita(const QJsonObject& json) :
     Sensore(json),
@@ -26,8 +26,8 @@ TemPercepita::TemPercepita(const QJsonObject& json) :
         qDebug() << message;
     };
 
-    if (json.contains("Umidità") && json["Umidità"].isString()) {
-        QString umiditaJsonString = json["Umidità"].toString();
+    if (json.contains("Umidità") && json["Umidita"].isString()) {
+        QString umiditaJsonString = json["Umidita"].toString();
         QJsonDocument umiditaDoc = QJsonDocument::fromJson(umiditaJsonString.toUtf8());
         if (!umiditaDoc.isNull() && umiditaDoc.isObject()) {
             QJsonObject umiditaObj = umiditaDoc.object();
@@ -98,20 +98,11 @@ std::map<std::string, std::string> TemPercepita::getInfo() const {
     info["IndiceCalore"] = std::to_string(IndiceCalore);
 
     auto umiditaInfo = u.getInfo();
-    if (umiditaInfo.find("Dato") != umiditaInfo.end()) {
-        info["Umidità"] = umiditaInfo["Dato"];
-    }
-
-    auto temperaturaInfo = t.getInfo();
-    if (temperaturaInfo.find("Dato") != temperaturaInfo.end()) {
-        info["Temperatura"] = temperaturaInfo["Dato"];
-    }
-/*
     QJsonObject umiditaJson;
     for (const auto& pair : umiditaInfo) {
         umiditaJson[QString::fromStdString(pair.first)] = QString::fromStdString(pair.second);
     }
-
+    auto temperaturaInfo = t.getInfo();
     QJsonObject temperaturaJson;
     for (const auto& pair : temperaturaInfo) {
         temperaturaJson[QString::fromStdString(pair.first)] = QString::fromStdString(pair.second);
@@ -122,7 +113,7 @@ std::map<std::string, std::string> TemPercepita::getInfo() const {
 
     info["Umidita"] = umiditaDoc.toJson(QJsonDocument::Compact).toStdString();
     info["Temperatura"] = temperaturaDoc.toJson(QJsonDocument::Compact).toStdString();
-*/
+
     return info;
 }
 
