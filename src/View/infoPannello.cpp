@@ -1,1 +1,0 @@
-#include "infoPannello.h"
