@@ -1,0 +1,44 @@
+{
+    "sensori": [
+        {
+            "Angolo": "0.000000",
+            "ID": "2",
+            "MaxVelocita": "30.000000",
+            "Nome": "Ventola Ovest",
+            "Offset": "0.000000",
+            "Tipo": "Vento",
+            "Tolleranza Anemometro": "0.500000",
+            "Tolleranza Goniometro": "0.100000",
+            "Velocità": "0.000000"
+        },
+        {
+            "Dato": "0.000000",
+            "ID": "3",
+            "Nome": "Zona fredda",
+            "Tipo": "Temperatura",
+            "Tolleranza": "0.500000"
+        },
+        {
+            "Dato": "0.000000",
+            "ID": "4",
+            "Nome": "Zona fredda",
+            "Tipo": "Umidità",
+            "Tolleranza": "0.500000"
+        },
+        {
+            "ID": "5",
+            "Indice Calore": "0.000000",
+            "Nome": "Zona tropicale",
+            "Temperatura": "0.000000",
+            "Tipo": "Temp. Percepita",
+            "Umidità": "0.000000"
+        },
+        {
+            "Attivo": "false",
+            "ID": "1",
+            "Nome": "Ingresso Sud",
+            "Soglia": "0.000000",
+            "Tipo": "Fotocellula"
+        }
+    ]
+}
