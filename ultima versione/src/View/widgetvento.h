@@ -13,8 +13,6 @@
 #include <QChartView>
 #include <QLineSeries>
 
-
-
 namespace View {
 class WidgetVento : public WidgetGrafico {
     Q_OBJECT
@@ -40,9 +38,6 @@ private:
 
     int iterazioniRimanenti;
     double angoloCorrente;
-
-
-
 };
 
 
