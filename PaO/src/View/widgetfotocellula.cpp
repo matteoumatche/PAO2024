@@ -1,5 +1,6 @@
 #include "widgetfotocellula.h"
 #include "../Model/fotocellula.h"
+
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QSplineSeries>
@@ -13,25 +14,24 @@
 View::WidgetFotocellula::WidgetFotocellula(std::vector<Model::Sensore*>* s ,QWidget *parent)
     : WidgetGrafico(parent), sensori(s){
 
-
     series = new QSplineSeries();
-    series->setName("visitatori");
+    series->setName("Visitatori");
     chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
-    chart->setTitle("andamento numero visitatori");
+    chart->setTitle("Andamento numero visitatori");
     chart->createDefaultAxes();
     chart->axes(Qt::Vertical).first()->setRange(0, 1000);
     chart->axes(Qt::Horizontal).first()->setRange(10, 18);
-    chart->axes(Qt::Vertical).first()->setTitleText("numero visitatori");
-    chart->axes(Qt::Horizontal).first()->setTitleText("ore (hh)");
+    chart->axes(Qt::Vertical).first()->setTitleText("N. visitatori");
+    chart->axes(Qt::Horizontal).first()->setTitleText("Ore (hh)");
 
     chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
 
     tabella = new QTableWidget(0, 2, this);
-    tabella->setHorizontalHeaderLabels(QStringList() << "numero di ospiti" <<"ora(hh:mm:ss)");
+    tabella->setHorizontalHeaderLabels(QStringList() << "N. ospiti" << "Ora (hh:mm:ss)");
     tabella->horizontalHeader()->setStretchLastSection(true);
     tabella->verticalHeader()->setVisible(false);
 
@@ -62,8 +62,6 @@ void View::WidgetFotocellula::simulazione(Model::Sensore* s) {
 
     for (int i = 0; i < 50; i++) {
 
-        qDebug() << "sim foto i:" << i;
-
         for (std::vector<Model::Sensore*>::iterator it = sensori->begin(); it != sensori->end(); it++) {
             if ((*it)->getInfo()["Tipo"] == "Fotocellula") {
                 bool attivo = dynamic_cast<Model::Fotocellula*>(*it)->Misura(&ora);  // Simula una misura per l'ora corrente
@@ -75,7 +73,6 @@ void View::WidgetFotocellula::simulazione(Model::Sensore* s) {
         tabella->setItem(row, 0, new QTableWidgetItem(QString::number(j, 'f', 2)));
         tabella->setItem(row, 1, new QTableWidgetItem(QString::number((ora.tm_hour + ora.tm_min / 60.0), 'f', 2)));
 
-        qDebug() << "series";
         // Aggiungi i valori ottenuti alla serie per la visualizzazione grafica
         serie->append(ora.tm_hour + ora.tm_min / 60.0, j);
         // Incrementa l'ora di 10 minuti per ogni iterazione

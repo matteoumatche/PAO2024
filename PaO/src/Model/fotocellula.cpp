@@ -1,4 +1,5 @@
 #include "fotocellula.h"
+
 #include <random>
 
 namespace Model {
@@ -45,62 +46,59 @@ bool Fotocellula::isAttivo() const {
 }
 
 void Fotocellula::simulaMisura() {
-    // Ottieni l'ora corrente
+    //ora corrente
     auto now = std::chrono::system_clock::now();
     std::time_t now_time = std::chrono::system_clock::to_time_t(now);
     std::tm* local_time = std::localtime(&now_time);
 
-    // Estrai l'ora del giorno (0 - 23)
+    //estrae l'ora del giorno (0 - 23)
     int hour = local_time->tm_hour;
 
-    // Definisci la probabilità base
+    //probabilità base
     double probability = 0.0;
 
-    // Definisci una curva a campana che ha il picco tra le 10:00 e le 18:00
+    //curva a campana che ha il picco tra le 10:00 e le 18:00
     if (hour >= 10 && hour <= 18) {
-        // Più vicino alle 14:00 (il picco), più alta la probabilità
+        //alle 14:00 (il picco), più alta la probabilità
         int peak_hour = 14;
         int distance_from_peak = std::abs(hour - peak_hour);
         probability = std::exp(-0.5 * std::pow(distance_from_peak / 2.0, 2)); // Gaussiana centrata sulle 14:00
     } else {
-        // Probabilità molto bassa al di fuori dell'orario di punta
+        //probabilità molto bassa al di fuori dell'orario di punta
         probability = 0.1;
     }
 
-    // Generazione casuale
+    //generazione casuale
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(0.0, 1.0);
 
-    // Confronta la probabilità generata con la soglia
     attivo = (dis(gen) < probability);
 }
 
 
 bool Fotocellula::Misura(std::tm* local_time) {
-    // Estrai l'ora del giorno (0 - 23) dall'oggetto std::tm
+    //estrae l'ora del giorno (0 - 23) dall'oggetto std::tm
     int hour = local_time->tm_hour;
 
-    // Definisci la probabilità base
+    //probabilità base
     double probability = 0.0;
 
-    // Definisci una curva a campana che ha il picco tra le 10:00 e le 18:00
+    //curva a campana che ha il picco tra le 10:00 e le 18:00
     if (hour >= 10 && hour <= 18) {
-        // Più vicino alle 14:00 (il picco), più alta la probabilità
+        //alle 14:00 (il picco), più alta la probabilità
         int peak_hour = 14;
         int distance_from_peak = std::abs(hour - peak_hour);
         probability = std::exp(-0.5 * std::pow(distance_from_peak / 2.0, 2)); // Gaussiana centrata sulle 14:00
     } else {
-        // Probabilità molto bassa al di fuori dell'orario di punta
+        //probabilità molto bassa al di fuori dell'orario di punta
         probability = 0.1;
     }
 
-    // Generazione casuale
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(0.0, 1.0);
 
-    // Confronta la probabilità generata con la soglia
     return (dis(gen) < probability);
 }
 
@@ -110,7 +108,6 @@ double Fotocellula::getSoglia() const{
 
 std::map<std::string, std::string> Fotocellula::getInfo() const {
     std::map<std::string, std::string> info;
-    //info.merge(Sensore::getInfo());
     std::map<std::string, std::string> sensorInfo = Sensore::getInfo();
 
     for (const auto& pair : sensorInfo) {

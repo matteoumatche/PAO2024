@@ -1,4 +1,5 @@
 #include "widgettemperatura.h"
+
 #include <QVBoxLayout>
 #include <QBarSet>
 #include <QChart>

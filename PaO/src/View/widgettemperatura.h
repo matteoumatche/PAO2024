@@ -14,6 +14,7 @@ namespace View {
 
 class WidgetTemperatura : public WidgetGrafico {
     Q_OBJECT
+
 public slots:
     void simulazione(Model::Sensore* sensore) override;
 

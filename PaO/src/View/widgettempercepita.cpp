@@ -1,4 +1,5 @@
 #include "widgettempercepita.h"
+
 #include <QBarSet>
 #include <QBarSeries>
 #include <QChart>
@@ -68,7 +69,7 @@ void View::WidgetTempercepita::simulazione(Model::Sensore* sensore) {
     for (int i = 0; i < 10; ++i) {
         sensore->simulaMisura();  // Simula una misura
         std::map<std::string, std::string> info = sensore->getInfo();  // Ottiene le informazioni dal sensore
-        double percepita = std::stod(info["IndiceCalore"]);  // Conversione da stringa a double
+        double percepita = std::stod(info["Indice Calore"]);  // Conversione da stringa a double
         double registrata = std::stod(info["Temperatura"]);
         *setTP << percepita;
         *setTR << registrata;

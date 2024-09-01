@@ -1,4 +1,5 @@
 #include "vento.h"
+
 #include <random>
 #include <cmath>
 #include <QJsonDocument>
@@ -43,22 +44,22 @@ Vento::Vento(const QJsonObject& json) : Sensore(json) {
         valoreMaxVelocita = 30.0;
     }
 
-    if (json.contains("TolleranzaGoniometro") && json["TolleranzaGoniometro"].isString()) {
-        tolleranzaGoniometro = stringToDouble(json["TolleranzaGoniometro"].toString());
+    if (json.contains("Tolleranza Goniometro") && json["Tolleranza Goniometro"].isString()) {
+        tolleranzaGoniometro = stringToDouble(json["Tolleranza Goniometro"].toString());
     } else {
-        qDebug() << "Warning: Missing or incorrect 'TolleranzaGoniometro' in JSON";
+        qDebug() << "Warning: Missing or incorrect 'Tolleranza Goniometro' in JSON";
         tolleranzaGoniometro = 0.1;
     }
 
-    if (json.contains("TolleranzaAnemometro") && json["TolleranzaAnemometro"].isString()) {
-        tolleranzaAnemometro = stringToDouble(json["TolleranzaAnemometro"].toString());
+    if (json.contains("Tolleranza Anemometro") && json["Tolleranza Anemometro"].isString()) {
+        tolleranzaAnemometro = stringToDouble(json["Tolleranza Anemometro"].toString());
     } else {
-        qDebug() << "Warning: Missing or incorrect 'TolleranzaAnemometro' in JSON";
+        qDebug() << "Warning: Missing or incorrect 'Tolleranza Anemometro' in JSON";
         tolleranzaAnemometro = 0.5;
     }
 
-    if (json.contains("Velocita") && json["Velocita"].isString()) {
-        dato.first = stringToDouble(json["Velocita"].toString());
+    if (json.contains("Velocità") && json["Velocità"].isString()) {
+        dato.first = stringToDouble(json["Velocità"].toString());
     } else {
         qDebug() << "Warning: Missing or incorrect 'Velocita' in 'Dato' object";
         dato.first = 0.0;
@@ -138,9 +139,9 @@ std::map<std::string, std::string> Vento::getInfo() const {
     info.insert(std::make_pair("Tipo", "Vento"));
     info.insert(std::make_pair("Offset", std::to_string(offset)));
     info.insert(std::make_pair("MaxVelocita", std::to_string(valoreMaxVelocita)));
-    info.insert(std::make_pair("TolleranzaGoniometro", std::to_string(tolleranzaGoniometro)));
-    info.insert(std::make_pair("TolleranzaAnemometro", std::to_string(tolleranzaAnemometro)));
-    info.insert(std::make_pair("Velocita", std::to_string(dato.first)));
+    info.insert(std::make_pair("Tolleranza Goniometro", std::to_string(tolleranzaGoniometro)));
+    info.insert(std::make_pair("Tolleranza Anemometro", std::to_string(tolleranzaAnemometro)));
+    info.insert(std::make_pair("Velocità", std::to_string(dato.first)));
     info.insert(std::make_pair("Angolo", std::to_string(dato.second)));
     return info;
 }

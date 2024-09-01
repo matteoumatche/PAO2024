@@ -11,7 +11,7 @@ private:
     double dato;
 
 public:
-    Temperatura(unsigned int id=0, std::string nome="temperatura", double toll = 0.5);
+    Temperatura(unsigned int id = 0, std::string nome = "Temperatura", double toll = 0.5);
     Temperatura(const QJsonObject& json);
 
     double getTolleranza() const;
@@ -23,7 +23,7 @@ public:
     void simulaMisura() override;
     double Misura(double valoreReale);
 
-    Temperatura* clone() const override;
+    virtual Temperatura* clone() const override;
 };
 
 }

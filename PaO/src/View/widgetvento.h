@@ -3,6 +3,7 @@
 
 #include "widgetgrafico.h"
 #include "../Model/vento.h"
+
 #include <QPolarChart>
 #include <QValueAxis>
 #include <QChartView>

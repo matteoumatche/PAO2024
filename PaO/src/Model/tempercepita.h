@@ -11,6 +11,7 @@ private:
     Umidita u;
     Temperatura t;
     double IndiceCalore;
+
 public:
     TemPercepita(unsigned int, std::string, Umidita, Temperatura);
     TemPercepita(unsigned int id, std::string nome);
@@ -22,7 +23,7 @@ public:
     void simulaMisura() override;
     double Misura(double);
 
-    TemPercepita* clone() const override;
+    virtual TemPercepita* clone() const override;
 };
 
 }

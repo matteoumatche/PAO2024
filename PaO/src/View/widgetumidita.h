@@ -3,6 +3,7 @@
 
 #include "widgetgrafico.h"
 #include "src/Model/Sensore.h"
+
 #include <QChart>
 #include <QChartView>
 #include <QTableWidget>

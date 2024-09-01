@@ -3,6 +3,7 @@
 
 #include "widgetgrafico.h"
 #include "../Model/Sensore.h"
+
 #include <QTableWidgetItem>
 #include <QSplineSeries>
 #include <QChart>
@@ -16,6 +17,7 @@ namespace View{
 
 class WidgetFotocellula : public WidgetGrafico {
     Q_OBJECT
+
 private:
     std::vector<Model::Sensore*>* sensori;
     QSplitter *splitter;

@@ -11,6 +11,7 @@ class Sensore {
 private:
     unsigned int ID;
     std::string nome;
+
 public:
     Sensore(unsigned int id, std::string nome);
     Sensore(const QJsonObject& json);

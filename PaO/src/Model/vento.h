@@ -18,7 +18,7 @@ private:
 
 public:
     Vento(unsigned int , std::string , double );
-    Vento(unsigned int , std::string , double o=0, double max=30, double tollG=0.1, double tollA=0.5);
+    Vento(unsigned int , std::string , double o = 0, double max = 30, double tollG = 0.1, double tollA = 0.5);
     Vento(const QJsonObject& );
 
     double getMaxVelocita() const;
@@ -35,7 +35,7 @@ public:
     void simulaMisura() override;
     std::pair<double, double> Misura(std::pair<double, double> valoreReale);
 
-    Vento* clone() const override;
+    virtual Vento* clone() const override;
 };
 
 }

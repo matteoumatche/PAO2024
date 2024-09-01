@@ -1,4 +1,5 @@
 #include "sensorinfowidget.h"
+
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QMouseEvent>

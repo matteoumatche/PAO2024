@@ -11,7 +11,7 @@ private:
     double dato;
 
 public:
-    Umidita(unsigned int id=0 , std::string n="umidita", double toll = 0.5);
+    Umidita(unsigned int id = 0 , std::string n = "Umidità", double toll = 0.5);
     Umidita(const QJsonObject& );
 
     double getTolleranza() const;
@@ -23,7 +23,7 @@ public:
     void simulaMisura() override;
     double Misura(double valoreReale);
 
-    Umidita* clone() const override;
+    virtual Umidita* clone() const override;
 };
 
 }

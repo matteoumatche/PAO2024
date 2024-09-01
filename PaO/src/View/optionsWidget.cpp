@@ -26,12 +26,12 @@ View::optionsWidget::optionsWidget(Model::Sensore* s, QWidget *parent) :
 
     std::map<std::string, std::string> info = s->getInfo();
 
-    // Definire l'insieme delle chiavi da escludere
-    std::set<std::string> excludeKeys = {"Dato", "ID", "Nome", "Temperatura", "Umidita", "IndiceCalore", "Tipo", "Velocita", "Angolo", "IndiceCalore", "Umidita"};
+    //schiavi da escludere
+    std::set<std::string> excludeKeys = {"Dato", "ID", "Nome", "Temperatura", "Umidita", "Tipo", "Velocità", "Angolo", "Indice Calore", "Umidità", "MaxVelocita"};
 
     for (const auto& pair : info) {
         QString key = QString::fromStdString(pair.first);
-        // Verificare se la chiave è presente nell'insieme delle chiavi da escludere
+
         if (excludeKeys.find(pair.first) == excludeKeys.end()) {
             QLabel* label = new QLabel(key + ": " + QString::fromStdString(pair.second), dataWidget);
             dataLayout->addWidget(label);

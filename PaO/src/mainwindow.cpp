@@ -92,7 +92,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
     connect(searchLineEdit, &QLineEdit::textChanged, this, &MainWindow::onSearchTextChanged);
     connect(filterComboBox, &QComboBox::currentTextChanged, this, &MainWindow::onFilterComboBoxChanged);
-
 }
 
 MainWindow::~MainWindow(){}
@@ -131,14 +130,14 @@ void MainWindow::showNewSensorDialog() {
         }
 
         //validazione dell'ID
-        QRegularExpression idRegex("^[0-9]{4}$");
+        QRegularExpression idRegex("^[0-9]{1,4}$");
         if (!idRegex.match(id).hasMatch()) {
             QMessageBox::warning(&dialog, "Errore", "L'ID deve avere esattamente 4 caratteri numerici.");
             return;
         }
 
         //validazione del Nome
-        QRegularExpression nameRegex("^[A-Za-z0-9]+$"); //solo caratteri alfabetici
+        QRegularExpression nameRegex("^[A-Za-z0-9 ]+$"); //solo caratteri alfabetici
         if (!nameRegex.match(name).hasMatch()) {
             QMessageBox::warning(&dialog, "Errore", "Il Nome deve contenere solo caratteri alfanumerici.");
             return;
@@ -154,10 +153,10 @@ void MainWindow::showNewSensorDialog() {
 }
 
 void MainWindow::addSensor(const QString &type, const QString &id, const QString &name){
-    //controllo ID o nome già esistenti
+    //controllo ID già esistente
     for (const auto& sensore : sensori) {
-        if (sensore->getID() == id.toUInt() || sensore->getNome() == name.toStdString()) {
-            QMessageBox::warning(this, "Errore", "ID o Nome già esistenti. Inserire valori unici.");
+        if (sensore->getID() == id.toUInt()) {
+            QMessageBox::warning(this, "Errore", "ID già esistente. Inserire un ID unico.");
             return;
         }
     }
@@ -519,22 +518,6 @@ void MainWindow::cloneSensor(Model::Sensore* selectedSensor){
     }
 }
 
-
-/*
-void MainWindow::cloneSensor(Model::Sensore* selectedSensor){
-    if (selectedSensor) {
-        //clona il sensore selezionato
-        Model::Sensore* clonedSensor = selectedSensor->clone();
-
-        //aggiungi il clone alla lista dei sensori
-        sensori.push_back(clonedSensor);
-
-        //aggiorna la visualizzazione
-        emit sensorListWidget->updateList();
-    }
-}
-*/
-
 void MainWindow::modifySensor(Model::Sensore* selectedSensor) {
     if (selectedSensor) {
         EditSensorDialog* dialog = new EditSensorDialog(selectedSensor, this);
@@ -580,7 +563,6 @@ void MainWindow::deleteSensor(Model::Sensore* selectedSensor){
         }
     }
 }
-
 
 void MainWindow::onSearchTextChanged(const QString& searchText) {
     std::vector<Model::Sensore*> filteredSensors;
@@ -633,13 +615,18 @@ void MainWindow::updateSensorList(std::vector<Model::Sensore*>& sensors) {
     connect(sensorListWidget, &View::SensorListWidget::updateList, this, &MainWindow::dataUpdated);
     connect(sensorListWidget, &View::SensorListWidget::sensorSelected, this, &MainWindow::onSensorSelected);
 }
-/*
+
 void MainWindow::onSensorModified(std::map<std::string, std::string>& info) {
     //ciclo attraverso il vettore dei sensori per trovare quello selezionato
     qDebug() <<"onsensor trovato";
-    for (auto sensore=sensori.begin(); sensore!=sensori.end(); sensore++) {
+    for (auto sensore=sensori.begin();sensore!=sensori.end();sensore++) {
         if ((*sensore)->getInfo()["ID"] == info["ID"]) {
             qDebug() <<"onsensor trovato";
+            for(auto &field : info) {
+            QString value = QString::fromStdString(field.second);
+            value.replace(",",".");
+            field.second = value.toStdString();
+            }
             //dealloco il vecchio sensore per evitare fughe di memoria
             sensori.erase(sensore);
             qDebug() <<"eliminato";
@@ -648,28 +635,8 @@ void MainWindow::onSensorModified(std::map<std::string, std::string>& info) {
             break;
         }
     }
-}*/
-void MainWindow::onSensorModified(std::map<std::string, std::string>& info) {
-    // Ciclo attraverso il vettore dei sensori per trovare quello selezionato
-    qDebug() << "onSensor trovato";
-    for (auto sensore = sensori.begin(); sensore != sensori.end(); ++sensore) {
-        if ((*sensore)->getInfo()["ID"] == info["ID"]) {
-            qDebug() << "onSensor trovato";
-
-            // Creo il nuovo sensore usando i dati passati
-            Model::Sensore* newSensor = creaSensore(mapToJson(info));
-
-            // Dealloco il vecchio sensore per evitare fughe di memoria
-            delete *sensore;
-
-            // Sostituisco il vecchio sensore con il nuovo nella stessa posizione
-            *sensore = newSensor;
-
-            qDebug() << "Sensore sostituito";
-            break;
-        }
-    }
 }
+
 
 
 

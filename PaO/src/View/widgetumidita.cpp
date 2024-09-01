@@ -1,4 +1,5 @@
 #include "widgetumidita.h"
+
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QTableWidgetItem>
@@ -13,7 +14,7 @@ View::WidgetUmidita::WidgetUmidita(Model::Sensore* s, QWidget *parent)
       tabella(new QTableWidget(0, 2, this)),
       series(new QSplineSeries())
 {
-    tabella->setHorizontalHeaderLabels(QStringList() << "misura" << "umidità relativa (%)");
+    tabella->setHorizontalHeaderLabels(QStringList() << "Misura" << "Umidità relativa (%)");
     tabella->horizontalHeader()->setStretchLastSection(true);
     tabella->verticalHeader()->setVisible(false);
 
@@ -53,7 +54,7 @@ void View::WidgetUmidita::simulazione(Model::Sensore* sensore) {
     series->clear();
     tabella->setRowCount(0);
 
-    for (int i = 0; i < 24; ++i) {
+    for (int i = 0; i < 25; ++i) {
         sensore->simulaMisura();  //simula una misura
         std::map<std::string, std::string> info = sensore->getInfo();
         double dato = std::stod(info["Dato"]);

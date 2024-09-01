@@ -10,16 +10,15 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
 
     QVBoxLayout* layout = new QVBoxLayout();
 
-    //Fotocellule alla fine
+    //ordinazione Fotocellule alla fine
     std::sort(this->sensori.begin(), this->sensori.end(), [](Model::Sensore* a, Model::Sensore* b) {
         auto isFotocellulaA = dynamic_cast<Model::Fotocellula*>(a) != nullptr;
         auto isFotocellulaB = dynamic_cast<Model::Fotocellula*>(b) != nullptr;
-        return isFotocellulaA < isFotocellulaB; // Fotocellula deve essere "più grande" di tutti gli altri
+        return isFotocellulaA < isFotocellulaB;
     });
 
     bool addedDivider = false;
 
-    //SensorInfoWidget per ciascun sensore
     for (Model::Sensore* sensore : sensori) {
         std::map<std::string, std::string> info = sensore->getInfo();
         SensorInfoWidget* sensorWidget = new SensorInfoWidget(info, this);
@@ -39,7 +38,7 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
             line->setFrameShape(QFrame::HLine);
             line->setFrameShadow(QFrame::Sunken);
             layout->addWidget(line);
-            addedDivider = true; //non più di un divisore
+            addedDivider = true; //impedisce di aggiungere più di un divisore
         }
 
         layout->addLayout(layoutInterno);
@@ -51,3 +50,4 @@ View::SensorListWidget::SensorListWidget(std::vector<Model::Sensore*>& sensori, 
 void View::SensorListWidget::onSensorSelected(const std::string& sensorID){
     emit sensorSelected(sensorID);
 }
+

@@ -7,7 +7,6 @@ namespace Model{
 
 class Fotocellula : public Sensore {
 private:
-
     bool attivo;
     double soglia;
 

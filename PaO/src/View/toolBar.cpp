@@ -7,13 +7,7 @@ namespace View {
 ToolBar::ToolBar(QToolBar *parent)
     : QToolBar(parent)
 {
-    QIcon icon(":Assets/Pulsanti/webcam.svg");
-    qDebug() << "Current path: " << QDir::currentPath();
-
-    if (icon.isNull()) {
-        qDebug() << "Icon not loaded correctly";
-    }
-    newAction = new QAction(icon, tr("Nuovo sensore"), this);
+    newAction = new QAction( tr("Nuovo sensore"), this);
     openAction = new QAction( tr("Apri"), this);
     saveAction = new QAction( tr("Salva"), this);
     saveAsAction = new QAction( tr("Salva con nome"), this);
