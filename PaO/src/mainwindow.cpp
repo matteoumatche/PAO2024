@@ -479,7 +479,7 @@ void MainWindow::cloneSensor(Model::Sensore* selectedSensor){
         Model::Sensore* clonedSensor = selectedSensor->clone();
 
         // Ottieni l'ID originale e creane uno nuovo
-        int newID = selectedSensor->getID();
+        unsigned int newID = selectedSensor->getID();
 
         // Funzione lambda per incrementare l'ID seguendo la logica specificata
         auto incrementID = [](int id) -> int {
