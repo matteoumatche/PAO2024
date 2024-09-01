@@ -315,8 +315,6 @@ void MainWindow::saveJsonFileAs(){
 }
 
 void MainWindow::dataUpdated() {
-    qDebug() << "dataUpdated";
-
     //prima di creare un nuovo widget, eliminiamo il vecchio
     if (sensorListWidget) {
         delete sensorListWidget;
@@ -525,7 +523,6 @@ void MainWindow::modifySensor(Model::Sensore* selectedSensor) {
         connect(dialog, &EditSensorDialog::sensorModified, this, &MainWindow::onSensorModified);
 
         if (dialog->exec() == QDialog::Accepted) {
-            qDebug() <<"accettato";
             emit sensorListWidget->updateList();
             onSensorSelected(selectedSensor->getInfo()["ID"]);
         }
@@ -618,10 +615,8 @@ void MainWindow::updateSensorList(std::vector<Model::Sensore*>& sensors) {
 
 void MainWindow::onSensorModified(std::map<std::string, std::string>& info) {
     //ciclo attraverso il vettore dei sensori per trovare quello selezionato
-    qDebug() <<"onsensor trovato";
     for (auto sensore=sensori.begin();sensore!=sensori.end();sensore++) {
         if ((*sensore)->getInfo()["ID"] == info["ID"]) {
-            qDebug() <<"onsensor trovato";
             for(auto &field : info) {
             QString value = QString::fromStdString(field.second);
             value.replace(",",".");
@@ -629,14 +624,9 @@ void MainWindow::onSensorModified(std::map<std::string, std::string>& info) {
             }
             //dealloco il vecchio sensore per evitare fughe di memoria
             sensori.erase(sensore);
-            qDebug() <<"eliminato";
             //sostituisco il vecchio sensore con il nuovo
             sensori.push_back(creaSensore(mapToJson(info)));
             break;
         }
     }
 }
-
-
-
-
